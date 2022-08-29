@@ -19,12 +19,25 @@ export interface IColor3Like {
   b: float;
 }
 
+export type Color3Like = {
+  r: float;
+  g: float;
+  b: float;
+};
+
 export interface IQuaternionLike {
   x: float;
   y: float;
   z: float;
   w: float;
 }
+
+export type QuaternionLike = {
+  x: float;
+  y: float;
+  z: float;
+  w: float;
+};
 
 export type ReadonlyQuaternionLike = {
   readonly x: float;
@@ -42,6 +55,13 @@ export interface IVector4Like {
   z: float;
   w: float;
 }
+
+export type Vector4Like = {
+  x: float;
+  y: float;
+  z: float;
+  w: float;
+};
 
 /**
  * @hidden

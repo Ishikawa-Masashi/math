@@ -119,83 +119,86 @@ export class Matrix {
     return this._isIdentity;
   }
 
-  //     /**
-  //      * Check if the current matrix is identity as a texture matrix (3x2 store in 4x4)
-  //      * @returns true is the matrix is the identity matrix
-  //      */
-  //     public isIdentityAs3x2(): boolean {
-  //         if (this._isIdentity3x2Dirty) {
-  //             this._isIdentity3x2Dirty = false;
-  //             if (this._m[0] !== 1.0 || this._m[5] !== 1.0 || this._m[15] !== 1.0) {
-  //                 this._isIdentity3x2 = false;
-  //             } else if (
-  //                 this._m[1] !== 0.0 ||
-  //                 this._m[2] !== 0.0 ||
-  //                 this._m[3] !== 0.0 ||
-  //                 this._m[4] !== 0.0 ||
-  //                 this._m[6] !== 0.0 ||
-  //                 this._m[7] !== 0.0 ||
-  //                 this._m[8] !== 0.0 ||
-  //                 this._m[9] !== 0.0 ||
-  //                 this._m[10] !== 0.0 ||
-  //                 this._m[11] !== 0.0 ||
-  //                 this._m[12] !== 0.0 ||
-  //                 this._m[13] !== 0.0 ||
-  //                 this._m[14] !== 0.0
-  //             ) {
-  //                 this._isIdentity3x2 = false;
-  //             } else {
-  //                 this._isIdentity3x2 = true;
-  //             }
-  //         }
-  //         return this._isIdentity3x2;
-  //     }
-  //     /**
-  //      * Gets the determinant of the matrix
-  //      * @returns the matrix determinant
-  //      */
-  //     public determinant(): number {
-  //         if (this._isIdentity === true) {
-  //             return 1;
-  //         }
-  //         const m = this._m;
-  //         const m00 = m[0],
-  //             m01 = m[1],
-  //             m02 = m[2],
-  //             m03 = m[3];
-  //         const m10 = m[4],
-  //             m11 = m[5],
-  //             m12 = m[6],
-  //             m13 = m[7];
-  //         const m20 = m[8],
-  //             m21 = m[9],
-  //             m22 = m[10],
-  //             m23 = m[11];
-  //         const m30 = m[12],
-  //             m31 = m[13],
-  //             m32 = m[14],
-  //             m33 = m[15];
-  //         // https://en.wikipedia.org/wiki/Laplace_expansion
-  //         // to compute the deterrminant of a 4x4 Matrix we compute the cofactors of any row or column,
-  //         // then we multiply each Cofactor by its corresponding matrix value and sum them all to get the determinant
-  //         // Cofactor(i, j) = sign(i,j) * det(Minor(i, j))
-  //         // where
-  //         //  - sign(i,j) = (i+j) % 2 === 0 ? 1 : -1
-  //         //  - Minor(i, j) is the 3x3 matrix we get by removing row i and column j from current Matrix
-  //         //
-  //         // Here we do that for the 1st row.
-  //         const det_22_33 = m22 * m33 - m32 * m23;
-  //         const det_21_33 = m21 * m33 - m31 * m23;
-  //         const det_21_32 = m21 * m32 - m31 * m22;
-  //         const det_20_33 = m20 * m33 - m30 * m23;
-  //         const det_20_32 = m20 * m32 - m22 * m30;
-  //         const det_20_31 = m20 * m31 - m30 * m21;
-  //         const cofact_00 = +(m11 * det_22_33 - m12 * det_21_33 + m13 * det_21_32);
-  //         const cofact_01 = -(m10 * det_22_33 - m12 * det_20_33 + m13 * det_20_32);
-  //         const cofact_02 = +(m10 * det_21_33 - m11 * det_20_33 + m13 * det_20_31);
-  //         const cofact_03 = -(m10 * det_21_32 - m11 * det_20_32 + m12 * det_20_31);
-  //         return m00 * cofact_00 + m01 * cofact_01 + m02 * cofact_02 + m03 * cofact_03;
-  //     }
+  /**
+   * Check if the current matrix is identity as a texture matrix (3x2 store in 4x4)
+   * @returns true is the matrix is the identity matrix
+   */
+  public isIdentityAs3x2(): boolean {
+    if (this._isIdentity3x2Dirty) {
+      this._isIdentity3x2Dirty = false;
+      if (this._m[0] !== 1.0 || this._m[5] !== 1.0 || this._m[15] !== 1.0) {
+        this._isIdentity3x2 = false;
+      } else if (
+        this._m[1] !== 0.0 ||
+        this._m[2] !== 0.0 ||
+        this._m[3] !== 0.0 ||
+        this._m[4] !== 0.0 ||
+        this._m[6] !== 0.0 ||
+        this._m[7] !== 0.0 ||
+        this._m[8] !== 0.0 ||
+        this._m[9] !== 0.0 ||
+        this._m[10] !== 0.0 ||
+        this._m[11] !== 0.0 ||
+        this._m[12] !== 0.0 ||
+        this._m[13] !== 0.0 ||
+        this._m[14] !== 0.0
+      ) {
+        this._isIdentity3x2 = false;
+      } else {
+        this._isIdentity3x2 = true;
+      }
+    }
+    return this._isIdentity3x2;
+  }
+
+  /**
+   * Gets the determinant of the matrix
+   * @returns the matrix determinant
+   */
+  public determinant(): number {
+    if (this._isIdentity === true) {
+      return 1;
+    }
+    const m = this._m;
+    const m00 = m[0],
+      m01 = m[1],
+      m02 = m[2],
+      m03 = m[3];
+    const m10 = m[4],
+      m11 = m[5],
+      m12 = m[6],
+      m13 = m[7];
+    const m20 = m[8],
+      m21 = m[9],
+      m22 = m[10],
+      m23 = m[11];
+    const m30 = m[12],
+      m31 = m[13],
+      m32 = m[14],
+      m33 = m[15];
+    // https://en.wikipedia.org/wiki/Laplace_expansion
+    // to compute the deterrminant of a 4x4 Matrix we compute the cofactors of any row or column,
+    // then we multiply each Cofactor by its corresponding matrix value and sum them all to get the determinant
+    // Cofactor(i, j) = sign(i,j) * det(Minor(i, j))
+    // where
+    //  - sign(i,j) = (i+j) % 2 === 0 ? 1 : -1
+    //  - Minor(i, j) is the 3x3 matrix we get by removing row i and column j from current Matrix
+    //
+    // Here we do that for the 1st row.
+    const det_22_33 = m22 * m33 - m32 * m23;
+    const det_21_33 = m21 * m33 - m31 * m23;
+    const det_21_32 = m21 * m32 - m31 * m22;
+    const det_20_33 = m20 * m33 - m30 * m23;
+    const det_20_32 = m20 * m32 - m22 * m30;
+    const det_20_31 = m20 * m31 - m30 * m21;
+    const cofact_00 = +(m11 * det_22_33 - m12 * det_21_33 + m13 * det_21_32);
+    const cofact_01 = -(m10 * det_22_33 - m12 * det_20_33 + m13 * det_20_32);
+    const cofact_02 = +(m10 * det_21_33 - m11 * det_20_33 + m13 * det_20_31);
+    const cofact_03 = -(m10 * det_21_32 - m11 * det_20_32 + m12 * det_20_31);
+    return (
+      m00 * cofact_00 + m01 * cofact_01 + m02 * cofact_02 + m03 * cofact_03
+    );
+  }
 
   //     // Methods
 
@@ -223,15 +226,35 @@ export class Matrix {
   //         this.invertToRef(this);
   //         return this;
   //     }
-  //     /**
-  //      * Sets all the matrix elements to zero
-  //      * @returns the current matrix
-  //      */
-  //     public reset(): Matrix {
-  //         Matrix.FromValuesToRef(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, this);
-  //         this._updateIdentityStatus(false);
-  //         return this;
-  //     }
+
+  /**
+   * Sets all the matrix elements to zero
+   * @returns the current matrix
+   */
+  public reset(): Matrix {
+    Matrix.FromValuesToRef(
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      this
+    );
+    this._updateIdentityStatus(false);
+    return this;
+  }
+
   //     /**
   //      * Adds the current matrix with a second one
   //      * @param other defines the matrix to add
@@ -272,96 +295,98 @@ export class Matrix {
   //         this.markAsUpdated();
   //         return this;
   //     }
-  //     /**
-  //      * Sets the given matrix to the current inverted Matrix
-  //      * @param other defines the target matrix
-  //      * @returns the unmodified current matrix
-  //      */
-  //     public invertToRef(other: Matrix): Matrix {
-  //         if (this._isIdentity === true) {
-  //             Matrix.IdentityToRef(other);
-  //             return this;
-  //         }
-  //         // the inverse of a Matrix is the transpose of cofactor matrix divided by the determinant
-  //         const m = this._m;
-  //         const m00 = m[0],
-  //             m01 = m[1],
-  //             m02 = m[2],
-  //             m03 = m[3];
-  //         const m10 = m[4],
-  //             m11 = m[5],
-  //             m12 = m[6],
-  //             m13 = m[7];
-  //         const m20 = m[8],
-  //             m21 = m[9],
-  //             m22 = m[10],
-  //             m23 = m[11];
-  //         const m30 = m[12],
-  //             m31 = m[13],
-  //             m32 = m[14],
-  //             m33 = m[15];
-  //         const det_22_33 = m22 * m33 - m32 * m23;
-  //         const det_21_33 = m21 * m33 - m31 * m23;
-  //         const det_21_32 = m21 * m32 - m31 * m22;
-  //         const det_20_33 = m20 * m33 - m30 * m23;
-  //         const det_20_32 = m20 * m32 - m22 * m30;
-  //         const det_20_31 = m20 * m31 - m30 * m21;
-  //         const cofact_00 = +(m11 * det_22_33 - m12 * det_21_33 + m13 * det_21_32);
-  //         const cofact_01 = -(m10 * det_22_33 - m12 * det_20_33 + m13 * det_20_32);
-  //         const cofact_02 = +(m10 * det_21_33 - m11 * det_20_33 + m13 * det_20_31);
-  //         const cofact_03 = -(m10 * det_21_32 - m11 * det_20_32 + m12 * det_20_31);
-  //         const det = m00 * cofact_00 + m01 * cofact_01 + m02 * cofact_02 + m03 * cofact_03;
-  //         if (det === 0) {
-  //             // not invertible
-  //             other.copyFrom(this);
-  //             return this;
-  //         }
-  //         const detInv = 1 / det;
-  //         const det_12_33 = m12 * m33 - m32 * m13;
-  //         const det_11_33 = m11 * m33 - m31 * m13;
-  //         const det_11_32 = m11 * m32 - m31 * m12;
-  //         const det_10_33 = m10 * m33 - m30 * m13;
-  //         const det_10_32 = m10 * m32 - m30 * m12;
-  //         const det_10_31 = m10 * m31 - m30 * m11;
-  //         const det_12_23 = m12 * m23 - m22 * m13;
-  //         const det_11_23 = m11 * m23 - m21 * m13;
-  //         const det_11_22 = m11 * m22 - m21 * m12;
-  //         const det_10_23 = m10 * m23 - m20 * m13;
-  //         const det_10_22 = m10 * m22 - m20 * m12;
-  //         const det_10_21 = m10 * m21 - m20 * m11;
-  //         const cofact_10 = -(m01 * det_22_33 - m02 * det_21_33 + m03 * det_21_32);
-  //         const cofact_11 = +(m00 * det_22_33 - m02 * det_20_33 + m03 * det_20_32);
-  //         const cofact_12 = -(m00 * det_21_33 - m01 * det_20_33 + m03 * det_20_31);
-  //         const cofact_13 = +(m00 * det_21_32 - m01 * det_20_32 + m02 * det_20_31);
-  //         const cofact_20 = +(m01 * det_12_33 - m02 * det_11_33 + m03 * det_11_32);
-  //         const cofact_21 = -(m00 * det_12_33 - m02 * det_10_33 + m03 * det_10_32);
-  //         const cofact_22 = +(m00 * det_11_33 - m01 * det_10_33 + m03 * det_10_31);
-  //         const cofact_23 = -(m00 * det_11_32 - m01 * det_10_32 + m02 * det_10_31);
-  //         const cofact_30 = -(m01 * det_12_23 - m02 * det_11_23 + m03 * det_11_22);
-  //         const cofact_31 = +(m00 * det_12_23 - m02 * det_10_23 + m03 * det_10_22);
-  //         const cofact_32 = -(m00 * det_11_23 - m01 * det_10_23 + m03 * det_10_21);
-  //         const cofact_33 = +(m00 * det_11_22 - m01 * det_10_22 + m02 * det_10_21);
-  //         Matrix.FromValuesToRef(
-  //             cofact_00 * detInv,
-  //             cofact_10 * detInv,
-  //             cofact_20 * detInv,
-  //             cofact_30 * detInv,
-  //             cofact_01 * detInv,
-  //             cofact_11 * detInv,
-  //             cofact_21 * detInv,
-  //             cofact_31 * detInv,
-  //             cofact_02 * detInv,
-  //             cofact_12 * detInv,
-  //             cofact_22 * detInv,
-  //             cofact_32 * detInv,
-  //             cofact_03 * detInv,
-  //             cofact_13 * detInv,
-  //             cofact_23 * detInv,
-  //             cofact_33 * detInv,
-  //             other
-  //         );
-  //         return this;
-  //     }
+
+  /**
+   * Sets the given matrix to the current inverted Matrix
+   * @param other defines the target matrix
+   * @returns the unmodified current matrix
+   */
+  public invertToRef(other: Matrix): Matrix {
+    if (this._isIdentity === true) {
+      Matrix.IdentityToRef(other);
+      return this;
+    }
+    // the inverse of a Matrix is the transpose of cofactor matrix divided by the determinant
+    const m = this._m;
+    const m00 = m[0],
+      m01 = m[1],
+      m02 = m[2],
+      m03 = m[3];
+    const m10 = m[4],
+      m11 = m[5],
+      m12 = m[6],
+      m13 = m[7];
+    const m20 = m[8],
+      m21 = m[9],
+      m22 = m[10],
+      m23 = m[11];
+    const m30 = m[12],
+      m31 = m[13],
+      m32 = m[14],
+      m33 = m[15];
+    const det_22_33 = m22 * m33 - m32 * m23;
+    const det_21_33 = m21 * m33 - m31 * m23;
+    const det_21_32 = m21 * m32 - m31 * m22;
+    const det_20_33 = m20 * m33 - m30 * m23;
+    const det_20_32 = m20 * m32 - m22 * m30;
+    const det_20_31 = m20 * m31 - m30 * m21;
+    const cofact_00 = +(m11 * det_22_33 - m12 * det_21_33 + m13 * det_21_32);
+    const cofact_01 = -(m10 * det_22_33 - m12 * det_20_33 + m13 * det_20_32);
+    const cofact_02 = +(m10 * det_21_33 - m11 * det_20_33 + m13 * det_20_31);
+    const cofact_03 = -(m10 * det_21_32 - m11 * det_20_32 + m12 * det_20_31);
+    const det =
+      m00 * cofact_00 + m01 * cofact_01 + m02 * cofact_02 + m03 * cofact_03;
+    if (det === 0) {
+      // not invertible
+      other.copyFrom(this);
+      return this;
+    }
+    const detInv = 1 / det;
+    const det_12_33 = m12 * m33 - m32 * m13;
+    const det_11_33 = m11 * m33 - m31 * m13;
+    const det_11_32 = m11 * m32 - m31 * m12;
+    const det_10_33 = m10 * m33 - m30 * m13;
+    const det_10_32 = m10 * m32 - m30 * m12;
+    const det_10_31 = m10 * m31 - m30 * m11;
+    const det_12_23 = m12 * m23 - m22 * m13;
+    const det_11_23 = m11 * m23 - m21 * m13;
+    const det_11_22 = m11 * m22 - m21 * m12;
+    const det_10_23 = m10 * m23 - m20 * m13;
+    const det_10_22 = m10 * m22 - m20 * m12;
+    const det_10_21 = m10 * m21 - m20 * m11;
+    const cofact_10 = -(m01 * det_22_33 - m02 * det_21_33 + m03 * det_21_32);
+    const cofact_11 = +(m00 * det_22_33 - m02 * det_20_33 + m03 * det_20_32);
+    const cofact_12 = -(m00 * det_21_33 - m01 * det_20_33 + m03 * det_20_31);
+    const cofact_13 = +(m00 * det_21_32 - m01 * det_20_32 + m02 * det_20_31);
+    const cofact_20 = +(m01 * det_12_33 - m02 * det_11_33 + m03 * det_11_32);
+    const cofact_21 = -(m00 * det_12_33 - m02 * det_10_33 + m03 * det_10_32);
+    const cofact_22 = +(m00 * det_11_33 - m01 * det_10_33 + m03 * det_10_31);
+    const cofact_23 = -(m00 * det_11_32 - m01 * det_10_32 + m02 * det_10_31);
+    const cofact_30 = -(m01 * det_12_23 - m02 * det_11_23 + m03 * det_11_22);
+    const cofact_31 = +(m00 * det_12_23 - m02 * det_10_23 + m03 * det_10_22);
+    const cofact_32 = -(m00 * det_11_23 - m01 * det_10_23 + m03 * det_10_21);
+    const cofact_33 = +(m00 * det_11_22 - m01 * det_10_22 + m02 * det_10_21);
+    Matrix.FromValuesToRef(
+      cofact_00 * detInv,
+      cofact_10 * detInv,
+      cofact_20 * detInv,
+      cofact_30 * detInv,
+      cofact_01 * detInv,
+      cofact_11 * detInv,
+      cofact_21 * detInv,
+      cofact_31 * detInv,
+      cofact_02 * detInv,
+      cofact_12 * detInv,
+      cofact_22 * detInv,
+      cofact_32 * detInv,
+      cofact_03 * detInv,
+      cofact_13 * detInv,
+      cofact_23 * detInv,
+      cofact_33 * detInv,
+      other
+    );
+    return this;
+  }
   //     /**
   //      * add a value at the specified position in the current Matrix
   //      * @param index the index of the value within the matrix. between 0 and 15.
@@ -420,24 +445,27 @@ export class Matrix {
   //     public setTranslation(vector3: DeepImmutable<Vector3>): Matrix {
   //         return this.setTranslationFromFloats(vector3._x, vector3._y, vector3._z);
   //     }
-  //     /**
-  //      * Gets the translation value of the current matrix
-  //      * @returns a new Vector3 as the extracted translation from the matrix
-  //      */
-  //     public getTranslation(): Vector3 {
-  //         return new Vector3(this._m[12], this._m[13], this._m[14]);
-  //     }
-  //     /**
-  //      * Fill a Vector3 with the extracted translation from the matrix
-  //      * @param result defines the Vector3 where to store the translation
-  //      * @returns the current matrix
-  //      */
-  //     public getTranslationToRef(result: Vector3): Matrix {
-  //         result.x = this._m[12];
-  //         result.y = this._m[13];
-  //         result.z = this._m[14];
-  //         return this;
-  //     }
+
+  /**
+   * Gets the translation value of the current matrix
+   * @returns a new Vector3 as the extracted translation from the matrix
+   */
+  public getTranslation(): Vector3 {
+    return new Vector3(this._m[12], this._m[13], this._m[14]);
+  }
+
+  /**
+   * Fill a Vector3 with the extracted translation from the matrix
+   * @param result defines the Vector3 where to store the translation
+   * @returns the current matrix
+   */
+  public getTranslationToRef(result: Vector3): Matrix {
+    result.x = this._m[12];
+    result.y = this._m[13];
+    result.z = this._m[14];
+    return this;
+  }
+
   //     /**
   //      * Remove rotation and scaling part from the matrix
   //      * @returns the updated matrix
@@ -458,44 +486,52 @@ export class Matrix {
   //         this.multiplyToRef(other, result);
   //         return result;
   //     }
-  //     /**
-  //      * Copy the current matrix from the given one
-  //      * @param other defines the source matrix
-  //      * @returns the current updated matrix
-  //      */
-  //     public copyFrom(other: DeepImmutable<Matrix>): Matrix {
-  //         other.copyToArray(this._m);
-  //         const o = other as Matrix;
-  //         this.updateFlag = o.updateFlag;
-  //         this._updateIdentityStatus(o._isIdentity, o._isIdentityDirty, o._isIdentity3x2, o._isIdentity3x2Dirty);
-  //         return this;
-  //     }
-  //     /**
-  //      * Populates the given array from the starting index with the current matrix values
-  //      * @param array defines the target array
-  //      * @param offset defines the offset in the target array where to start storing values
-  //      * @returns the current matrix
-  //      */
-  //     public copyToArray(array: Float32Array | Array<number>, offset: number = 0): Matrix {
-  //         const source = this._m;
-  //         array[offset] = source[0];
-  //         array[offset + 1] = source[1];
-  //         array[offset + 2] = source[2];
-  //         array[offset + 3] = source[3];
-  //         array[offset + 4] = source[4];
-  //         array[offset + 5] = source[5];
-  //         array[offset + 6] = source[6];
-  //         array[offset + 7] = source[7];
-  //         array[offset + 8] = source[8];
-  //         array[offset + 9] = source[9];
-  //         array[offset + 10] = source[10];
-  //         array[offset + 11] = source[11];
-  //         array[offset + 12] = source[12];
-  //         array[offset + 13] = source[13];
-  //         array[offset + 14] = source[14];
-  //         array[offset + 15] = source[15];
-  //         return this;
-  //     }
+
+  /**
+   * Copy the current matrix from the given one
+   * @param other defines the source matrix
+   * @returns the current updated matrix
+   */
+  public copyFrom(other: DeepImmutable<Matrix>): Matrix {
+    other.copyToArray(this._m);
+    const o = other as Matrix;
+    this.updateFlag = o.updateFlag;
+    this._updateIdentityStatus(
+      o._isIdentity,
+      o._isIdentityDirty,
+      o._isIdentity3x2,
+      o._isIdentity3x2Dirty
+    );
+    return this;
+  }
+
+  /**
+   * Populates the given array from the starting index with the current matrix values
+   * @param array defines the target array
+   * @param offset defines the offset in the target array where to start storing values
+   * @returns the current matrix
+   */
+  public copyToArray(array: Float32Array | Array<number>, offset = 0): Matrix {
+    const source = this._m;
+    array[offset] = source[0];
+    array[offset + 1] = source[1];
+    array[offset + 2] = source[2];
+    array[offset + 3] = source[3];
+    array[offset + 4] = source[4];
+    array[offset + 5] = source[5];
+    array[offset + 6] = source[6];
+    array[offset + 7] = source[7];
+    array[offset + 8] = source[8];
+    array[offset + 9] = source[9];
+    array[offset + 10] = source[10];
+    array[offset + 11] = source[11];
+    array[offset + 12] = source[12];
+    array[offset + 13] = source[13];
+    array[offset + 14] = source[14];
+    array[offset + 15] = source[15];
+    return this;
+  }
+
   //     /**
   //      * Sets the given matrix "result" with the multiplication result of the current Matrix and the given one
   //      * @param other defines the second operand
@@ -935,64 +971,65 @@ export class Matrix {
   //     public static get IdentityReadOnly(): DeepImmutable<Matrix> {
   //         return Matrix._IdentityReadOnly;
   //     }
-  //     /**
-  //      * Stores a list of values (16) inside a given matrix
-  //      * @param initialM11 defines 1st value of 1st row
-  //      * @param initialM12 defines 2nd value of 1st row
-  //      * @param initialM13 defines 3rd value of 1st row
-  //      * @param initialM14 defines 4th value of 1st row
-  //      * @param initialM21 defines 1st value of 2nd row
-  //      * @param initialM22 defines 2nd value of 2nd row
-  //      * @param initialM23 defines 3rd value of 2nd row
-  //      * @param initialM24 defines 4th value of 2nd row
-  //      * @param initialM31 defines 1st value of 3rd row
-  //      * @param initialM32 defines 2nd value of 3rd row
-  //      * @param initialM33 defines 3rd value of 3rd row
-  //      * @param initialM34 defines 4th value of 3rd row
-  //      * @param initialM41 defines 1st value of 4th row
-  //      * @param initialM42 defines 2nd value of 4th row
-  //      * @param initialM43 defines 3rd value of 4th row
-  //      * @param initialM44 defines 4th value of 4th row
-  //      * @param result defines the target matrix
-  //      */
-  //     public static FromValuesToRef(
-  //         initialM11: number,
-  //         initialM12: number,
-  //         initialM13: number,
-  //         initialM14: number,
-  //         initialM21: number,
-  //         initialM22: number,
-  //         initialM23: number,
-  //         initialM24: number,
-  //         initialM31: number,
-  //         initialM32: number,
-  //         initialM33: number,
-  //         initialM34: number,
-  //         initialM41: number,
-  //         initialM42: number,
-  //         initialM43: number,
-  //         initialM44: number,
-  //         result: Matrix
-  //     ): void {
-  //         const m = result._m;
-  //         m[0] = initialM11;
-  //         m[1] = initialM12;
-  //         m[2] = initialM13;
-  //         m[3] = initialM14;
-  //         m[4] = initialM21;
-  //         m[5] = initialM22;
-  //         m[6] = initialM23;
-  //         m[7] = initialM24;
-  //         m[8] = initialM31;
-  //         m[9] = initialM32;
-  //         m[10] = initialM33;
-  //         m[11] = initialM34;
-  //         m[12] = initialM41;
-  //         m[13] = initialM42;
-  //         m[14] = initialM43;
-  //         m[15] = initialM44;
-  //         result.markAsUpdated();
-  //     }
+
+  /**
+   * Stores a list of values (16) inside a given matrix
+   * @param initialM11 defines 1st value of 1st row
+   * @param initialM12 defines 2nd value of 1st row
+   * @param initialM13 defines 3rd value of 1st row
+   * @param initialM14 defines 4th value of 1st row
+   * @param initialM21 defines 1st value of 2nd row
+   * @param initialM22 defines 2nd value of 2nd row
+   * @param initialM23 defines 3rd value of 2nd row
+   * @param initialM24 defines 4th value of 2nd row
+   * @param initialM31 defines 1st value of 3rd row
+   * @param initialM32 defines 2nd value of 3rd row
+   * @param initialM33 defines 3rd value of 3rd row
+   * @param initialM34 defines 4th value of 3rd row
+   * @param initialM41 defines 1st value of 4th row
+   * @param initialM42 defines 2nd value of 4th row
+   * @param initialM43 defines 3rd value of 4th row
+   * @param initialM44 defines 4th value of 4th row
+   * @param result defines the target matrix
+   */
+  public static FromValuesToRef(
+    initialM11: number,
+    initialM12: number,
+    initialM13: number,
+    initialM14: number,
+    initialM21: number,
+    initialM22: number,
+    initialM23: number,
+    initialM24: number,
+    initialM31: number,
+    initialM32: number,
+    initialM33: number,
+    initialM34: number,
+    initialM41: number,
+    initialM42: number,
+    initialM43: number,
+    initialM44: number,
+    result: Matrix
+  ): void {
+    const m = result._m;
+    m[0] = initialM11;
+    m[1] = initialM12;
+    m[2] = initialM13;
+    m[3] = initialM14;
+    m[4] = initialM21;
+    m[5] = initialM22;
+    m[6] = initialM23;
+    m[7] = initialM24;
+    m[8] = initialM31;
+    m[9] = initialM32;
+    m[10] = initialM33;
+    m[11] = initialM34;
+    m[12] = initialM41;
+    m[13] = initialM42;
+    m[14] = initialM43;
+    m[15] = initialM44;
+    result.markAsUpdated();
+  }
 
   /**
    * Creates new matrix from a list of values (16)
@@ -1140,14 +1177,33 @@ export class Matrix {
     return identity;
   }
 
-  //     /**
-  //      * Creates a new identity matrix and stores the result in a given matrix
-  //      * @param result defines the target matrix
-  //      */
-  //     public static IdentityToRef(result: Matrix): void {
-  //         Matrix.FromValuesToRef(1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, result);
-  //         result._updateIdentityStatus(true);
-  //     }
+  /**
+   * Creates a new identity matrix and stores the result in a given matrix
+   * @param result defines the target matrix
+   */
+  public static IdentityToRef(result: Matrix): void {
+    Matrix.FromValuesToRef(
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      result
+    );
+    result._updateIdentityStatus(true);
+  }
+
   //     /**
   //      * Creates a new zero matrix
   //      * @returns a new zero matrix

@@ -90,7 +90,7 @@ export interface IMatrixLike {
   updateFlag: int;
 }
 
-export type ReadonlyMatrixLike = ReadonlyArray<number>;
+export type ReadonlyMatrixLike = { readonly m: Float32Array };
 
 /**
  * @hidden

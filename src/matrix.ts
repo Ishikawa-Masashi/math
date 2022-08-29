@@ -196,21 +196,25 @@ export class Matrix {
   //         const cofact_03 = -(m10 * det_21_32 - m11 * det_20_32 + m12 * det_20_31);
   //         return m00 * cofact_00 + m01 * cofact_01 + m02 * cofact_02 + m03 * cofact_03;
   //     }
+
   //     // Methods
-  //     /**
-  //      * Returns the matrix as a Float32Array or Array<number>
-  //      * @returns the matrix underlying array
-  //      */
-  //     public toArray(): DeepImmutable<Float32Array | Array<number>> {
-  //         return this._m;
-  //     }
-  //     /**
-  //      * Returns the matrix as a Float32Array or Array<number>
-  //      * @returns the matrix underlying array.
-  //      */
-  //     public asArray(): DeepImmutable<Float32Array | Array<number>> {
-  //         return this._m;
-  //     }
+
+  /**
+   * Returns the matrix as a Float32Array or Array<number>
+   * @returns the matrix underlying array
+   */
+  public toArray(): DeepImmutable<Float32Array | Array<number>> {
+    return this._m;
+  }
+
+  /**
+   * Returns the matrix as a Float32Array or Array<number>
+   * @returns the matrix underlying array.
+   */
+  public asArray(): DeepImmutable<Float32Array | Array<number>> {
+    return this._m;
+  }
+
   //     /**
   //      * Inverts the current matrix in place
   //      * @returns the current inverted matrix

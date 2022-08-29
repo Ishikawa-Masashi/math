@@ -83,6 +83,8 @@ export interface IMatrixLike {
   updateFlag: int;
 }
 
+export type ReadonlyMatrixLike = ReadonlyArray<number>;
+
 /**
  * @hidden
  */

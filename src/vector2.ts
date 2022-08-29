@@ -84,7 +84,7 @@ export class Vector2 {
    * @param index defines the offset in the destination array
    * @returns the current Vector3
    */
-  public fromArray(array: FloatArray, index: number = 0): Vector2 {
+  public fromArray(array: FloatArray, index = 0): Vector2 {
     Vector2.FromArrayToRef(array, index, this);
     return this;
   }

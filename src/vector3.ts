@@ -40,6 +40,7 @@ export class Vector3 {
   public _z: number;
   /** @hidden */
   public _isDirty = true;
+
   /** Gets or sets the x coordinate */
   public get x() {
     return this._x;
@@ -48,6 +49,7 @@ export class Vector3 {
     this._x = value;
     this._isDirty = true;
   }
+
   /** Gets or sets the y coordinate */
   public get y() {
     return this._y;
@@ -56,6 +58,7 @@ export class Vector3 {
     this._y = value;
     this._isDirty = true;
   }
+
   /** Gets or sets the z coordinate */
   public get z() {
     return this._z;
@@ -64,6 +67,7 @@ export class Vector3 {
     this._z = value;
     this._isDirty = true;
   }
+
   /**
    * Creates a new Vector3 object from the given x, y, z (floats) coordinates.
    * @param x defines the first coordinates (on X axis)
@@ -75,58 +79,65 @@ export class Vector3 {
     this._y = y;
     this._z = z;
   }
-  //     /**
-  //      * Creates a string representation of the Vector3
-  //      * Example Playground https://playground.babylonjs.com/#R1F8YU#67
-  //      * @returns a string with the Vector3 coordinates.
-  //      */
-  //     public toString(): string {
-  //         return `{X: ${this._x} Y: ${this._y} Z: ${this._z}}`;
-  //     }
-  //     /**
-  //      * Gets the class name
-  //      * @returns the string "Vector3"
-  //      */
-  //     public getClassName(): string {
-  //         return "Vector3";
-  //     }
-  //     /**
-  //      * Creates the Vector3 hash code
-  //      * @returns a number which tends to be unique between Vector3 instances
-  //      */
-  //     public getHashCode(): number {
-  //         const x = _ExtractAsInt(this._x);
-  //         const y = _ExtractAsInt(this._y);
-  //         const z = _ExtractAsInt(this._z);
-  //         let hash = x;
-  //         hash = (hash * 397) ^ y;
-  //         hash = (hash * 397) ^ z;
-  //         return hash;
-  //     }
-  //     // Operators
-  //     /**
-  //      * Creates an array containing three elements : the coordinates of the Vector3
-  //      * Example Playground https://playground.babylonjs.com/#R1F8YU#10
-  //      * @returns a new array of numbers
-  //      */
-  //     public asArray(): number[] {
-  //         const result: number[] = [];
-  //         this.toArray(result, 0);
-  //         return result;
-  //     }
-  //     /**
-  //      * Populates the given array or Float32Array from the given index with the successive coordinates of the Vector3
-  //      * Example Playground https://playground.babylonjs.com/#R1F8YU#65
-  //      * @param array defines the destination array
-  //      * @param index defines the offset in the destination array
-  //      * @returns the current Vector3
-  //      */
-  //     public toArray(array: FloatArray, index: number = 0): Vector3 {
-  //         array[index] = this._x;
-  //         array[index + 1] = this._y;
-  //         array[index + 2] = this._z;
-  //         return this;
-  //     }
+
+  /**
+   * Creates a string representation of the Vector3
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#67
+   * @returns a string with the Vector3 coordinates.
+   */
+  public toString(): string {
+    return `{X: ${this._x} Y: ${this._y} Z: ${this._z}}`;
+  }
+
+  /**
+   * Gets the class name
+   * @returns the string "Vector3"
+   */
+  public getClassName(): string {
+    return 'Vector3';
+  }
+
+  /**
+   * Creates the Vector3 hash code
+   * @returns a number which tends to be unique between Vector3 instances
+   */
+  public getHashCode(): number {
+    const x = _ExtractAsInt(this._x);
+    const y = _ExtractAsInt(this._y);
+    const z = _ExtractAsInt(this._z);
+    let hash = x;
+    hash = (hash * 397) ^ y;
+    hash = (hash * 397) ^ z;
+    return hash;
+  }
+
+  // Operators
+
+  /**
+   * Creates an array containing three elements : the coordinates of the Vector3
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#10
+   * @returns a new array of numbers
+   */
+  public asArray(): number[] {
+    const result: number[] = [];
+    this.toArray(result, 0);
+    return result;
+  }
+
+  /**
+   * Populates the given array or Float32Array from the given index with the successive coordinates of the Vector3
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#65
+   * @param array defines the destination array
+   * @param index defines the offset in the destination array
+   * @returns the current Vector3
+   */
+  public toArray(array: FloatArray, index = 0): Vector3 {
+    array[index] = this._x;
+    array[index + 1] = this._y;
+    array[index + 2] = this._z;
+    return this;
+  }
+
   //     /**
   //      * Update the current vector from an array
   //      * Example Playground https://playground.babylonjs.com/#R1F8YU#24
@@ -1322,16 +1333,21 @@ export class Vector3 {
   //         result.y = start._y + (end._y - start._y) * amount;
   //         result.z = start._z + (end._z - start._z) * amount;
   //     }
-  //     /**
-  //      * Returns the dot product (float) between the vectors "left" and "right"
-  //      * Example Playground https://playground.babylonjs.com/#R1F8YU#82
-  //      * @param left defines the left operand
-  //      * @param right defines the right operand
-  //      * @returns the dot product
-  //      */
-  //     public static Dot(left: DeepImmutable<Vector3>, right: DeepImmutable<Vector3>): number {
-  //         return left._x * right._x + left._y * right._y + left._z * right._z;
-  //     }
+
+  /**
+   * Returns the dot product (float) between the vectors "left" and "right"
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#82
+   * @param left defines the left operand
+   * @param right defines the right operand
+   * @returns the dot product
+   */
+  public static dot(
+    left: DeepImmutable<Vector3>,
+    right: DeepImmutable<Vector3>
+  ): number {
+    return left._x * right._x + left._y * right._y + left._z * right._z;
+  }
+
   //     /**
   //      * Returns a new Vector3 as the cross product of the vectors "left" and "right"
   //      * The cross product is then orthogonal to both "left" and "right"

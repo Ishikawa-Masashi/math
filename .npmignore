@@ -5,7 +5,7 @@
 /tests
 
 .gitignore
-.npnignore
+.npmignore
 package-lock.json
 
 README.md

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 // import { Scalar } from "./math.scalar";
 import { Epsilon } from './constants';
+import { ReadonlyVector2Like } from './like';
 // import type { Viewport } from "./math.viewport";
 import type { DeepImmutable, Nullable, FloatArray, float } from './types';
 import { Vector3 } from './vector3';
@@ -733,9 +734,22 @@ export class Vector2 {
    * @param value2 defines second vector
    * @returns the distance between vectors
    */
-  public static distance(
+  public static Distance(
     value1: DeepImmutable<Vector2>,
     value2: DeepImmutable<Vector2>
+  ): number {
+    return Math.sqrt(Vector2.distanceSquared(value1, value2));
+  }
+
+  /**
+   * Gets the distance between the vectors "value1" and "value2"
+   * @param value1 defines first vector
+   * @param value2 defines second vector
+   * @returns the distance between vectors
+   */
+  public static distance(
+    value1: ReadonlyVector2Like,
+    value2: ReadonlyVector2Like
   ): number {
     return Math.sqrt(Vector2.distanceSquared(value1, value2));
   }
@@ -746,9 +760,24 @@ export class Vector2 {
    * @param value2 defines second vector
    * @returns the squared distance between vectors
    */
-  public static distanceSquared(
+  public static DistanceSquared(
     value1: DeepImmutable<Vector2>,
     value2: DeepImmutable<Vector2>
+  ): number {
+    const x = value1.x - value2.x;
+    const y = value1.y - value2.y;
+    return x * x + y * y;
+  }
+
+  /**
+   * Returns the squared distance between the vectors "value1" and "value2"
+   * @param value1 defines first vector
+   * @param value2 defines second vector
+   * @returns the squared distance between vectors
+   */
+  public static distanceSquared(
+    value1: ReadonlyVector2Like,
+    value2: ReadonlyVector2Like
   ): number {
     const x = value1.x - value2.x;
     const y = value1.y - value2.y;

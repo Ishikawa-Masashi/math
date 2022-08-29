@@ -922,16 +922,21 @@ export class Vector3 {
   //     public static SmoothToRef(source: Vector3, goal: Vector3, deltaTime: number, lerpTime: number, result: Vector3) {
   //         Vector3.SlerpToRef(source, goal, lerpTime === 0 ? 1 : deltaTime / lerpTime, result);
   //     }
-  //     /**
-  //      * Returns a new Vector3 set from the index "offset" of the given array
-  //      * Example Playground https://playground.babylonjs.com/#R1F8YU#83
-  //      * @param array defines the source array
-  //      * @param offset defines the offset in the source array
-  //      * @returns the new Vector3
-  //      */
-  //     public static FromArray(array: DeepImmutable<ArrayLike<number>>, offset: number = 0): Vector3 {
-  //         return new Vector3(array[offset], array[offset + 1], array[offset + 2]);
-  //     }
+
+  /**
+   * Returns a new Vector3 set from the index "offset" of the given array
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#83
+   * @param array defines the source array
+   * @param offset defines the offset in the source array
+   * @returns the new Vector3
+   */
+  public static FromArray(
+    array: DeepImmutable<ArrayLike<number>>,
+    offset = 0
+  ): Vector3 {
+    return new Vector3(array[offset], array[offset + 1], array[offset + 2]);
+  }
+
   //     /**
   //      * Returns a new Vector3 set from the index "offset" of the given Float32Array
   //      * @param array defines the source array
@@ -1589,29 +1594,38 @@ export class Vector3 {
   //         max.maximizeInPlace(right);
   //         return max;
   //     }
-  //     /**
-  //      * Returns the distance between the vectors "value1" and "value2"
-  //      * Example Playground https://playground.babylonjs.com/#R1F8YU#81
-  //      * @param value1 defines the first operand
-  //      * @param value2 defines the second operand
-  //      * @returns the distance
-  //      */
-  //     public static Distance(value1: DeepImmutable<Vector3>, value2: DeepImmutable<Vector3>): number {
-  //         return Math.sqrt(Vector3.DistanceSquared(value1, value2));
-  //     }
-  //     /**
-  //      * Returns the squared distance between the vectors "value1" and "value2"
-  //      * Example Playground https://playground.babylonjs.com/#R1F8YU#80
-  //      * @param value1 defines the first operand
-  //      * @param value2 defines the second operand
-  //      * @returns the squared distance
-  //      */
-  //     public static DistanceSquared(value1: DeepImmutable<Vector3>, value2: DeepImmutable<Vector3>): number {
-  //         const x = value1._x - value2._x;
-  //         const y = value1._y - value2._y;
-  //         const z = value1._z - value2._z;
-  //         return x * x + y * y + z * z;
-  //     }
+
+  /**
+   * Returns the distance between the vectors "value1" and "value2"
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#81
+   * @param value1 defines the first operand
+   * @param value2 defines the second operand
+   * @returns the distance
+   */
+  public static Distance(
+    value1: DeepImmutable<Vector3>,
+    value2: DeepImmutable<Vector3>
+  ): number {
+    return Math.sqrt(Vector3.DistanceSquared(value1, value2));
+  }
+
+  /**
+   * Returns the squared distance between the vectors "value1" and "value2"
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#80
+   * @param value1 defines the first operand
+   * @param value2 defines the second operand
+   * @returns the squared distance
+   */
+  public static DistanceSquared(
+    value1: DeepImmutable<Vector3>,
+    value2: DeepImmutable<Vector3>
+  ): number {
+    const x = value1._x - value2._x;
+    const y = value1._y - value2._y;
+    const z = value1._z - value2._z;
+    return x * x + y * y + z * z;
+  }
+
   //     /**
   //      * Projects "vector" on the triangle determined by its extremities "p0", "p1" and "p2", stores the result in "ref"
   //      * and returns the distance to the projected point.

@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-// import { Scalar } from "./math.scalar";
+import { Scalar } from './scalar';
 import { Epsilon } from './constants';
-import { withinEpsilon } from './scalar';
 // import type { Viewport } from "./math.viewport";
 import type { DeepImmutable, Nullable, FloatArray, float } from './types';
 // import { ArrayTools } from "../Misc/arrayTools";
@@ -171,14 +170,14 @@ export class Quaternion {
    */
   public equalsWithEpsilon(
     otherQuaternion: DeepImmutable<Quaternion>,
-    epsilon: number = Epsilon
+    epsilon = Epsilon
   ): boolean {
     return (
       otherQuaternion &&
-      withinEpsilon(this._x, otherQuaternion._x, epsilon) &&
-      withinEpsilon(this._y, otherQuaternion._y, epsilon) &&
-      withinEpsilon(this._z, otherQuaternion._z, epsilon) &&
-      withinEpsilon(this._w, otherQuaternion._w, epsilon)
+      Scalar.WithinEpsilon(this._x, otherQuaternion._x, epsilon) &&
+      Scalar.WithinEpsilon(this._y, otherQuaternion._y, epsilon) &&
+      Scalar.WithinEpsilon(this._z, otherQuaternion._z, epsilon) &&
+      Scalar.WithinEpsilon(this._w, otherQuaternion._w, epsilon)
     );
   }
 

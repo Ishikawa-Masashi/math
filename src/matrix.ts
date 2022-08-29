@@ -218,14 +218,14 @@ export class Matrix {
     return this._m;
   }
 
-  //     /**
-  //      * Inverts the current matrix in place
-  //      * @returns the current inverted matrix
-  //      */
-  //     public invert(): Matrix {
-  //         this.invertToRef(this);
-  //         return this;
-  //     }
+  /**
+   * Inverts the current matrix in place
+   * @returns the current inverted matrix
+   */
+  public invert(): Matrix {
+    this.invertToRef(this);
+    return this;
+  }
 
   /**
    * Sets all the matrix elements to zero
@@ -265,36 +265,38 @@ export class Matrix {
   //         this.addToRef(other, result);
   //         return result;
   //     }
-  //     /**
-  //      * Sets the given matrix "result" to the addition of the current matrix and the given one
-  //      * @param other defines the matrix to add
-  //      * @param result defines the target matrix
-  //      * @returns the current matrix
-  //      */
-  //     public addToRef(other: DeepImmutable<Matrix>, result: Matrix): Matrix {
-  //         const m = this._m;
-  //         const resultM = result._m;
-  //         const otherM = other.m;
-  //         for (let index = 0; index < 16; index++) {
-  //             resultM[index] = m[index] + otherM[index];
-  //         }
-  //         result.markAsUpdated();
-  //         return this;
-  //     }
-  //     /**
-  //      * Adds in place the given matrix to the current matrix
-  //      * @param other defines the second operand
-  //      * @returns the current updated matrix
-  //      */
-  //     public addToSelf(other: DeepImmutable<Matrix>): Matrix {
-  //         const m = this._m;
-  //         const otherM = other.m;
-  //         for (let index = 0; index < 16; index++) {
-  //             m[index] += otherM[index];
-  //         }
-  //         this.markAsUpdated();
-  //         return this;
-  //     }
+
+  /**
+   * Sets the given matrix "result" to the addition of the current matrix and the given one
+   * @param other defines the matrix to add
+   * @param result defines the target matrix
+   * @returns the current matrix
+   */
+  public addToRef(other: DeepImmutable<Matrix>, result: Matrix): Matrix {
+    const m = this._m;
+    const resultM = result._m;
+    const otherM = other.m;
+    for (let index = 0; index < 16; index++) {
+      resultM[index] = m[index] + otherM[index];
+    }
+    result.markAsUpdated();
+    return this;
+  }
+
+  /**
+   * Adds in place the given matrix to the current matrix
+   * @param other defines the second operand
+   * @returns the current updated matrix
+   */
+  public addToSelf(other: DeepImmutable<Matrix>): Matrix {
+    const m = this._m;
+    const otherM = other.m;
+    for (let index = 0; index < 16; index++) {
+      m[index] += otherM[index];
+    }
+    this.markAsUpdated();
+    return this;
+  }
 
   /**
    * Sets the given matrix to the current inverted Matrix

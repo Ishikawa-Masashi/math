@@ -8,16 +8,15 @@
 export const TwoPi = Math.PI * 2;
 export const TWO_PI = Math.PI * 2;
 
-//     /**
-//      * Boolean : true if the absolute difference between a and b is lower than epsilon (default = 1.401298E-45)
-//      * @param a number
-//      * @param b number
-//      * @param epsilon (default = 1.401298E-45)
-//      * @returns true if the absolute difference between a and b is lower than epsilon (default = 1.401298E-45)
-//      */
-//     public static WithinEpsilon(a: number, b: number, epsilon: number = 1.401298e-45): boolean {
-//         return Math.abs(a - b) <= epsilon;
-//     }
+/**
+ * Boolean : true if the absolute difference between a and b is lower than epsilon (default = 1.401298E-45)
+ * @param a number
+ * @param b number
+ * @param epsilon (default = 1.401298E-45)
+ * @returns true if the absolute difference between a and b is lower than epsilon (default = 1.401298E-45)
+ */
+export const withinEpsilon = (a: number, b: number, epsilon = 1.401298e-45) =>
+  Math.abs(a - b) <= epsilon;
 
 //     /**
 //      * Returns a string : the upper case translation of the number i to hexadecimal.

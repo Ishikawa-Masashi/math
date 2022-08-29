@@ -26,6 +26,13 @@ export interface IQuaternionLike {
   w: float;
 }
 
+export type ReadonlyQuaternionLike = {
+  readonly x: float;
+  readonly y: float;
+  readonly z: float;
+  readonly w: float;
+};
+
 /**
  * @hidden
  */

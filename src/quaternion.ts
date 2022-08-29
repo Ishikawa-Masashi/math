@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 // import { Scalar } from "./math.scalar";
 import { Epsilon } from './constants';
+import { withinEpsilon } from './scalar';
 // import type { Viewport } from "./math.viewport";
 import type { DeepImmutable, Nullable, FloatArray, float } from './types';
 // import { ArrayTools } from "../Misc/arrayTools";
@@ -108,22 +109,22 @@ export class Quaternion {
     return 'Quaternion';
   }
 
-  //     /**
-  //      * Gets a hash code for this quaternion
-  //      * @returns the quaternion hash code
-  //      */
-  //     public getHashCode(): number {
-  //         const x = _ExtractAsInt(this._x);
-  //         const y = _ExtractAsInt(this._y);
-  //         const z = _ExtractAsInt(this._z);
-  //         const w = _ExtractAsInt(this._w);
+  /**
+   * Gets a hash code for this quaternion
+   * @returns the quaternion hash code
+   */
+  public getHashCode(): number {
+    const x = _ExtractAsInt(this._x);
+    const y = _ExtractAsInt(this._y);
+    const z = _ExtractAsInt(this._z);
+    const w = _ExtractAsInt(this._w);
 
-  //         let hash = x;
-  //         hash = (hash * 397) ^ y;
-  //         hash = (hash * 397) ^ z;
-  //         hash = (hash * 397) ^ w;
-  //         return hash;
-  //     }
+    let hash = x;
+    hash = (hash * 397) ^ y;
+    hash = (hash * 397) ^ z;
+    hash = (hash * 397) ^ w;
+    return hash;
+  }
 
   /**
    * Copy the quaternion to an array
@@ -147,30 +148,39 @@ export class Quaternion {
     return this;
   }
 
-  //     /**
-  //      * Check if two quaternions are equals
-  //      * @param otherQuaternion defines the second operand
-  //      * @return true if the current quaternion and the given one coordinates are strictly equals
-  //      */
-  //     public equals(otherQuaternion: DeepImmutable<Quaternion>): boolean {
-  //         return otherQuaternion && this._x === otherQuaternion._x && this._y === otherQuaternion._y && this._z === otherQuaternion._z && this._w === otherQuaternion._w;
-  //     }
+  /**
+   * Check if two quaternions are equals
+   * @param otherQuaternion defines the second operand
+   * @return true if the current quaternion and the given one coordinates are strictly equals
+   */
+  public equals(otherQuaternion: DeepImmutable<Quaternion>): boolean {
+    return (
+      otherQuaternion &&
+      this._x === otherQuaternion._x &&
+      this._y === otherQuaternion._y &&
+      this._z === otherQuaternion._z &&
+      this._w === otherQuaternion._w
+    );
+  }
 
-  //     /**
-  //      * Gets a boolean if two quaternions are equals (using an epsilon value)
-  //      * @param otherQuaternion defines the other quaternion
-  //      * @param epsilon defines the minimal distance to consider equality
-  //      * @returns true if the given quaternion coordinates are close to the current ones by a distance of epsilon.
-  //      */
-  //     public equalsWithEpsilon(otherQuaternion: DeepImmutable<Quaternion>, epsilon: number = Epsilon): boolean {
-  //         return (
-  //             otherQuaternion &&
-  //             Scalar.WithinEpsilon(this._x, otherQuaternion._x, epsilon) &&
-  //             Scalar.WithinEpsilon(this._y, otherQuaternion._y, epsilon) &&
-  //             Scalar.WithinEpsilon(this._z, otherQuaternion._z, epsilon) &&
-  //             Scalar.WithinEpsilon(this._w, otherQuaternion._w, epsilon)
-  //         );
-  //     }
+  /**
+   * Gets a boolean if two quaternions are equals (using an epsilon value)
+   * @param otherQuaternion defines the other quaternion
+   * @param epsilon defines the minimal distance to consider equality
+   * @returns true if the given quaternion coordinates are close to the current ones by a distance of epsilon.
+   */
+  public equalsWithEpsilon(
+    otherQuaternion: DeepImmutable<Quaternion>,
+    epsilon: number = Epsilon
+  ): boolean {
+    return (
+      otherQuaternion &&
+      withinEpsilon(this._x, otherQuaternion._x, epsilon) &&
+      withinEpsilon(this._y, otherQuaternion._y, epsilon) &&
+      withinEpsilon(this._z, otherQuaternion._z, epsilon) &&
+      withinEpsilon(this._w, otherQuaternion._w, epsilon)
+    );
+  }
 
   /**
    * Clone the current quaternion
@@ -180,34 +190,34 @@ export class Quaternion {
     return new Quaternion(this._x, this._y, this._z, this._w);
   }
 
-  //     /**
-  //      * Copy a quaternion to the current one
-  //      * @param other defines the other quaternion
-  //      * @returns the updated current quaternion
-  //      */
-  //     public copyFrom(other: DeepImmutable<Quaternion>): Quaternion {
-  //         this.x = other._x;
-  //         this.y = other._y;
-  //         this.z = other._z;
-  //         this.w = other._w;
-  //         return this;
-  //     }
+  /**
+   * Copy a quaternion to the current one
+   * @param other defines the other quaternion
+   * @returns the updated current quaternion
+   */
+  public copyFrom(other: DeepImmutable<Quaternion>): Quaternion {
+    this.x = other._x;
+    this.y = other._y;
+    this.z = other._z;
+    this.w = other._w;
+    return this;
+  }
 
-  //     /**
-  //      * Updates the current quaternion with the given float coordinates
-  //      * @param x defines the x coordinate
-  //      * @param y defines the y coordinate
-  //      * @param z defines the z coordinate
-  //      * @param w defines the w coordinate
-  //      * @returns the updated current quaternion
-  //      */
-  //     public copyFromFloats(x: number, y: number, z: number, w: number): Quaternion {
-  //         this.x = x;
-  //         this.y = y;
-  //         this.z = z;
-  //         this.w = w;
-  //         return this;
-  //     }
+  /**
+   * Updates the current quaternion with the given float coordinates
+   * @param x defines the x coordinate
+   * @param y defines the y coordinate
+   * @param z defines the z coordinate
+   * @param w defines the w coordinate
+   * @returns the updated current quaternion
+   */
+  public copyFromFloats(x: number, y: number, z: number, w: number) {
+    this.x = x;
+    this.y = y;
+    this.z = z;
+    this.w = w;
+    return this;
+  }
 
   //     /**
   //      * Updates the current quaternion from the given float coordinates
@@ -221,27 +231,32 @@ export class Quaternion {
   //         return this.copyFromFloats(x, y, z, w);
   //     }
 
-  //     /**
-  //      * Adds two quaternions
-  //      * @param other defines the second operand
-  //      * @returns a new quaternion as the addition result of the given one and the current quaternion
-  //      */
-  //     public add(other: DeepImmutable<Quaternion>): Quaternion {
-  //         return new Quaternion(this._x + other._x, this._y + other._y, this._z + other._z, this._w + other._w);
-  //     }
+  /**
+   * Adds two quaternions
+   * @param other defines the second operand
+   * @returns a new quaternion as the addition result of the given one and the current quaternion
+   */
+  public add(other: DeepImmutable<Quaternion>): Quaternion {
+    return new Quaternion(
+      this._x + other._x,
+      this._y + other._y,
+      this._z + other._z,
+      this._w + other._w
+    );
+  }
 
-  //     /**
-  //      * Add a quaternion to the current one
-  //      * @param other defines the quaternion to add
-  //      * @returns the current quaternion
-  //      */
-  //     public addInPlace(other: DeepImmutable<Quaternion>): Quaternion {
-  //         this._x += other._x;
-  //         this._y += other._y;
-  //         this._z += other._z;
-  //         this._w += other._w;
-  //         return this;
-  //     }
+  /**
+   * Add a quaternion to the current one
+   * @param other defines the quaternion to add
+   * @returns the current quaternion
+   */
+  public addInPlace(other: DeepImmutable<Quaternion>): Quaternion {
+    this._x += other._x;
+    this._y += other._y;
+    this._z += other._z;
+    this._w += other._w;
+    return this;
+  }
 
   //     /**
   //      * Subtract two quaternions
@@ -584,15 +599,23 @@ export class Quaternion {
   //         }
   //     }
 
-  //     /**
-  //      * Returns the dot product (float) between the quaternions "left" and "right"
-  //      * @param left defines the left operand
-  //      * @param right defines the right operand
-  //      * @returns the dot product
-  //      */
-  //     public static Dot(left: DeepImmutable<Quaternion>, right: DeepImmutable<Quaternion>): number {
-  //         return left._x * right._x + left._y * right._y + left._z * right._z + left._w * right._w;
-  //     }
+  /**
+   * Returns the dot product (float) between the quaternions "left" and "right"
+   * @param left defines the left operand
+   * @param right defines the right operand
+   * @returns the dot product
+   */
+  public static dot(
+    left: DeepImmutable<Quaternion>,
+    right: DeepImmutable<Quaternion>
+  ): number {
+    return (
+      left._x * right._x +
+      left._y * right._y +
+      left._z * right._z +
+      left._w * right._w
+    );
+  }
 
   //     /**
   //      * Checks if the two quaternions are close to each other

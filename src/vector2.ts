@@ -289,72 +289,79 @@ export class Vector2 {
     return this.divideToRef(otherVector, this);
   }
 
-  //     /**
-  //      * Gets a new Vector2 with current Vector2 negated coordinates
-  //      * @returns a new Vector2
-  //      */
-  //     public negate(): Vector2 {
-  //         return new Vector2(-this.x, -this.y);
-  //     }
-  //     /**
-  //      * Negate this vector in place
-  //      * @returns this
-  //      */
-  //     public negateInPlace(): Vector2 {
-  //         this.x *= -1;
-  //         this.y *= -1;
-  //         return this;
-  //     }
-  //     /**
-  //      * Negate the current Vector2 and stores the result in the given vector "result" coordinates
-  //      * @param result defines the Vector3 object where to store the result
-  //      * @returns the current Vector2
-  //      */
-  //     public negateToRef(result: Vector2): Vector2 {
-  //         return result.copyFromFloats(this.x * -1, this.y * -1);
-  //     }
-  //     /**
-  //      * Multiply the Vector2 coordinates by scale
-  //      * @param scale defines the scaling factor
-  //      * @returns the current updated Vector2
-  //      */
-  //     public scaleInPlace(scale: number): Vector2 {
-  //         this.x *= scale;
-  //         this.y *= scale;
-  //         return this;
-  //     }
-  //     /**
-  //      * Returns a new Vector2 scaled by "scale" from the current Vector2
-  //      * @param scale defines the scaling factor
-  //      * @returns a new Vector2
-  //      */
-  //     public scale(scale: number): Vector2 {
-  //         const result = new Vector2(0, 0);
-  //         this.scaleToRef(scale, result);
-  //         return result;
-  //     }
-  //     /**
-  //      * Scale the current Vector2 values by a factor to a given Vector2
-  //      * @param scale defines the scale factor
-  //      * @param result defines the Vector2 object where to store the result
-  //      * @returns the unmodified current Vector2
-  //      */
-  //     public scaleToRef(scale: number, result: Vector2): Vector2 {
-  //         result.x = this.x * scale;
-  //         result.y = this.y * scale;
-  //         return this;
-  //     }
-  //     /**
-  //      * Scale the current Vector2 values by a factor and add the result to a given Vector2
-  //      * @param scale defines the scale factor
-  //      * @param result defines the Vector2 object where to store the result
-  //      * @returns the unmodified current Vector2
-  //      */
-  //     public scaleAndAddToRef(scale: number, result: Vector2): Vector2 {
-  //         result.x += this.x * scale;
-  //         result.y += this.y * scale;
-  //         return this;
-  //     }
+  /**
+   * Gets a new Vector2 with current Vector2 negated coordinates
+   * @returns a new Vector2
+   */
+  public negate(): Vector2 {
+    return new Vector2(-this.x, -this.y);
+  }
+
+  /**
+   * Negate this vector in place
+   * @returns this
+   */
+  public negateInPlace(): Vector2 {
+    this.x *= -1;
+    this.y *= -1;
+    return this;
+  }
+
+  /**
+   * Negate the current Vector2 and stores the result in the given vector "result" coordinates
+   * @param result defines the Vector3 object where to store the result
+   * @returns the current Vector2
+   */
+  public negateToRef(result: Vector2): Vector2 {
+    return result.copyFromFloats(this.x * -1, this.y * -1);
+  }
+
+  /**
+   * Multiply the Vector2 coordinates by scale
+   * @param scale defines the scaling factor
+   * @returns the current updated Vector2
+   */
+  public scaleInPlace(scale: number): Vector2 {
+    this.x *= scale;
+    this.y *= scale;
+    return this;
+  }
+
+  /**
+   * Returns a new Vector2 scaled by "scale" from the current Vector2
+   * @param scale defines the scaling factor
+   * @returns a new Vector2
+   */
+  public scale(scale: number): Vector2 {
+    const result = new Vector2(0, 0);
+    this.scaleToRef(scale, result);
+    return result;
+  }
+
+  /**
+   * Scale the current Vector2 values by a factor to a given Vector2
+   * @param scale defines the scale factor
+   * @param result defines the Vector2 object where to store the result
+   * @returns the unmodified current Vector2
+   */
+  public scaleToRef(scale: number, result: Vector2): Vector2 {
+    result.x = this.x * scale;
+    result.y = this.y * scale;
+    return this;
+  }
+
+  /**
+   * Scale the current Vector2 values by a factor and add the result to a given Vector2
+   * @param scale defines the scale factor
+   * @param result defines the Vector2 object where to store the result
+   * @returns the unmodified current Vector2
+   */
+  public scaleAndAddToRef(scale: number, result: Vector2): Vector2 {
+    result.x += this.x * scale;
+    result.y += this.y * scale;
+    return this;
+  }
+
   //     /**
   //      * Gets a boolean if two vectors are equals
   //      * @param otherVector defines the other vector

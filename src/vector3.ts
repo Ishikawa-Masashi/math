@@ -166,39 +166,54 @@ export class Vector3 {
   //     public addInPlace(otherVector: DeepImmutable<Vector3>): Vector3 {
   //         return this.addInPlaceFromFloats(otherVector._x, otherVector._y, otherVector._z);
   //     }
-  //     /**
-  //      * Adds the given coordinates to the current Vector3
-  //      * Example Playground https://playground.babylonjs.com/#R1F8YU#5
-  //      * @param x defines the x coordinate of the operand
-  //      * @param y defines the y coordinate of the operand
-  //      * @param z defines the z coordinate of the operand
-  //      * @returns the current updated Vector3
-  //      */
-  //     public addInPlaceFromFloats(x: number, y: number, z: number): Vector3 {
-  //         this.x += x;
-  //         this.y += y;
-  //         this.z += z;
-  //         return this;
-  //     }
-  //     /**
-  //      * Gets a new Vector3, result of the addition the current Vector3 and the given vector
-  //      * Example Playground https://playground.babylonjs.com/#R1F8YU#3
-  //      * @param otherVector defines the second operand
-  //      * @returns the resulting Vector3
-  //      */
-  //     public add(otherVector: DeepImmutable<Vector3>): Vector3 {
-  //         return new Vector3(this._x + otherVector._x, this._y + otherVector._y, this._z + otherVector._z);
-  //     }
-  //     /**
-  //      * Adds the current Vector3 to the given one and stores the result in the vector "result"
-  //      * Example Playground https://playground.babylonjs.com/#R1F8YU#6
-  //      * @param otherVector defines the second operand
-  //      * @param result defines the Vector3 object where to store the result
-  //      * @returns the current Vector3
-  //      */
-  //     public addToRef(otherVector: DeepImmutable<Vector3>, result: Vector3): Vector3 {
-  //         return result.copyFromFloats(this._x + otherVector._x, this._y + otherVector._y, this._z + otherVector._z);
-  //     }
+
+  /**
+   * Adds the given coordinates to the current Vector3
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#5
+   * @param x defines the x coordinate of the operand
+   * @param y defines the y coordinate of the operand
+   * @param z defines the z coordinate of the operand
+   * @returns the current updated Vector3
+   */
+  public addInPlaceFromFloats(x: number, y: number, z: number): Vector3 {
+    this.x += x;
+    this.y += y;
+    this.z += z;
+    return this;
+  }
+
+  /**
+   * Gets a new Vector3, result of the addition the current Vector3 and the given vector
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#3
+   * @param otherVector defines the second operand
+   * @returns the resulting Vector3
+   */
+  public add(otherVector: DeepImmutable<Vector3>): Vector3 {
+    return new Vector3(
+      this._x + otherVector._x,
+      this._y + otherVector._y,
+      this._z + otherVector._z
+    );
+  }
+
+  /**
+   * Adds the current Vector3 to the given one and stores the result in the vector "result"
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#6
+   * @param otherVector defines the second operand
+   * @param result defines the Vector3 object where to store the result
+   * @returns the current Vector3
+   */
+  public addToRef(
+    otherVector: DeepImmutable<Vector3>,
+    result: Vector3
+  ): Vector3 {
+    return result.copyFromFloats(
+      this._x + otherVector._x,
+      this._y + otherVector._y,
+      this._z + otherVector._z
+    );
+  }
+
   //     /**
   //      * Subtract the given vector from the current Vector3
   //      * Example Playground https://playground.babylonjs.com/#R1F8YU#61
@@ -756,20 +771,22 @@ export class Vector3 {
   //     public copyFrom(source: DeepImmutable<Vector3>): Vector3 {
   //         return this.copyFromFloats(source._x, source._y, source._z);
   //     }
-  //     /**
-  //      * Copies the given floats to the current Vector3 coordinates
-  //      * Example Playground https://playground.babylonjs.com/#R1F8YU#13
-  //      * @param x defines the x coordinate of the operand
-  //      * @param y defines the y coordinate of the operand
-  //      * @param z defines the z coordinate of the operand
-  //      * @returns the current updated Vector3
-  //      */
-  //     public copyFromFloats(x: number, y: number, z: number): Vector3 {
-  //         this.x = x;
-  //         this.y = y;
-  //         this.z = z;
-  //         return this;
-  //     }
+
+  /**
+   * Copies the given floats to the current Vector3 coordinates
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#13
+   * @param x defines the x coordinate of the operand
+   * @param y defines the y coordinate of the operand
+   * @param z defines the z coordinate of the operand
+   * @returns the current updated Vector3
+   */
+  public copyFromFloats(x: number, y: number, z: number): Vector3 {
+    this.x = x;
+    this.y = y;
+    this.z = z;
+    return this;
+  }
+
   //     /**
   //      * Copies the given floats to the current Vector3 coordinates
   //      * Example Playground https://playground.babylonjs.com/#R1F8YU#58

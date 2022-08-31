@@ -930,30 +930,41 @@ export class Matrix {
   //         m[11] *= -1;
   //         this.markAsUpdated();
   //     }
-  //     // Statics
-  //     /**
-  //      * Creates a matrix from an array
-  //      * @param array defines the source array
-  //      * @param offset defines an offset in the source array
-  //      * @returns a new Matrix set from the starting index of the given array
-  //      */
-  //     public static FromArray(array: DeepImmutable<ArrayLike<number>>, offset: number = 0): Matrix {
-  //         const result = new Matrix();
-  //         Matrix.FromArrayToRef(array, offset, result);
-  //         return result;
-  //     }
-  //     /**
-  //      * Copy the content of an array into a given matrix
-  //      * @param array defines the source array
-  //      * @param offset defines an offset in the source array
-  //      * @param result defines the target matrix
-  //      */
-  //     public static FromArrayToRef(array: DeepImmutable<ArrayLike<number>>, offset: number, result: Matrix) {
-  //         for (let index = 0; index < 16; index++) {
-  //             result._m[index] = array[index + offset];
-  //         }
-  //         result.markAsUpdated();
-  //     }
+
+  // Statics
+
+  /**
+   * Creates a matrix from an array
+   * @param array defines the source array
+   * @param offset defines an offset in the source array
+   * @returns a new Matrix set from the starting index of the given array
+   */
+  public static FromArray(
+    array: DeepImmutable<ArrayLike<number>>,
+    offset = 0
+  ): Matrix {
+    const result = new Matrix();
+    Matrix.FromArrayToRef(array, offset, result);
+    return result;
+  }
+
+  /**
+   * Copy the content of an array into a given matrix
+   * @param array defines the source array
+   * @param offset defines an offset in the source array
+   * @param result defines the target matrix
+   */
+  public static FromArrayToRef(
+    array: DeepImmutable<ArrayLike<number>>,
+    offset: number,
+    result: Matrix
+  ) {
+    for (let index = 0; index < 16; index++) {
+      result._m[index] = array[index + offset];
+    }
+    result.markAsUpdated();
+  }
+
   //     /**
   //      * Stores an array into a matrix after having multiplied each component by a given factor
   //      * @param array defines the source array

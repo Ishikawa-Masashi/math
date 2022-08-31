@@ -434,15 +434,22 @@ export class Vector3 {
   //             origin.addToRef(scaledV, result);
   //         }
   //     }
-  //     /**
-  //      * Returns true if the current Vector3 and the given vector coordinates are strictly equal
-  //      * Example Playground https://playground.babylonjs.com/#R1F8YU#19
-  //      * @param otherVector defines the second operand
-  //      * @returns true if both vectors are equals
-  //      */
-  //     public equals(otherVector: DeepImmutable<Vector3>): boolean {
-  //         return otherVector && this._x === otherVector._x && this._y === otherVector._y && this._z === otherVector._z;
-  //     }
+
+  /**
+   * Returns true if the current Vector3 and the given vector coordinates are strictly equal
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#19
+   * @param otherVector defines the second operand
+   * @returns true if both vectors are equals
+   */
+  public equals(otherVector: DeepImmutable<Vector3>): boolean {
+    return (
+      otherVector &&
+      this._x === otherVector._x &&
+      this._y === otherVector._y &&
+      this._z === otherVector._z
+    );
+  }
+
   //     /**
   //      * Returns true if the current Vector3 and the given vector coordinates are distant less than epsilon
   //      * Example Playground https://playground.babylonjs.com/#R1F8YU#21
@@ -961,16 +968,20 @@ export class Vector3 {
     return new Vector3(array[offset], array[offset + 1], array[offset + 2]);
   }
 
-  //     /**
-  //      * Returns a new Vector3 set from the index "offset" of the given Float32Array
-  //      * @param array defines the source array
-  //      * @param offset defines the offset in the source array
-  //      * @returns the new Vector3
-  //      * @deprecated Please use FromArray instead.
-  //      */
-  //     public static FromFloatArray(array: DeepImmutable<Float32Array>, offset?: number): Vector3 {
-  //         return Vector3.FromArray(array, offset);
-  //     }
+  /**
+   * Returns a new Vector3 set from the index "offset" of the given Float32Array
+   * @param array defines the source array
+   * @param offset defines the offset in the source array
+   * @returns the new Vector3
+   * @deprecated Please use FromArray instead.
+   */
+  public static FromFloatArray(
+    array: DeepImmutable<Float32Array>,
+    offset?: number
+  ): Vector3 {
+    return Vector3.FromArray(array, offset);
+  }
+
   //     /**
   //      * Sets the given vector "result" with the element values from the index "offset" of the given array
   //      * Example Playground https://playground.babylonjs.com/#R1F8YU#84

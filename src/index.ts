@@ -1,4 +1,5 @@
 export * from './like';
+export * from './arrayTools';
 export * from './scalar';
 export * from './vector2';
 export * from './vector3';

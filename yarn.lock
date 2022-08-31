@@ -216,6 +216,11 @@ assertion-error@^1.1.0:
   resolved "https://registry.yarnpkg.com/assertion-error/-/assertion-error-1.1.0.tgz#e60b6b0e8f301bd97e5375215bda406c85118c0b"
   integrity sha512-jgsaNduz+ndvGyFt3uSuWqvy4lCnIJiovtouQN5JZHOKCS2QuhEdbcQHFhVksz2N2U9hXJo8odG7ETyWlEeuDw==
 
+babylonjs@^5.21.0:
+  version "5.21.0"
+  resolved "https://registry.yarnpkg.com/babylonjs/-/babylonjs-5.21.0.tgz#2b7ade46a7ef55c097406e477815557be1089de7"
+  integrity sha512-0Gu30ReYz8VVo/JUsDrljmNGcN929refftm+v90F8M3PFbahkQgvtqBRldVxt9R86MhhmBv+43GCi/kKmj+y+Q==
+
 balanced-match@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.2.tgz#e83e3a7e3f300b34cb9d87f615fa0cbf357690ee"

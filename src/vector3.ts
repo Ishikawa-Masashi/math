@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 // import { Scalar } from "./math.scalar";
+import { ArrayTools } from './arrayTools';
 import { Epsilon } from './constants';
+import { Scalar } from './scalar';
 // import type { Viewport } from "./math.viewport";
 import type { DeepImmutable, Nullable, FloatArray, float } from './types';
 // import { ArrayTools } from "../Misc/arrayTools";
@@ -157,15 +159,20 @@ export class Vector3 {
   //     public toQuaternion(): Quaternion {
   //         return Quaternion.RotationYawPitchRoll(this._y, this._x, this._z);
   //     }
-  //     /**
-  //      * Adds the given vector to the current Vector3
-  //      * Example Playground https://playground.babylonjs.com/#R1F8YU#4
-  //      * @param otherVector defines the second operand
-  //      * @returns the current updated Vector3
-  //      */
-  //     public addInPlace(otherVector: DeepImmutable<Vector3>): Vector3 {
-  //         return this.addInPlaceFromFloats(otherVector._x, otherVector._y, otherVector._z);
-  //     }
+
+  /**
+   * Adds the given vector to the current Vector3
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#4
+   * @param otherVector defines the second operand
+   * @returns the current updated Vector3
+   */
+  public addInPlace(otherVector: DeepImmutable<Vector3>): Vector3 {
+    return this.addInPlaceFromFloats(
+      otherVector._x,
+      otherVector._y,
+      otherVector._z
+    );
+  }
 
   /**
    * Adds the given coordinates to the current Vector3
@@ -214,18 +221,19 @@ export class Vector3 {
     );
   }
 
-  //     /**
-  //      * Subtract the given vector from the current Vector3
-  //      * Example Playground https://playground.babylonjs.com/#R1F8YU#61
-  //      * @param otherVector defines the second operand
-  //      * @returns the current updated Vector3
-  //      */
-  //     public subtractInPlace(otherVector: DeepImmutable<Vector3>): Vector3 {
-  //         this.x -= otherVector._x;
-  //         this.y -= otherVector._y;
-  //         this.z -= otherVector._z;
-  //         return this;
-  //     }
+  /**
+   * Subtract the given vector from the current Vector3
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#61
+   * @param otherVector defines the second operand
+   * @returns the current updated Vector3
+   */
+  public subtractInPlace(otherVector: DeepImmutable<Vector3>): Vector3 {
+    this.x -= otherVector._x;
+    this.y -= otherVector._y;
+    this.z -= otherVector._z;
+    return this;
+  }
+
   //     /**
   //      * Returns a new Vector3, result of the subtraction of the given vector from the current Vector3
   //      * Example Playground https://playground.babylonjs.com/#R1F8YU#60
@@ -235,16 +243,24 @@ export class Vector3 {
   //     public subtract(otherVector: DeepImmutable<Vector3>): Vector3 {
   //         return new Vector3(this._x - otherVector._x, this._y - otherVector._y, this._z - otherVector._z);
   //     }
-  //     /**
-  //      * Subtracts the given vector from the current Vector3 and stores the result in the vector "result".
-  //      * Example Playground https://playground.babylonjs.com/#R1F8YU#63
-  //      * @param otherVector defines the second operand
-  //      * @param result defines the Vector3 object where to store the result
-  //      * @returns the current Vector3
-  //      */
-  //     public subtractToRef(otherVector: DeepImmutable<Vector3>, result: Vector3): Vector3 {
-  //         return this.subtractFromFloatsToRef(otherVector._x, otherVector._y, otherVector._z, result);
-  //     }
+  /**
+   * Subtracts the given vector from the current Vector3 and stores the result in the vector "result".
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#63
+   * @param otherVector defines the second operand
+   * @param result defines the Vector3 object where to store the result
+   * @returns the current Vector3
+   */
+  public subtractToRef(
+    otherVector: DeepImmutable<Vector3>,
+    result: Vector3
+  ): Vector3 {
+    return this.subtractFromFloatsToRef(
+      otherVector._x,
+      otherVector._y,
+      otherVector._z,
+      result
+    );
+  }
   //     /**
   //      * Returns a new Vector3 set with the subtraction of the given floats from the current Vector3 coordinates
   //      * Example Playground https://playground.babylonjs.com/#R1F8YU#62
@@ -256,18 +272,25 @@ export class Vector3 {
   //     public subtractFromFloats(x: number, y: number, z: number): Vector3 {
   //         return new Vector3(this._x - x, this._y - y, this._z - z);
   //     }
-  //     /**
-  //      * Subtracts the given floats from the current Vector3 coordinates and set the given vector "result" with this result
-  //      * Example Playground https://playground.babylonjs.com/#R1F8YU#64
-  //      * @param x defines the x coordinate of the operand
-  //      * @param y defines the y coordinate of the operand
-  //      * @param z defines the z coordinate of the operand
-  //      * @param result defines the Vector3 object where to store the result
-  //      * @returns the current Vector3
-  //      */
-  //     public subtractFromFloatsToRef(x: number, y: number, z: number, result: Vector3): Vector3 {
-  //         return result.copyFromFloats(this._x - x, this._y - y, this._z - z);
-  //     }
+
+  /**
+   * Subtracts the given floats from the current Vector3 coordinates and set the given vector "result" with this result
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#64
+   * @param x defines the x coordinate of the operand
+   * @param y defines the y coordinate of the operand
+   * @param z defines the z coordinate of the operand
+   * @param result defines the Vector3 object where to store the result
+   * @returns the current Vector3
+   */
+  public subtractFromFloatsToRef(
+    x: number,
+    y: number,
+    z: number,
+    result: Vector3
+  ): Vector3 {
+    return result.copyFromFloats(this._x - x, this._y - y, this._z - z);
+  }
+
   //     /**
   //      * Gets a new Vector3 set with the current Vector3 negated coordinates
   //      * Example Playground https://playground.babylonjs.com/#R1F8YU#35
@@ -762,15 +785,16 @@ export class Vector3 {
   //     public clone(): Vector3 {
   //         return new Vector3(this._x, this._y, this._z);
   //     }
-  //     /**
-  //      * Copies the given vector coordinates to the current Vector3 ones
-  //      * Example Playground https://playground.babylonjs.com/#R1F8YU#12
-  //      * @param source defines the source Vector3
-  //      * @returns the current updated Vector3
-  //      */
-  //     public copyFrom(source: DeepImmutable<Vector3>): Vector3 {
-  //         return this.copyFromFloats(source._x, source._y, source._z);
-  //     }
+
+  /**
+   * Copies the given vector coordinates to the current Vector3 ones
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#12
+   * @param source defines the source Vector3
+   * @returns the current updated Vector3
+   */
+  public copyFrom(source: DeepImmutable<Vector3>): Vector3 {
+    return this.copyFromFloats(source._x, source._y, source._z);
+  }
 
   /**
    * Copies the given floats to the current Vector3 coordinates
@@ -980,13 +1004,15 @@ export class Vector3 {
   //     public static FromFloatsToRef(x: number, y: number, z: number, result: Vector3): void {
   //         result.copyFromFloats(x, y, z);
   //     }
-  //     /**
-  //      * Returns a new Vector3 set to (0.0, 0.0, 0.0)
-  //      * @returns a new empty Vector3
-  //      */
-  //     public static Zero(): Vector3 {
-  //         return new Vector3(0.0, 0.0, 0.0);
-  //     }
+
+  /**
+   * Returns a new Vector3 set to (0.0, 0.0, 0.0)
+   * @returns a new empty Vector3
+   */
+  public static Zero(): Vector3 {
+    return new Vector3(0.0, 0.0, 0.0);
+  }
+
   //     /**
   //      * Returns a new Vector3 set to (1.0, 1.0, 1.0)
   //      * @returns a new Vector3
@@ -1363,6 +1389,20 @@ export class Vector3 {
    * @param right defines the right operand
    * @returns the dot product
    */
+  public static Dot(
+    left: DeepImmutable<Vector3>,
+    right: DeepImmutable<Vector3>
+  ): number {
+    return left._x * right._x + left._y * right._y + left._z * right._z;
+  }
+
+  /**
+   * Returns the dot product (float) between the vectors "left" and "right"
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#82
+   * @param left defines the left operand
+   * @param right defines the right operand
+   * @returns the dot product
+   */
   public static dot(
     left: DeepImmutable<Vector3>,
     right: DeepImmutable<Vector3>
@@ -1383,20 +1423,26 @@ export class Vector3 {
   //         Vector3.CrossToRef(left, right, result);
   //         return result;
   //     }
-  //     /**
-  //      * Sets the given vector "result" with the cross product of "left" and "right"
-  //      * The cross product is then orthogonal to both "left" and "right"
-  //      * Example Playground https://playground.babylonjs.com/#R1F8YU#78
-  //      * @param left defines the left operand
-  //      * @param right defines the right operand
-  //      * @param result defines the Vector3 where to store the result
-  //      */
-  //     public static CrossToRef(left: DeepImmutable<Vector3>, right: DeepImmutable<Vector3>, result: Vector3): void {
-  //         const x = left._y * right._z - left._z * right._y;
-  //         const y = left._z * right._x - left._x * right._z;
-  //         const z = left._x * right._y - left._y * right._x;
-  //         result.copyFromFloats(x, y, z);
-  //     }
+
+  /**
+   * Sets the given vector "result" with the cross product of "left" and "right"
+   * The cross product is then orthogonal to both "left" and "right"
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#78
+   * @param left defines the left operand
+   * @param right defines the right operand
+   * @param result defines the Vector3 where to store the result
+   */
+  public static CrossToRef(
+    left: DeepImmutable<Vector3>,
+    right: DeepImmutable<Vector3>,
+    result: Vector3
+  ): void {
+    const x = left._y * right._z - left._z * right._y;
+    const y = left._z * right._x - left._x * right._z;
+    const z = left._x * right._y - left._y * right._x;
+    result.copyFromFloats(x, y, z);
+  }
+
   //     /**
   //      * Returns a new Vector3 as the normalization of the given vector
   //      * Example Playground https://playground.babylonjs.com/#R1F8YU#98
@@ -1626,144 +1672,151 @@ export class Vector3 {
     return x * x + y * y + z * z;
   }
 
-  //     /**
-  //      * Projects "vector" on the triangle determined by its extremities "p0", "p1" and "p2", stores the result in "ref"
-  //      * and returns the distance to the projected point.
-  //      * Example Playground https://playground.babylonjs.com/#R1F8YU#104
-  //      * From http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.104.4264&rep=rep1&type=pdf
-  //      *
-  //      * @param vector the vector to get distance from
-  //      * @param p0 extremity of the triangle
-  //      * @param p1 extremity of the triangle
-  //      * @param p2 extremity of the triangle
-  //      * @param ref variable to store the result to
-  //      * @returns The distance between "ref" and "vector"
-  //      */
-  //     public static ProjectOnTriangleToRef(vector: DeepImmutable<Vector3>, p0: DeepImmutable<Vector3>, p1: DeepImmutable<Vector3>, p2: DeepImmutable<Vector3>, ref: Vector3): number {
-  //         const p1p0 = MathTmp.Vector3[0];
-  //         const p2p0 = MathTmp.Vector3[1];
-  //         const p2p1 = MathTmp.Vector3[2];
-  //         const normal = MathTmp.Vector3[3];
-  //         const vectorp0 = MathTmp.Vector3[4];
-  //         // Triangle vectors
-  //         p1.subtractToRef(p0, p1p0);
-  //         p2.subtractToRef(p0, p2p0);
-  //         p2.subtractToRef(p1, p2p1);
-  //         const p1p0L = p1p0.length();
-  //         const p2p0L = p2p0.length();
-  //         const p2p1L = p2p1.length();
-  //         if (p1p0L < Epsilon || p2p0L < Epsilon || p2p1L < Epsilon) {
-  //             // This is a degenerate triangle. As we assume this is part of a non-degenerate mesh,
-  //             // we will find a better intersection later.
-  //             // Let's just return one of the extremities
-  //             ref.copyFrom(p0);
-  //             return Vector3.Distance(vector, p0);
-  //         }
-  //         // Compute normal and vector to p0
-  //         vector.subtractToRef(p0, vectorp0);
-  //         Vector3.CrossToRef(p1p0, p2p0, normal);
-  //         const nl = normal.length();
-  //         if (nl < Epsilon) {
-  //             // Extremities are aligned, we are back on the case of a degenerate triangle
-  //             ref.copyFrom(p0);
-  //             return Vector3.Distance(vector, p0);
-  //         }
-  //         normal.normalizeFromLength(nl);
-  //         let l = vectorp0.length();
-  //         if (l < Epsilon) {
-  //             // Vector is p0
-  //             ref.copyFrom(p0);
-  //             return 0;
-  //         }
-  //         vectorp0.normalizeFromLength(l);
-  //         // Project to "proj" that lies on the triangle plane
-  //         const cosA = Vector3.Dot(normal, vectorp0);
-  //         const projVector = MathTmp.Vector3[5];
-  //         const proj = MathTmp.Vector3[6];
-  //         projVector.copyFrom(normal).scaleInPlace(-l * cosA);
-  //         proj.copyFrom(vector).addInPlace(projVector);
-  //         // Compute barycentric coordinates (v0, v1 and v2 are axis from barycenter to extremities)
-  //         const v0 = MathTmp.Vector3[4];
-  //         const v1 = MathTmp.Vector3[5];
-  //         const v2 = MathTmp.Vector3[7];
-  //         const tmp = MathTmp.Vector3[8];
-  //         v0.copyFrom(p1p0).scaleInPlace(1 / p1p0L);
-  //         tmp.copyFrom(p2p0).scaleInPlace(1 / p2p0L);
-  //         v0.addInPlace(tmp).scaleInPlace(-1);
-  //         v1.copyFrom(p1p0).scaleInPlace(-1 / p1p0L);
-  //         tmp.copyFrom(p2p1).scaleInPlace(1 / p2p1L);
-  //         v1.addInPlace(tmp).scaleInPlace(-1);
-  //         v2.copyFrom(p2p1).scaleInPlace(-1 / p2p1L);
-  //         tmp.copyFrom(p2p0).scaleInPlace(-1 / p2p0L);
-  //         v2.addInPlace(tmp).scaleInPlace(-1);
-  //         // Determines which edge of the triangle is closest to "proj"
-  //         const projP = MathTmp.Vector3[9];
-  //         let dot;
-  //         projP.copyFrom(proj).subtractInPlace(p0);
-  //         Vector3.CrossToRef(v0, projP, tmp);
-  //         dot = Vector3.Dot(tmp, normal);
-  //         const s0 = dot;
-  //         projP.copyFrom(proj).subtractInPlace(p1);
-  //         Vector3.CrossToRef(v1, projP, tmp);
-  //         dot = Vector3.Dot(tmp, normal);
-  //         const s1 = dot;
-  //         projP.copyFrom(proj).subtractInPlace(p2);
-  //         Vector3.CrossToRef(v2, projP, tmp);
-  //         dot = Vector3.Dot(tmp, normal);
-  //         const s2 = dot;
-  //         const edge = MathTmp.Vector3[10];
-  //         let e0, e1;
-  //         if (s0 > 0 && s1 < 0) {
-  //             edge.copyFrom(p1p0);
-  //             e0 = p0;
-  //             e1 = p1;
-  //         } else if (s1 > 0 && s2 < 0) {
-  //             edge.copyFrom(p2p1);
-  //             e0 = p1;
-  //             e1 = p2;
-  //         } else {
-  //             edge.copyFrom(p2p0).scaleInPlace(-1);
-  //             e0 = p2;
-  //             e1 = p0;
-  //         }
-  //         // Determines if "proj" lies inside the triangle
-  //         const tmp2 = MathTmp.Vector3[9];
-  //         const tmp3 = MathTmp.Vector3[4];
-  //         e0.subtractToRef(proj, tmp);
-  //         e1.subtractToRef(proj, tmp2);
-  //         Vector3.CrossToRef(tmp, tmp2, tmp3);
-  //         const isOutside = Vector3.Dot(tmp3, normal) < 0;
-  //         // If inside, we already found the projected point, "proj"
-  //         if (!isOutside) {
-  //             ref.copyFrom(proj);
-  //             return Math.abs(l * cosA);
-  //         }
-  //         // If outside, we find "triProj", the closest point from "proj" on the closest edge
-  //         const r = MathTmp.Vector3[5];
-  //         Vector3.CrossToRef(edge, tmp3, r);
-  //         r.normalize();
-  //         const e0proj = MathTmp.Vector3[9];
-  //         e0proj.copyFrom(e0).subtractInPlace(proj);
-  //         const e0projL = e0proj.length();
-  //         if (e0projL < Epsilon) {
-  //             // Proj is e0
-  //             ref.copyFrom(e0);
-  //             return Vector3.Distance(vector, e0);
-  //         }
-  //         e0proj.normalizeFromLength(e0projL);
-  //         const cosG = Vector3.Dot(r, e0proj);
-  //         const triProj = MathTmp.Vector3[7];
-  //         triProj.copyFrom(proj).addInPlace(r.scaleInPlace(e0projL * cosG));
-  //         // Now we clamp "triProj" so it lies between e0 and e1
-  //         tmp.copyFrom(triProj).subtractInPlace(e0);
-  //         l = edge.length();
-  //         edge.normalizeFromLength(l);
-  //         let t = Vector3.Dot(tmp, edge) / Math.max(l, Epsilon);
-  //         t = Scalar.Clamp(t, 0, 1);
-  //         triProj.copyFrom(e0).addInPlace(edge.scaleInPlace(t * l));
-  //         ref.copyFrom(triProj);
-  //         return Vector3.Distance(vector, triProj);
-  //     }
+  /**
+   * Projects "vector" on the triangle determined by its extremities "p0", "p1" and "p2", stores the result in "ref"
+   * and returns the distance to the projected point.
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#104
+   * From http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.104.4264&rep=rep1&type=pdf
+   *
+   * @param vector the vector to get distance from
+   * @param p0 extremity of the triangle
+   * @param p1 extremity of the triangle
+   * @param p2 extremity of the triangle
+   * @param ref variable to store the result to
+   * @returns The distance between "ref" and "vector"
+   */
+  public static ProjectOnTriangleToRef(
+    vector: DeepImmutable<Vector3>,
+    p0: DeepImmutable<Vector3>,
+    p1: DeepImmutable<Vector3>,
+    p2: DeepImmutable<Vector3>,
+    ref: Vector3
+  ): number {
+    const p1p0 = MathTmp.Vector3[0];
+    const p2p0 = MathTmp.Vector3[1];
+    const p2p1 = MathTmp.Vector3[2];
+    const normal = MathTmp.Vector3[3];
+    const vectorp0 = MathTmp.Vector3[4];
+    // Triangle vectors
+    p1.subtractToRef(p0, p1p0);
+    p2.subtractToRef(p0, p2p0);
+    p2.subtractToRef(p1, p2p1);
+    const p1p0L = p1p0.length();
+    const p2p0L = p2p0.length();
+    const p2p1L = p2p1.length();
+    if (p1p0L < Epsilon || p2p0L < Epsilon || p2p1L < Epsilon) {
+      // This is a degenerate triangle. As we assume this is part of a non-degenerate mesh,
+      // we will find a better intersection later.
+      // Let's just return one of the extremities
+      ref.copyFrom(p0);
+      return Vector3.Distance(vector, p0);
+    }
+    // Compute normal and vector to p0
+    vector.subtractToRef(p0, vectorp0);
+    Vector3.CrossToRef(p1p0, p2p0, normal);
+    const nl = normal.length();
+    if (nl < Epsilon) {
+      // Extremities are aligned, we are back on the case of a degenerate triangle
+      ref.copyFrom(p0);
+      return Vector3.Distance(vector, p0);
+    }
+    normal.normalizeFromLength(nl);
+    let l = vectorp0.length();
+    if (l < Epsilon) {
+      // Vector is p0
+      ref.copyFrom(p0);
+      return 0;
+    }
+    vectorp0.normalizeFromLength(l);
+    // Project to "proj" that lies on the triangle plane
+    const cosA = Vector3.Dot(normal, vectorp0);
+    const projVector = MathTmp.Vector3[5];
+    const proj = MathTmp.Vector3[6];
+    projVector.copyFrom(normal).scaleInPlace(-l * cosA);
+    proj.copyFrom(vector).addInPlace(projVector);
+    // Compute barycentric coordinates (v0, v1 and v2 are axis from barycenter to extremities)
+    const v0 = MathTmp.Vector3[4];
+    const v1 = MathTmp.Vector3[5];
+    const v2 = MathTmp.Vector3[7];
+    const tmp = MathTmp.Vector3[8];
+    v0.copyFrom(p1p0).scaleInPlace(1 / p1p0L);
+    tmp.copyFrom(p2p0).scaleInPlace(1 / p2p0L);
+    v0.addInPlace(tmp).scaleInPlace(-1);
+    v1.copyFrom(p1p0).scaleInPlace(-1 / p1p0L);
+    tmp.copyFrom(p2p1).scaleInPlace(1 / p2p1L);
+    v1.addInPlace(tmp).scaleInPlace(-1);
+    v2.copyFrom(p2p1).scaleInPlace(-1 / p2p1L);
+    tmp.copyFrom(p2p0).scaleInPlace(-1 / p2p0L);
+    v2.addInPlace(tmp).scaleInPlace(-1);
+    // Determines which edge of the triangle is closest to "proj"
+    const projP = MathTmp.Vector3[9];
+    let dot;
+    projP.copyFrom(proj).subtractInPlace(p0);
+    Vector3.CrossToRef(v0, projP, tmp);
+    dot = Vector3.Dot(tmp, normal);
+    const s0 = dot;
+    projP.copyFrom(proj).subtractInPlace(p1);
+    Vector3.CrossToRef(v1, projP, tmp);
+    dot = Vector3.Dot(tmp, normal);
+    const s1 = dot;
+    projP.copyFrom(proj).subtractInPlace(p2);
+    Vector3.CrossToRef(v2, projP, tmp);
+    dot = Vector3.Dot(tmp, normal);
+    const s2 = dot;
+    const edge = MathTmp.Vector3[10];
+    let e0, e1;
+    if (s0 > 0 && s1 < 0) {
+      edge.copyFrom(p1p0);
+      e0 = p0;
+      e1 = p1;
+    } else if (s1 > 0 && s2 < 0) {
+      edge.copyFrom(p2p1);
+      e0 = p1;
+      e1 = p2;
+    } else {
+      edge.copyFrom(p2p0).scaleInPlace(-1);
+      e0 = p2;
+      e1 = p0;
+    }
+    // Determines if "proj" lies inside the triangle
+    const tmp2 = MathTmp.Vector3[9];
+    const tmp3 = MathTmp.Vector3[4];
+    e0.subtractToRef(proj, tmp);
+    e1.subtractToRef(proj, tmp2);
+    Vector3.CrossToRef(tmp, tmp2, tmp3);
+    const isOutside = Vector3.Dot(tmp3, normal) < 0;
+    // If inside, we already found the projected point, "proj"
+    if (!isOutside) {
+      ref.copyFrom(proj);
+      return Math.abs(l * cosA);
+    }
+    // If outside, we find "triProj", the closest point from "proj" on the closest edge
+    const r = MathTmp.Vector3[5];
+    Vector3.CrossToRef(edge, tmp3, r);
+    r.normalize();
+    const e0proj = MathTmp.Vector3[9];
+    e0proj.copyFrom(e0).subtractInPlace(proj);
+    const e0projL = e0proj.length();
+    if (e0projL < Epsilon) {
+      // Proj is e0
+      ref.copyFrom(e0);
+      return Vector3.Distance(vector, e0);
+    }
+    e0proj.normalizeFromLength(e0projL);
+    const cosG = Vector3.Dot(r, e0proj);
+    const triProj = MathTmp.Vector3[7];
+    triProj.copyFrom(proj).addInPlace(r.scaleInPlace(e0projL * cosG));
+    // Now we clamp "triProj" so it lies between e0 and e1
+    tmp.copyFrom(triProj).subtractInPlace(e0);
+    l = edge.length();
+    edge.normalizeFromLength(l);
+    let t = Vector3.Dot(tmp, edge) / Math.max(l, Epsilon);
+    t = Scalar.Clamp(t, 0, 1);
+    triProj.copyFrom(e0).addInPlace(edge.scaleInPlace(t * l));
+    ref.copyFrom(triProj);
+    return Vector3.Distance(vector, triProj);
+  }
+
   //     /**
   //      * Returns a new Vector3 located at the center between "value1" and "value2"
   //      * Example Playground https://playground.babylonjs.com/#R1F8YU#72
@@ -1817,15 +1870,15 @@ export class Vector3 {
   //     }
 }
 
-// /**
-//  * @hidden
-//  * Same as Tmp but not exported to keep it only for math functions to avoid conflicts
-//  */
-// class MathTmp {
-//     public static Vector3 = ArrayTools.BuildTuple(11, Vector3.Zero);
-//     public static Matrix = ArrayTools.BuildTuple(2, Matrix.Identity);
-//     public static Quaternion = ArrayTools.BuildTuple(3, Quaternion.Zero);
-// }
+/**
+ * @hidden
+ * Same as Tmp but not exported to keep it only for math functions to avoid conflicts
+ */
+class MathTmp {
+  public static Vector3 = ArrayTools.BuildTuple(11, Vector3.Zero);
+  // public static Matrix = ArrayTools.BuildTuple(2, Matrix.Identity);
+  // public static Quaternion = ArrayTools.BuildTuple(3, Quaternion.Zero);
+}
 
 // /**
 //  * @hidden

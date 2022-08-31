@@ -255,16 +255,16 @@ export class Matrix {
     return this;
   }
 
-  //     /**
-  //      * Adds the current matrix with a second one
-  //      * @param other defines the matrix to add
-  //      * @returns a new matrix as the addition of the current matrix and the given one
-  //      */
-  //     public add(other: DeepImmutable<Matrix>): Matrix {
-  //         const result = new Matrix();
-  //         this.addToRef(other, result);
-  //         return result;
-  //     }
+  /**
+   * Adds the current matrix with a second one
+   * @param other defines the matrix to add
+   * @returns a new matrix as the addition of the current matrix and the given one
+   */
+  public add(other: DeepImmutable<Matrix>): Matrix {
+    const result = new Matrix();
+    this.addToRef(other, result);
+    return result;
+  }
 
   /**
    * Sets the given matrix "result" to the addition of the current matrix and the given one

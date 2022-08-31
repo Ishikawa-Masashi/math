@@ -613,58 +613,62 @@ export class Matrix {
   //         result[offset + 15] = tm12 * om3 + tm13 * om7 + tm14 * om11 + tm15 * om15;
   //         return this;
   //     }
-  //     /**
-  //      * Check equality between this matrix and a second one
-  //      * @param value defines the second matrix to compare
-  //      * @returns true is the current matrix and the given one values are strictly equal
-  //      */
-  //     public equals(value: DeepImmutable<Matrix>): boolean {
-  //         const other = value as Matrix;
-  //         if (!other) {
-  //             return false;
-  //         }
-  //         if (this._isIdentity || other._isIdentity) {
-  //             if (!this._isIdentityDirty && !other._isIdentityDirty) {
-  //                 return this._isIdentity && other._isIdentity;
-  //             }
-  //         }
-  //         const m = this.m;
-  //         const om = other.m;
-  //         return (
-  //             m[0] === om[0] &&
-  //             m[1] === om[1] &&
-  //             m[2] === om[2] &&
-  //             m[3] === om[3] &&
-  //             m[4] === om[4] &&
-  //             m[5] === om[5] &&
-  //             m[6] === om[6] &&
-  //             m[7] === om[7] &&
-  //             m[8] === om[8] &&
-  //             m[9] === om[9] &&
-  //             m[10] === om[10] &&
-  //             m[11] === om[11] &&
-  //             m[12] === om[12] &&
-  //             m[13] === om[13] &&
-  //             m[14] === om[14] &&
-  //             m[15] === om[15]
-  //         );
-  //     }
-  //     /**
-  //      * Clone the current matrix
-  //      * @returns a new matrix from the current matrix
-  //      */
-  //     public clone(): Matrix {
-  //         const matrix = new Matrix();
-  //         matrix.copyFrom(this);
-  //         return matrix;
-  //     }
-  //     /**
-  //      * Returns the name of the current matrix class
-  //      * @returns the string "Matrix"
-  //      */
-  //     public getClassName(): string {
-  //         return "Matrix";
-  //     }
+
+  /**
+   * Check equality between this matrix and a second one
+   * @param value defines the second matrix to compare
+   * @returns true is the current matrix and the given one values are strictly equal
+   */
+  public equals(value: DeepImmutable<Matrix>): boolean {
+    const other = value as Matrix;
+    if (!other) {
+      return false;
+    }
+    if (this._isIdentity || other._isIdentity) {
+      if (!this._isIdentityDirty && !other._isIdentityDirty) {
+        return this._isIdentity && other._isIdentity;
+      }
+    }
+    const m = this.m;
+    const om = other.m;
+    return (
+      m[0] === om[0] &&
+      m[1] === om[1] &&
+      m[2] === om[2] &&
+      m[3] === om[3] &&
+      m[4] === om[4] &&
+      m[5] === om[5] &&
+      m[6] === om[6] &&
+      m[7] === om[7] &&
+      m[8] === om[8] &&
+      m[9] === om[9] &&
+      m[10] === om[10] &&
+      m[11] === om[11] &&
+      m[12] === om[12] &&
+      m[13] === om[13] &&
+      m[14] === om[14] &&
+      m[15] === om[15]
+    );
+  }
+
+  /**
+   * Clone the current matrix
+   * @returns a new matrix from the current matrix
+   */
+  public clone(): Matrix {
+    const matrix = new Matrix();
+    matrix.copyFrom(this);
+    return matrix;
+  }
+
+  /**
+   * Returns the name of the current matrix class
+   * @returns the string "Matrix"
+   */
+  public getClassName(): string {
+    return 'Matrix';
+  }
+
   //     /**
   //      * Gets the hash code of the current matrix
   //      * @returns the hash code
@@ -1217,15 +1221,33 @@ export class Matrix {
     result._updateIdentityStatus(true);
   }
 
-  //     /**
-  //      * Creates a new zero matrix
-  //      * @returns a new zero matrix
-  //      */
-  //     public static Zero(): Matrix {
-  //         const zero = Matrix.FromValues(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
-  //         zero._updateIdentityStatus(false);
-  //         return zero;
-  //     }
+  /**
+   * Creates a new zero matrix
+   * @returns a new zero matrix
+   */
+  public static Zero(): Matrix {
+    const zero = Matrix.FromValues(
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    );
+    zero._updateIdentityStatus(false);
+    return zero;
+  }
+
   //     /**
   //      * Creates a new rotation matrix for "angle" radians around the X axis
   //      * @param angle defines the angle (in radians) to use

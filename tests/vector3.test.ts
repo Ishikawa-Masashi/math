@@ -22,6 +22,7 @@ describe('Vector3', () => {
       const value2 = c.add(d);
 
       expect(value1.equals(value2)).toBeTruthy();
+      expect(value2.equals(value1 as unknown)).toBeTruthy();
     }
   });
 });

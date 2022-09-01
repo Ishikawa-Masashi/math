@@ -396,19 +396,19 @@ export class Vector2 {
   //     public fract(): Vector2 {
   //         return new Vector2(this.x - Math.floor(this.x), this.y - Math.floor(this.y));
   //     }
-  //     /**
-  //      * Rotate the current vector into a given result vector
-  //      * @param angle defines the rotation angle
-  //      * @param result defines the result vector where to store the rotated vector
-  //      * @returns the current vector
-  //      */
-  //     public rotateToRef(angle: number, result: Vector2) {
-  //         const cos = Math.cos(angle);
-  //         const sin = Math.sin(angle);
-  //         result.x = cos * this.x - sin * this.y;
-  //         result.y = sin * this.x + cos * this.y;
-  //         return this;
-  //     }
+  /**
+   * Rotate the current vector into a given result vector
+   * @param angle defines the rotation angle
+   * @param result defines the result vector where to store the rotated vector
+   * @returns the current vector
+   */
+  public rotateToRef(angle: number, result: Vector2) {
+    const cos = Math.cos(angle);
+    const sin = Math.sin(angle);
+    result.x = cos * this.x - sin * this.y;
+    result.y = sin * this.x + cos * this.y;
+    return this;
+  }
 
   // Properties
 

@@ -2,6 +2,7 @@
 // import { Scalar } from "./math.scalar";
 import { ArrayTools } from './arrayTools';
 import { Epsilon } from './constants';
+import { Matrix } from './matrix';
 import { Scalar } from './scalar';
 // import type { Viewport } from "./math.viewport";
 import type { DeepImmutable, Nullable, FloatArray, float } from './types';
@@ -1167,46 +1168,66 @@ export class Vector3 {
   //         result.y = ry * rw;
   //         result.z = rz * rw;
   //     }
-  //     /**
-  //      * Returns a new Vector3 set with the result of the normal transformation by the given matrix of the given vector
-  //      * This methods computes transformed normalized direction vectors only (ie. it does not apply translation)
-  //      * Example Playground https://playground.babylonjs.com/#R1F8YU#112
-  //      * @param vector defines the Vector3 to transform
-  //      * @param transformation defines the transformation matrix
-  //      * @returns the new Vector3
-  //      */
-  //     public static TransformNormal(vector: DeepImmutable<Vector3>, transformation: DeepImmutable<Matrix>): Vector3 {
-  //         const result = Vector3.Zero();
-  //         Vector3.TransformNormalToRef(vector, transformation, result);
-  //         return result;
-  //     }
-  //     /**
-  //      * Sets the given vector "result" with the result of the normal transformation by the given matrix of the given vector
-  //      * This methods computes transformed normalized direction vectors only (ie. it does not apply translation)
-  //      * Example Playground https://playground.babylonjs.com/#R1F8YU#114
-  //      * @param vector defines the Vector3 to transform
-  //      * @param transformation defines the transformation matrix
-  //      * @param result defines the Vector3 where to store the result
-  //      */
-  //     public static TransformNormalToRef(vector: DeepImmutable<Vector3>, transformation: DeepImmutable<Matrix>, result: Vector3): void {
-  //         this.TransformNormalFromFloatsToRef(vector._x, vector._y, vector._z, transformation, result);
-  //     }
-  //     /**
-  //      * Sets the given vector "result" with the result of the normal transformation by the given matrix of the given floats (x, y, z)
-  //      * This methods computes transformed normalized direction vectors only (ie. it does not apply translation)
-  //      * Example Playground https://playground.babylonjs.com/#R1F8YU#116
-  //      * @param x define the x coordinate of the source vector
-  //      * @param y define the y coordinate of the source vector
-  //      * @param z define the z coordinate of the source vector
-  //      * @param transformation defines the transformation matrix
-  //      * @param result defines the Vector3 where to store the result
-  //      */
-  //     public static TransformNormalFromFloatsToRef(x: number, y: number, z: number, transformation: DeepImmutable<Matrix>, result: Vector3): void {
-  //         const m = transformation.m;
-  //         result.x = x * m[0] + y * m[4] + z * m[8];
-  //         result.y = x * m[1] + y * m[5] + z * m[9];
-  //         result.z = x * m[2] + y * m[6] + z * m[10];
-  //     }
+
+      /**
+       * Returns a new Vector3 set with the result of the normal transformation by the given matrix of the given vector
+       * This methods computes transformed normalized direction vectors only (ie. it does not apply translation)
+       * Example Playground https://playground.babylonjs.com/#R1F8YU#112
+       * @param vector defines the Vector3 to transform
+       * @param transformation defines the transformation matrix
+       * @returns the new Vector3
+       */
+      public static TransformNormal(vector: DeepImmutable<Vector3>, transformation: DeepImmutable<Matrix>): Vector3 {
+          const result = Vector3.Zero();
+          Vector3.TransformNormalToRef(vector, transformation, result);
+          return result;
+      }
+
+  /**
+   * Sets the given vector "result" with the result of the normal transformation by the given matrix of the given vector
+   * This methods computes transformed normalized direction vectors only (ie. it does not apply translation)
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#114
+   * @param vector defines the Vector3 to transform
+   * @param transformation defines the transformation matrix
+   * @param result defines the Vector3 where to store the result
+   */
+  public static TransformNormalToRef(
+    vector: DeepImmutable<Vector3>,
+    transformation: DeepImmutable<Matrix>,
+    result: Vector3
+  ): void {
+    this.TransformNormalFromFloatsToRef(
+      vector._x,
+      vector._y,
+      vector._z,
+      transformation,
+      result
+    );
+  }
+
+  /**
+   * Sets the given vector "result" with the result of the normal transformation by the given matrix of the given floats (x, y, z)
+   * This methods computes transformed normalized direction vectors only (ie. it does not apply translation)
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#116
+   * @param x define the x coordinate of the source vector
+   * @param y define the y coordinate of the source vector
+   * @param z define the z coordinate of the source vector
+   * @param transformation defines the transformation matrix
+   * @param result defines the Vector3 where to store the result
+   */
+  public static TransformNormalFromFloatsToRef(
+    x: number,
+    y: number,
+    z: number,
+    transformation: DeepImmutable<Matrix>,
+    result: Vector3
+  ): void {
+    const m = transformation.m;
+    result.x = x * m[0] + y * m[4] + z * m[8];
+    result.y = x * m[1] + y * m[5] + z * m[9];
+    result.z = x * m[2] + y * m[6] + z * m[10];
+  }
+
   //     /**
   //      * Returns a new Vector3 located for "amount" on the CatmullRom interpolation spline defined by the vectors "value1", "value2", "value3", "value4"
   //      * Example Playground https://playground.babylonjs.com/#R1F8YU#69

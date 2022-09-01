@@ -669,17 +669,17 @@ export class Matrix {
     return 'Matrix';
   }
 
-  //     /**
-  //      * Gets the hash code of the current matrix
-  //      * @returns the hash code
-  //      */
-  //     public getHashCode(): number {
-  //         let hash = _ExtractAsInt(this._m[0]);
-  //         for (let i = 1; i < 16; i++) {
-  //             hash = (hash * 397) ^ _ExtractAsInt(this._m[i]);
-  //         }
-  //         return hash;
-  //     }
+  /**
+   * Gets the hash code of the current matrix
+   * @returns the hash code
+   */
+  public getHashCode(): number {
+    let hash = _ExtractAsInt(this._m[0]);
+    for (let i = 1; i < 16; i++) {
+      hash = (hash * 397) ^ _ExtractAsInt(this._m[i]);
+    }
+    return hash;
+  }
   //     /**
   //      * Decomposes the current Matrix into a translation, rotation and scaling components of the provided node
   //      * @param node the node to decompose the matrix to

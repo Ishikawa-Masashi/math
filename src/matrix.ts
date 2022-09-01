@@ -1310,17 +1310,37 @@ export class Matrix {
   //         Matrix.RotationZToRef(angle, result);
   //         return result;
   //     }
-  //     /**
-  //      * Creates a new rotation matrix for "angle" radians around the Z axis and stores it in a given matrix
-  //      * @param angle defines the angle (in radians) to use
-  //      * @param result defines the target matrix
-  //      */
-  //     public static RotationZToRef(angle: number, result: Matrix): void {
-  //         const s = Math.sin(angle);
-  //         const c = Math.cos(angle);
-  //         Matrix.FromValuesToRef(c, s, 0.0, 0.0, -s, c, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, result);
-  //         result._updateIdentityStatus(c === 1 && s === 0);
-  //     }
+
+  /**
+   * Creates a new rotation matrix for "angle" radians around the Z axis and stores it in a given matrix
+   * @param angle defines the angle (in radians) to use
+   * @param result defines the target matrix
+   */
+  public static RotationZToRef(angle: number, result: Matrix): void {
+    const s = Math.sin(angle);
+    const c = Math.cos(angle);
+    Matrix.FromValuesToRef(
+      c,
+      s,
+      0.0,
+      0.0,
+      -s,
+      c,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      result
+    );
+    result._updateIdentityStatus(c === 1 && s === 0);
+  }
+
   //     /**
   //      * Creates a new rotation matrix for "angle" radians around the given axis
   //      * @param axis defines the axis to use

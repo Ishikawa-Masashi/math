@@ -7,6 +7,18 @@ export class Scalar {
    */
   public static TwoPi: number = Math.PI * 2;
 
+  public static ToDegrees(radians: number) {
+    // Factor = 180 / pi
+    // return radians * 57.295779513082320876798154814105;
+    return (radians * 180) / Math.PI;
+  }
+
+  public static ToRadians(degrees: number) {
+    // Factor = pi / 180
+    // return degrees * 0.017453292519943295769236907684886;
+    return (degrees * Math.PI) / 180;
+  }
+
   /**
    * Boolean : true if the absolute difference between a and b is lower than epsilon (default = 1.401298E-45)
    * @param a number

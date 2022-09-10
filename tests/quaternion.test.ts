@@ -4,6 +4,7 @@ import { Quaternion } from '../src';
 describe('Quaternion', () => {
   it('初期化テスト', () => {
     const a = new Quaternion();
-    expect(a).toBeDefined();
+    const b = Quaternion.Identity();
+    expect(a.equalsWithEpsilon(b)).toBeTruthy();
   });
 });

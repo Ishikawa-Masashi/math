@@ -5,6 +5,7 @@ import { ReadonlyVector2Like } from './like';
 // import type { Viewport } from "./math.viewport";
 import type { DeepImmutable, Nullable, FloatArray, float } from './types';
 import { Vector3 } from './vector3';
+import { Scalar } from './scalar';
 // import { ArrayTools } from "../Misc/arrayTools";
 // import type { IPlaneLike } from "./math.like";
 // import { RegisterClass } from "../Misc/typeStore";
@@ -363,23 +364,32 @@ export class Vector2 {
     return this;
   }
 
-  //     /**
-  //      * Gets a boolean if two vectors are equals
-  //      * @param otherVector defines the other vector
-  //      * @returns true if the given vector coordinates strictly equal the current Vector2 ones
-  //      */
-  //     public equals(otherVector: DeepImmutable<Vector2>): boolean {
-  //         return otherVector && this.x === otherVector.x && this.y === otherVector.y;
-  //     }
-  //     /**
-  //      * Gets a boolean if two vectors are equals (using an epsilon value)
-  //      * @param otherVector defines the other vector
-  //      * @param epsilon defines the minimal distance to consider equality
-  //      * @returns true if the given vector coordinates are close to the current ones by a distance of epsilon.
-  //      */
-  //     public equalsWithEpsilon(otherVector: DeepImmutable<Vector2>, epsilon: number = Epsilon): boolean {
-  //         return otherVector && Scalar.WithinEpsilon(this.x, otherVector.x, epsilon) && Scalar.WithinEpsilon(this.y, otherVector.y, epsilon);
-  //     }
+  /**
+   * Gets a boolean if two vectors are equals
+   * @param otherVector defines the other vector
+   * @returns true if the given vector coordinates strictly equal the current Vector2 ones
+   */
+  public equals(otherVector: DeepImmutable<Vector2>): boolean {
+    return otherVector && this.x === otherVector.x && this.y === otherVector.y;
+  }
+
+  /**
+   * Gets a boolean if two vectors are equals (using an epsilon value)
+   * @param otherVector defines the other vector
+   * @param epsilon defines the minimal distance to consider equality
+   * @returns true if the given vector coordinates are close to the current ones by a distance of epsilon.
+   */
+  public equalsWithEpsilon(
+    otherVector: DeepImmutable<Vector2>,
+    epsilon: number = Epsilon
+  ): boolean {
+    return (
+      otherVector &&
+      Scalar.WithinEpsilon(this.x, otherVector.x, epsilon) &&
+      Scalar.WithinEpsilon(this.y, otherVector.y, epsilon)
+    );
+  }
+
   //     /**
   //      * Gets a new Vector2 from current Vector2 floored values
   //      * eg (1.2, 2.31) returns (1, 2)

@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 // import { Scalar } from "./math.scalar";
 import { Epsilon } from './constants';
+import { ReadonlyMatrixLike } from './like';
 import { Quaternion } from './quaternion';
 // import type { Viewport } from "./math.viewport";
 import type { DeepImmutable, Nullable, FloatArray, float } from './types';
 import { Vector3 } from './vector3';
-// import { ArrayTools } from "../Misc/arrayTools";
+import { ArrayTools } from './arrayTools';
 // import type { IPlaneLike } from "./math.like";
 // import { RegisterClass } from "../Misc/typeStore";
 // import type { Plane } from "./math.plane";
@@ -478,16 +479,17 @@ export class Matrix {
   //         this._updateIdentityStatus(m[12] === 0 && m[13] === 0 && m[14] === 0 && m[15] === 1);
   //         return this;
   //     }
-  //     /**
-  //      * Multiply two matrices
-  //      * @param other defines the second operand
-  //      * @returns a new matrix set with the multiplication result of the current Matrix and the given one
-  //      */
-  //     public multiply(other: DeepImmutable<Matrix>): Matrix {
-  //         const result = new Matrix();
-  //         this.multiplyToRef(other, result);
-  //         return result;
-  //     }
+
+  /**
+   * Multiply two matrices
+   * @param other defines the second operand
+   * @returns a new matrix set with the multiplication result of the current Matrix and the given one
+   */
+  public multiply(other: DeepImmutable<Matrix>): Matrix {
+    const result = new Matrix();
+    this.multiplyToRef(other, result);
+    return result;
+  }
 
   /**
    * Copy the current matrix from the given one
@@ -534,92 +536,98 @@ export class Matrix {
     return this;
   }
 
-  //     /**
-  //      * Sets the given matrix "result" with the multiplication result of the current Matrix and the given one
-  //      * @param other defines the second operand
-  //      * @param result defines the matrix where to store the multiplication
-  //      * @returns the current matrix
-  //      */
-  //     public multiplyToRef(other: DeepImmutable<Matrix>, result: Matrix): Matrix {
-  //         if (this._isIdentity) {
-  //             result.copyFrom(other);
-  //             return this;
-  //         }
-  //         if ((other as Matrix)._isIdentity) {
-  //             result.copyFrom(this);
-  //             return this;
-  //         }
-  //         this.multiplyToArray(other, result._m, 0);
-  //         result.markAsUpdated();
-  //         return this;
-  //     }
-  //     /**
-  //      * Sets the Float32Array "result" from the given index "offset" with the multiplication of the current matrix and the given one
-  //      * @param other defines the second operand
-  //      * @param result defines the array where to store the multiplication
-  //      * @param offset defines the offset in the target array where to start storing values
-  //      * @returns the current matrix
-  //      */
-  //     public multiplyToArray(other: DeepImmutable<Matrix>, result: Float32Array | Array<number>, offset: number): Matrix {
-  //         const m = this._m;
-  //         const otherM = other.m;
-  //         const tm0 = m[0],
-  //             tm1 = m[1],
-  //             tm2 = m[2],
-  //             tm3 = m[3];
-  //         const tm4 = m[4],
-  //             tm5 = m[5],
-  //             tm6 = m[6],
-  //             tm7 = m[7];
-  //         const tm8 = m[8],
-  //             tm9 = m[9],
-  //             tm10 = m[10],
-  //             tm11 = m[11];
-  //         const tm12 = m[12],
-  //             tm13 = m[13],
-  //             tm14 = m[14],
-  //             tm15 = m[15];
-  //         const om0 = otherM[0],
-  //             om1 = otherM[1],
-  //             om2 = otherM[2],
-  //             om3 = otherM[3];
-  //         const om4 = otherM[4],
-  //             om5 = otherM[5],
-  //             om6 = otherM[6],
-  //             om7 = otherM[7];
-  //         const om8 = otherM[8],
-  //             om9 = otherM[9],
-  //             om10 = otherM[10],
-  //             om11 = otherM[11];
-  //         const om12 = otherM[12],
-  //             om13 = otherM[13],
-  //             om14 = otherM[14],
-  //             om15 = otherM[15];
-  //         result[offset] = tm0 * om0 + tm1 * om4 + tm2 * om8 + tm3 * om12;
-  //         result[offset + 1] = tm0 * om1 + tm1 * om5 + tm2 * om9 + tm3 * om13;
-  //         result[offset + 2] = tm0 * om2 + tm1 * om6 + tm2 * om10 + tm3 * om14;
-  //         result[offset + 3] = tm0 * om3 + tm1 * om7 + tm2 * om11 + tm3 * om15;
-  //         result[offset + 4] = tm4 * om0 + tm5 * om4 + tm6 * om8 + tm7 * om12;
-  //         result[offset + 5] = tm4 * om1 + tm5 * om5 + tm6 * om9 + tm7 * om13;
-  //         result[offset + 6] = tm4 * om2 + tm5 * om6 + tm6 * om10 + tm7 * om14;
-  //         result[offset + 7] = tm4 * om3 + tm5 * om7 + tm6 * om11 + tm7 * om15;
-  //         result[offset + 8] = tm8 * om0 + tm9 * om4 + tm10 * om8 + tm11 * om12;
-  //         result[offset + 9] = tm8 * om1 + tm9 * om5 + tm10 * om9 + tm11 * om13;
-  //         result[offset + 10] = tm8 * om2 + tm9 * om6 + tm10 * om10 + tm11 * om14;
-  //         result[offset + 11] = tm8 * om3 + tm9 * om7 + tm10 * om11 + tm11 * om15;
-  //         result[offset + 12] = tm12 * om0 + tm13 * om4 + tm14 * om8 + tm15 * om12;
-  //         result[offset + 13] = tm12 * om1 + tm13 * om5 + tm14 * om9 + tm15 * om13;
-  //         result[offset + 14] = tm12 * om2 + tm13 * om6 + tm14 * om10 + tm15 * om14;
-  //         result[offset + 15] = tm12 * om3 + tm13 * om7 + tm14 * om11 + tm15 * om15;
-  //         return this;
-  //     }
+  /**
+   * Sets the given matrix "result" with the multiplication result of the current Matrix and the given one
+   * @param other defines the second operand
+   * @param result defines the matrix where to store the multiplication
+   * @returns the current matrix
+   */
+  public multiplyToRef(other: DeepImmutable<Matrix>, result: Matrix): Matrix {
+    if (this._isIdentity) {
+      result.copyFrom(other);
+      return this;
+    }
+    if ((other as Matrix)._isIdentity) {
+      result.copyFrom(this);
+      return this;
+    }
+    this.multiplyToArray(other, result._m, 0);
+    result.markAsUpdated();
+    return this;
+  }
+
+  /**
+   * Sets the Float32Array "result" from the given index "offset" with the multiplication of the current matrix and the given one
+   * @param other defines the second operand
+   * @param result defines the array where to store the multiplication
+   * @param offset defines the offset in the target array where to start storing values
+   * @returns the current matrix
+   */
+  public multiplyToArray(
+    other: DeepImmutable<Matrix>,
+    result: Float32Array | Array<number>,
+    offset: number
+  ): Matrix {
+    const m = this._m;
+    const otherM = other.m;
+    const tm0 = m[0],
+      tm1 = m[1],
+      tm2 = m[2],
+      tm3 = m[3];
+    const tm4 = m[4],
+      tm5 = m[5],
+      tm6 = m[6],
+      tm7 = m[7];
+    const tm8 = m[8],
+      tm9 = m[9],
+      tm10 = m[10],
+      tm11 = m[11];
+    const tm12 = m[12],
+      tm13 = m[13],
+      tm14 = m[14],
+      tm15 = m[15];
+    const om0 = otherM[0],
+      om1 = otherM[1],
+      om2 = otherM[2],
+      om3 = otherM[3];
+    const om4 = otherM[4],
+      om5 = otherM[5],
+      om6 = otherM[6],
+      om7 = otherM[7];
+    const om8 = otherM[8],
+      om9 = otherM[9],
+      om10 = otherM[10],
+      om11 = otherM[11];
+    const om12 = otherM[12],
+      om13 = otherM[13],
+      om14 = otherM[14],
+      om15 = otherM[15];
+    result[offset] = tm0 * om0 + tm1 * om4 + tm2 * om8 + tm3 * om12;
+    result[offset + 1] = tm0 * om1 + tm1 * om5 + tm2 * om9 + tm3 * om13;
+    result[offset + 2] = tm0 * om2 + tm1 * om6 + tm2 * om10 + tm3 * om14;
+    result[offset + 3] = tm0 * om3 + tm1 * om7 + tm2 * om11 + tm3 * om15;
+    result[offset + 4] = tm4 * om0 + tm5 * om4 + tm6 * om8 + tm7 * om12;
+    result[offset + 5] = tm4 * om1 + tm5 * om5 + tm6 * om9 + tm7 * om13;
+    result[offset + 6] = tm4 * om2 + tm5 * om6 + tm6 * om10 + tm7 * om14;
+    result[offset + 7] = tm4 * om3 + tm5 * om7 + tm6 * om11 + tm7 * om15;
+    result[offset + 8] = tm8 * om0 + tm9 * om4 + tm10 * om8 + tm11 * om12;
+    result[offset + 9] = tm8 * om1 + tm9 * om5 + tm10 * om9 + tm11 * om13;
+    result[offset + 10] = tm8 * om2 + tm9 * om6 + tm10 * om10 + tm11 * om14;
+    result[offset + 11] = tm8 * om3 + tm9 * om7 + tm10 * om11 + tm11 * om15;
+    result[offset + 12] = tm12 * om0 + tm13 * om4 + tm14 * om8 + tm15 * om12;
+    result[offset + 13] = tm12 * om1 + tm13 * om5 + tm14 * om9 + tm15 * om13;
+    result[offset + 14] = tm12 * om2 + tm13 * om6 + tm14 * om10 + tm15 * om14;
+    result[offset + 15] = tm12 * om3 + tm13 * om7 + tm14 * om11 + tm15 * om15;
+    return this;
+  }
 
   /**
    * Check equality between this matrix and a second one
    * @param value defines the second matrix to compare
    * @returns true is the current matrix and the given one values are strictly equal
    */
-  public equals(value: DeepImmutable<Matrix>): boolean {
+  // public equals(value: DeepImmutable<Matrix>): boolean {
+  public equals(value: ReadonlyMatrixLike): boolean {
     const other = value as Matrix;
     if (!other) {
       return false;
@@ -1435,29 +1443,46 @@ export class Matrix {
   //         m[15] = 1;
   //         result.markAsUpdated();
   //     }
-  //     /**
-  //      * Creates a rotation matrix
-  //      * @param yaw defines the yaw angle in radians (Y axis)
-  //      * @param pitch defines the pitch angle in radians (X axis)
-  //      * @param roll defines the roll angle in radians (Z axis)
-  //      * @returns the new rotation matrix
-  //      */
-  //     public static RotationYawPitchRoll(yaw: number, pitch: number, roll: number): Matrix {
-  //         const result = new Matrix();
-  //         Matrix.RotationYawPitchRollToRef(yaw, pitch, roll, result);
-  //         return result;
-  //     }
-  //     /**
-  //      * Creates a rotation matrix and stores it in a given matrix
-  //      * @param yaw defines the yaw angle in radians (Y axis)
-  //      * @param pitch defines the pitch angle in radians (X axis)
-  //      * @param roll defines the roll angle in radians (Z axis)
-  //      * @param result defines the target matrix
-  //      */
-  //     public static RotationYawPitchRollToRef(yaw: number, pitch: number, roll: number, result: Matrix): void {
-  //         Quaternion.RotationYawPitchRollToRef(yaw, pitch, roll, MathTmp.Quaternion[0]);
-  //         MathTmp.Quaternion[0].toRotationMatrix(result);
-  //     }
+
+  /**
+   * Creates a rotation matrix
+   * @param yaw defines the yaw angle in radians (Y axis)
+   * @param pitch defines the pitch angle in radians (X axis)
+   * @param roll defines the roll angle in radians (Z axis)
+   * @returns the new rotation matrix
+   */
+  public static RotationYawPitchRoll(
+    yaw: number,
+    pitch: number,
+    roll: number
+  ): Matrix {
+    const result = new Matrix();
+    Matrix.RotationYawPitchRollToRef(yaw, pitch, roll, result);
+    return result;
+  }
+
+  /**
+   * Creates a rotation matrix and stores it in a given matrix
+   * @param yaw defines the yaw angle in radians (Y axis)
+   * @param pitch defines the pitch angle in radians (X axis)
+   * @param roll defines the roll angle in radians (Z axis)
+   * @param result defines the target matrix
+   */
+  public static RotationYawPitchRollToRef(
+    yaw: number,
+    pitch: number,
+    roll: number,
+    result: Matrix
+  ): void {
+    Quaternion.RotationYawPitchRollToRef(
+      yaw,
+      pitch,
+      roll,
+      MathTmp.Quaternion[0]
+    );
+    MathTmp.Quaternion[0].toRotationMatrix(result);
+  }
+
   //     /**
   //      * Creates a scaling matrix
   //      * @param x defines the scale factor on X axis
@@ -2264,4 +2289,14 @@ export class Matrix {
     result._m[15] = 1.0;
     result.markAsUpdated();
   }
+}
+
+/**
+ * @hidden
+ * Same as Tmp but not exported to keep it only for math functions to avoid conflicts
+ */
+class MathTmp {
+  // public static Vector3 = ArrayTools.BuildTuple(11, Vector3.Zero);
+  // public static Matrix = ArrayTools.BuildTuple(2, Matrix.Identity);
+  public static Quaternion = ArrayTools.BuildTuple(3, Quaternion.Zero);
 }

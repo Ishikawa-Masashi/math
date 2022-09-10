@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { Vector3 } from '../src';
 import * as BABYLON from 'babylonjs';
-import { getRandomArray, getRandomVector3 } from './utils';
+import { getRandomVector3 } from './utils';
 
 describe('Vector3', () => {
   it('初期化テスト', () => {
@@ -22,7 +22,8 @@ describe('Vector3', () => {
       const value2 = c.add(d);
 
       expect(value1.equals(value2)).toBeTruthy();
-      expect(value2.equals(value1 as unknown)).toBeTruthy();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      expect(value2.equals(value1 as any)).toBeTruthy();
     }
   });
 });

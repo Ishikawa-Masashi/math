@@ -1,3 +1,4 @@
+import { Vector2 } from '../src';
 import { Vector3 } from '../src';
 import { Scalar } from '../src';
 import { ArrayTools } from '../src';
@@ -19,6 +20,23 @@ export function getRandomArray(
   max = Number.MAX_VALUE
 ) {
   return ArrayTools.BuildArray(size, () => getRandomFloat(min, max));
+}
+
+/**
+ * Get a random floating point number between `min` and `max`.
+ *
+ * @param {number} min - min number
+ * @param {number} max - max number
+ * @return {number} a random floating point number
+ */
+export function getRandomVector2(
+  min = Number.MIN_VALUE,
+  max = Number.MAX_VALUE
+) {
+  return new Vector2(
+    Scalar.RandomRange(min, max),
+    Scalar.RandomRange(min, max)
+  );
 }
 
 /**

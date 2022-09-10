@@ -2,6 +2,8 @@
 import { Scalar } from './scalar';
 import { Epsilon } from './constants';
 // import type { Viewport } from "./math.viewport";
+import { Vector3 } from './vector3';
+import { Matrix } from './matrix';
 import type { DeepImmutable, Nullable, FloatArray, float } from './types';
 // import { ArrayTools } from "../Misc/arrayTools";
 // import type { IPlaneLike } from "./math.like";
@@ -468,62 +470,62 @@ export class Quaternion {
   //         return this.scale(inv);
   //     }
 
-  //     /**
-  //      * Returns a new Vector3 set with the Euler angles translated from the current quaternion
-  //      * @returns a new Vector3 containing the Euler angles
-  //      * @see https://doc.babylonjs.com/divingDeeper/mesh/transforms/center_origin/rotation_conventions
-  //      */
-  //     public toEulerAngles(): Vector3 {
-  //         const result = Vector3.Zero();
-  //         this.toEulerAnglesToRef(result);
-  //         return result;
-  //     }
+  /**
+   * Returns a new Vector3 set with the Euler angles translated from the current quaternion
+   * @returns a new Vector3 containing the Euler angles
+   * @see https://doc.babylonjs.com/divingDeeper/mesh/transforms/center_origin/rotation_conventions
+   */
+  public toEulerAngles(): Vector3 {
+    const result = Vector3.Zero();
+    this.toEulerAnglesToRef(result);
+    return result;
+  }
 
-  //     /**
-  //      * Sets the given vector3 "result" with the Euler angles translated from the current quaternion
-  //      * @param result defines the vector which will be filled with the Euler angles
-  //      * @returns the current unchanged quaternion
-  //      * @see https://doc.babylonjs.com/divingDeeper/mesh/transforms/center_origin/rotation_conventions
-  //      */
-  //     public toEulerAnglesToRef(result: Vector3): Quaternion {
-  //         const qz = this._z;
-  //         const qx = this._x;
-  //         const qy = this._y;
-  //         const qw = this._w;
+  /**
+   * Sets the given vector3 "result" with the Euler angles translated from the current quaternion
+   * @param result defines the vector which will be filled with the Euler angles
+   * @returns the current unchanged quaternion
+   * @see https://doc.babylonjs.com/divingDeeper/mesh/transforms/center_origin/rotation_conventions
+   */
+  public toEulerAnglesToRef(result: Vector3): Quaternion {
+    const qz = this._z;
+    const qx = this._x;
+    const qy = this._y;
+    const qw = this._w;
 
-  //         const zAxisY = qy * qz - qx * qw;
-  //         const limit = 0.4999999;
+    const zAxisY = qy * qz - qx * qw;
+    const limit = 0.4999999;
 
-  //         if (zAxisY < -limit) {
-  //             result.y = 2 * Math.atan2(qy, qw);
-  //             result.x = Math.PI / 2;
-  //             result.z = 0;
-  //         } else if (zAxisY > limit) {
-  //             result.y = 2 * Math.atan2(qy, qw);
-  //             result.x = -Math.PI / 2;
-  //             result.z = 0;
-  //         } else {
-  //             const sqw = qw * qw;
-  //             const sqz = qz * qz;
-  //             const sqx = qx * qx;
-  //             const sqy = qy * qy;
-  //             result.z = Math.atan2(2.0 * (qx * qy + qz * qw), -sqz - sqx + sqy + sqw);
-  //             result.x = Math.asin(-2.0 * zAxisY);
-  //             result.y = Math.atan2(2.0 * (qz * qx + qy * qw), sqz - sqx - sqy + sqw);
-  //         }
+    if (zAxisY < -limit) {
+      result.y = 2 * Math.atan2(qy, qw);
+      result.x = Math.PI / 2;
+      result.z = 0;
+    } else if (zAxisY > limit) {
+      result.y = 2 * Math.atan2(qy, qw);
+      result.x = -Math.PI / 2;
+      result.z = 0;
+    } else {
+      const sqw = qw * qw;
+      const sqz = qz * qz;
+      const sqx = qx * qx;
+      const sqy = qy * qy;
+      result.z = Math.atan2(2.0 * (qx * qy + qz * qw), -sqz - sqx + sqy + sqw);
+      result.x = Math.asin(-2.0 * zAxisY);
+      result.y = Math.atan2(2.0 * (qz * qx + qy * qw), sqz - sqx - sqy + sqw);
+    }
 
-  //         return this;
-  //     }
+    return this;
+  }
 
-  //     /**
-  //      * Updates the given rotation matrix with the current quaternion values
-  //      * @param result defines the target matrix
-  //      * @returns the current unchanged quaternion
-  //      */
-  //     public toRotationMatrix(result: Matrix): Quaternion {
-  //         Matrix.FromQuaternionToRef(this, result);
-  //         return this;
-  //     }
+  /**
+   * Updates the given rotation matrix with the current quaternion values
+   * @param result defines the target matrix
+   * @returns the current unchanged quaternion
+   */
+  public toRotationMatrix(result: Matrix): Quaternion {
+    Matrix.FromQuaternionToRef(this, result);
+    return this;
+  }
 
   //     /**
   //      * Updates the current quaternion from the given rotation matrix values
@@ -644,13 +646,13 @@ export class Quaternion {
   //         Quaternion.SlerpToRef(source, goal, slerp, result);
   //     }
 
-  //     /**
-  //      * Creates an empty quaternion
-  //      * @returns a new quaternion set to (0.0, 0.0, 0.0)
-  //      */
-  //     public static Zero(): Quaternion {
-  //         return new Quaternion(0.0, 0.0, 0.0, 0.0);
-  //     }
+  /**
+   * Creates an empty quaternion
+   * @returns a new quaternion set to (0.0, 0.0, 0.0)
+   */
+  public static Zero(): Quaternion {
+    return new Quaternion(0.0, 0.0, 0.0, 0.0);
+  }
 
   //     /**
   //      * Inverse a given quaternion
@@ -672,13 +674,13 @@ export class Quaternion {
   //         return result;
   //     }
 
-  //     /**
-  //      * Creates an identity quaternion
-  //      * @returns the identity quaternion
-  //      */
-  //     public static Identity(): Quaternion {
-  //         return new Quaternion(0.0, 0.0, 0.0, 1.0);
-  //     }
+  /**
+   * Creates an identity quaternion
+   * @returns the identity quaternion
+   */
+  public static Identity(): Quaternion {
+    return new Quaternion(0.0, 0.0, 0.0, 1.0);
+  }
 
   //     /**
   //      * Gets a boolean indicating if the given quaternion is identity
@@ -814,44 +816,53 @@ export class Quaternion {
   //         return result.normalize();
   //     }
 
-  //     /**
-  //      * Creates a new quaternion from the given Euler float angles (y, x, z)
-  //      * @param yaw defines the rotation around Y axis
-  //      * @param pitch defines the rotation around X axis
-  //      * @param roll defines the rotation around Z axis
-  //      * @returns the new quaternion
-  //      */
-  //     public static RotationYawPitchRoll(yaw: number, pitch: number, roll: number): Quaternion {
-  //         const q = new Quaternion();
-  //         Quaternion.RotationYawPitchRollToRef(yaw, pitch, roll, q);
-  //         return q;
-  //     }
+  /**
+   * Creates a new quaternion from the given Euler float angles (y, x, z)
+   * @param yaw defines the rotation around Y axis
+   * @param pitch defines the rotation around X axis
+   * @param roll defines the rotation around Z axis
+   * @returns the new quaternion
+   */
+  public static RotationYawPitchRoll(
+    yaw: number,
+    pitch: number,
+    roll: number
+  ): Quaternion {
+    const q = new Quaternion();
+    Quaternion.RotationYawPitchRollToRef(yaw, pitch, roll, q);
+    return q;
+  }
 
-  //     /**
-  //      * Creates a new rotation from the given Euler float angles (y, x, z) and stores it in the target quaternion
-  //      * @param yaw defines the rotation around Y axis
-  //      * @param pitch defines the rotation around X axis
-  //      * @param roll defines the rotation around Z axis
-  //      * @param result defines the target quaternion
-  //      */
-  //     public static RotationYawPitchRollToRef(yaw: number, pitch: number, roll: number, result: Quaternion): void {
-  //         // Produces a quaternion from Euler angles in the z-y-x orientation (Tait-Bryan angles)
-  //         const halfRoll = roll * 0.5;
-  //         const halfPitch = pitch * 0.5;
-  //         const halfYaw = yaw * 0.5;
+  /**
+   * Creates a new rotation from the given Euler float angles (y, x, z) and stores it in the target quaternion
+   * @param yaw defines the rotation around Y axis
+   * @param pitch defines the rotation around X axis
+   * @param roll defines the rotation around Z axis
+   * @param result defines the target quaternion
+   */
+  public static RotationYawPitchRollToRef(
+    yaw: number,
+    pitch: number,
+    roll: number,
+    result: Quaternion
+  ): void {
+    // Produces a quaternion from Euler angles in the z-y-x orientation (Tait-Bryan angles)
+    const halfRoll = roll * 0.5;
+    const halfPitch = pitch * 0.5;
+    const halfYaw = yaw * 0.5;
 
-  //         const sinRoll = Math.sin(halfRoll);
-  //         const cosRoll = Math.cos(halfRoll);
-  //         const sinPitch = Math.sin(halfPitch);
-  //         const cosPitch = Math.cos(halfPitch);
-  //         const sinYaw = Math.sin(halfYaw);
-  //         const cosYaw = Math.cos(halfYaw);
+    const sinRoll = Math.sin(halfRoll);
+    const cosRoll = Math.cos(halfRoll);
+    const sinPitch = Math.sin(halfPitch);
+    const cosPitch = Math.cos(halfPitch);
+    const sinYaw = Math.sin(halfYaw);
+    const cosYaw = Math.cos(halfYaw);
 
-  //         result.x = cosYaw * sinPitch * cosRoll + sinYaw * cosPitch * sinRoll;
-  //         result.y = sinYaw * cosPitch * cosRoll - cosYaw * sinPitch * sinRoll;
-  //         result.z = cosYaw * cosPitch * sinRoll - sinYaw * sinPitch * cosRoll;
-  //         result.w = cosYaw * cosPitch * cosRoll + sinYaw * sinPitch * sinRoll;
-  //     }
+    result.x = cosYaw * sinPitch * cosRoll + sinYaw * cosPitch * sinRoll;
+    result.y = sinYaw * cosPitch * cosRoll - cosYaw * sinPitch * sinRoll;
+    result.z = cosYaw * cosPitch * sinRoll - sinYaw * sinPitch * cosRoll;
+    result.w = cosYaw * cosPitch * cosRoll + sinYaw * sinPitch * sinRoll;
+  }
 
   //     /**
   //      * Creates a new quaternion from the given Euler float angles expressed in z-x-z orientation

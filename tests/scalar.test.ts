@@ -5,6 +5,22 @@ import * as BABYLON from 'babylonjs';
 import { getRandomFloat } from './utils';
 
 describe('Scalar', () => {
+  it('ToDegrees', () => {
+    const value1 = Scalar.ToDegrees(Math.PI / 2);
+    expect(value1).toBe(90);
+
+    const value2 = Scalar.ToDegrees(Math.PI);
+    expect(value2).toBe(180);
+  });
+
+  it('ToRadians', () => {
+    const value1 = Scalar.ToRadians(90);
+    expect(value1).toBe(Math.PI / 2);
+
+    const value2 = Scalar.ToRadians(180);
+    expect(value2).toBe(Math.PI);
+  });
+
   it('RandomRange', () => {
     for (let i = 0; i < 10; ++i) {
       const min = getRandomFloat();
@@ -15,6 +31,7 @@ describe('Scalar', () => {
       expect(value).toBeLessThan(max);
     }
   });
+
   it('Clamp', () => {
     for (let i = 0; i < 10; ++i) {
       const value1 = BABYLON.Scalar.RandomRange(

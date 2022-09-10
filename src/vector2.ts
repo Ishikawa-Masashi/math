@@ -406,6 +406,7 @@ export class Vector2 {
   //     public fract(): Vector2 {
   //         return new Vector2(this.x - Math.floor(this.x), this.y - Math.floor(this.y));
   //     }
+
   /**
    * Rotate the current vector into a given result vector
    * @param angle defines the rotation angle

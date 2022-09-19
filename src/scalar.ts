@@ -7,6 +7,13 @@ export class Scalar {
    */
   public static TwoPi: number = Math.PI * 2;
 
+  /**
+   * Converts radians to degrees.
+   *
+   * @method ToDegrees
+   * @param {Number} radians The angle in radians.
+   * @return {Number} The angle in degrees.
+   */
   public static ToDegrees(radians: number) {
     // Factor = 180 / pi
     // return radians * 57.295779513082320876798154814105;
@@ -19,6 +26,17 @@ export class Scalar {
     return (degrees * Math.PI) / 180;
   }
 
+  /**
+   * Returns a modulo value which is always positive.
+   *
+   * @method mod
+   * @param {Number} value number
+   * @param {Number} n The divisor
+   * @return {Number} A modulo value
+   */
+  public static mod(value: number, n: number) {
+    return ((value % n) + n) % n;
+  }
   /**
    * Boolean : true if the absolute difference between a and b is lower than epsilon (default = 1.401298E-45)
    * @param a number

@@ -20,6 +20,15 @@ export class Scalar {
     return (radians * 180) / Math.PI;
   }
 
+  /// <summary>
+  /// Converts degrees to radians.
+  /// </summary>
+  /// <param name="degrees">The angle in degrees.</param>
+  /// <returns>The angle in radians.</returns>
+  /// <remarks>
+  /// This method uses double precision internally, though it returns single float.
+  /// Factor = pi / 180
+  /// </remarks>
   public static ToRadians(degrees: number) {
     // Factor = pi / 180
     // return degrees * 0.017453292519943295769236907684886;

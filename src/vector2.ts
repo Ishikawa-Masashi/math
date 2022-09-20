@@ -643,6 +643,19 @@ export class Vector2 {
    * @returns the dot product (float)
    */
   public static dot(
+    left: ReadonlyVector2Like,
+    right: ReadonlyVector2Like
+  ): number {
+    return left.x * right.x + left.y * right.y;
+  }
+
+  /**
+   * Gets the dot product of the vector "left" and the vector "right"
+   * @param left defines first vector
+   * @param right defines second vector
+   * @returns the dot product (float)
+   */
+  public static Dot(
     left: DeepImmutable<Vector2>,
     right: DeepImmutable<Vector2>
   ): number {

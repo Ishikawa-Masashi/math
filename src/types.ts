@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-interface */
 /* eslint-disable @typescript-eslint/naming-convention */
 /** Alias type for value that can be null */
 export type Nullable<T> = T | null;

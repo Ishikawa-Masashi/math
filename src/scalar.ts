@@ -1,3 +1,6 @@
+/** Factor to convert radians to degrees. */
+const RAD_TO_DEG = 180 / Math.PI;
+
 /**
  * Scalar computation library
  */
@@ -33,6 +36,47 @@ export class Scalar {
     // Factor = pi / 180
     // return degrees * 0.017453292519943295769236907684886;
     return (degrees * Math.PI) / 180;
+  }
+
+  /**
+   * Converts degrees to radians.
+   *
+   * @param degrees - The value in degrees to convert to radians.
+   * @return The given value converted to radians.
+   */
+  public static radians(degrees: number): number {
+    return degrees / RAD_TO_DEG;
+  }
+
+  /**
+   * Converts radians to degrees.
+   *
+   * @param radians - The value in radians to convert to degrees.
+   * @return The given value converted to degrees.
+   */
+  public static degrees(radians: number): number {
+    return radians * RAD_TO_DEG;
+  }
+
+  /**
+   * Normalizes an angle in radians so it is between 0 (inclusive) and 2*PI (exclusive).
+   *
+   * @param angle - The angle to normalize.
+   * @return The normalized angle.
+   */
+  normalizeRadians(angle: number): number {
+    const pi2 = Math.PI * 2;
+    return ((angle % pi2) + pi2) % pi2;
+  }
+
+  /**
+   * Normalizes an angle in degrees so it is between 0 (inclusive) and 360 (exclusive).
+   *
+   * @param degrees - The angle to normalize.
+   * @return The normalized angle.
+   */
+  normalizeDegrees(degrees: number): number {
+    return ((degrees % 360) + 360) % 360;
   }
 
   /**

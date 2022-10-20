@@ -983,18 +983,23 @@ export class Vector3 {
     return Vector3.FromArray(array, offset);
   }
 
-  //     /**
-  //      * Sets the given vector "result" with the element values from the index "offset" of the given array
-  //      * Example Playground https://playground.babylonjs.com/#R1F8YU#84
-  //      * @param array defines the source array
-  //      * @param offset defines the offset in the source array
-  //      * @param result defines the Vector3 where to store the result
-  //      */
-  //     public static FromArrayToRef(array: DeepImmutable<ArrayLike<number>>, offset: number, result: Vector3): void {
-  //         result.x = array[offset];
-  //         result.y = array[offset + 1];
-  //         result.z = array[offset + 2];
-  //     }
+  /**
+   * Sets the given vector "result" with the element values from the index "offset" of the given array
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#84
+   * @param array defines the source array
+   * @param offset defines the offset in the source array
+   * @param result defines the Vector3 where to store the result
+   */
+  public static FromArrayToRef(
+    array: DeepImmutable<ArrayLike<number>>,
+    offset: number,
+    result: Vector3
+  ): void {
+    result.x = array[offset];
+    result.y = array[offset + 1];
+    result.z = array[offset + 2];
+  }
+
   //     /**
   //      * Sets the given vector "result" with the element values from the index "offset" of the given Float32Array
   //      * @param array defines the source array
@@ -1169,19 +1174,22 @@ export class Vector3 {
   //         result.z = rz * rw;
   //     }
 
-      /**
-       * Returns a new Vector3 set with the result of the normal transformation by the given matrix of the given vector
-       * This methods computes transformed normalized direction vectors only (ie. it does not apply translation)
-       * Example Playground https://playground.babylonjs.com/#R1F8YU#112
-       * @param vector defines the Vector3 to transform
-       * @param transformation defines the transformation matrix
-       * @returns the new Vector3
-       */
-      public static TransformNormal(vector: DeepImmutable<Vector3>, transformation: DeepImmutable<Matrix>): Vector3 {
-          const result = Vector3.Zero();
-          Vector3.TransformNormalToRef(vector, transformation, result);
-          return result;
-      }
+  /**
+   * Returns a new Vector3 set with the result of the normal transformation by the given matrix of the given vector
+   * This methods computes transformed normalized direction vectors only (ie. it does not apply translation)
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#112
+   * @param vector defines the Vector3 to transform
+   * @param transformation defines the transformation matrix
+   * @returns the new Vector3
+   */
+  public static TransformNormal(
+    vector: DeepImmutable<Vector3>,
+    transformation: DeepImmutable<Matrix>
+  ): Vector3 {
+    const result = Vector3.Zero();
+    Vector3.TransformNormalToRef(vector, transformation, result);
+    return result;
+  }
 
   /**
    * Sets the given vector "result" with the result of the normal transformation by the given matrix of the given vector

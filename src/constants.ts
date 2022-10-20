@@ -25,3 +25,6 @@ export const PHI = (1 + Math.sqrt(5)) / 2;
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export const Epsilon = 0.001;
 export const EPSILON = 0.001;
+
+/** Factor to convert radians to degrees. */
+export const RAD_TO_DEG = 180 / Math.PI;

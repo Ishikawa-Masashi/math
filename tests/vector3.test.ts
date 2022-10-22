@@ -21,6 +21,7 @@ describe('Vector3', () => {
       const d = new BABYLON.Vector3(b.x, b.y, b.z);
       const value2 = c.add(d);
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       expect(value1.equals(value2 as any)).toBeTruthy();
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       expect(value2.equals(value1 as any)).toBeTruthy();

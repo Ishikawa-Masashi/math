@@ -32,6 +32,7 @@ export class Geometry2DFunctions {
   //         }
   //         return -(numer / denom);
   //     }
+
   // given a plane and a ray this function determins how far along the ray
   // an interestion occurs. Returns negative if the ray is parallel
   public static distanceToRayPlaneIntersection(

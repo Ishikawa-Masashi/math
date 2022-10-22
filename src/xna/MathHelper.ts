@@ -1,6 +1,4 @@
-﻿import Overload from '../Core/Overload.js';
-
-class MathHelper {
+﻿class MathHelper {
   /**
    * 呈现数学常量 e。
    * @static

@@ -1,86 +1,21 @@
-﻿import Overload from '../Core/Overload.js';
-import Object from '../Core/Object.js';
-import MathHelper from './MathHelper.js';
-import Vector2 from './Vector2.js';
-import Vector3 from './Vector3.js';
-import Quaternion from './Quaternion.js';
+﻿import MathHelper from './MathHelper';
+import { Vector2 } from './Vector2';
+import { Vector3 } from './Vector3';
+import Quaternion from './Quaternion';
 import { Matrix } from './Matrix';
-import TypeList from '../Core/TypeList.js';
+// import TypeList from '../Core/TypeList.js';
 
-class Vector4 extends Object {
-  constructor(...args) {
-    super();
-
-    window.Object.defineProperties(this, {
-      X: {
-        get: () => {
-          return this._getPrivateVar('_x');
-        },
-        set: Overload.Create().Add([Number], (value) => {
-          this._setPrivateVar('_x', value);
-        }),
-      },
-      Y: {
-        get: () => {
-          return this._getPrivateVar('_y');
-        },
-        set: Overload.Create().Add([Number], (value) => {
-          this._setPrivateVar('_y', value);
-        }),
-      },
-      Z: {
-        get: () => {
-          return this._getPrivateVar('_z');
-        },
-        set: Overload.Create().Add([Number], (value) => {
-          this._setPrivateVar('_z', value);
-        }),
-      },
-      W: {
-        get: () => {
-          return this._getPrivateVar('_w');
-        },
-        set: Overload.Create().Add([Number], (value) => {
-          this._setPrivateVar('_w', value);
-        }),
-      },
-    });
-
-    (
-      Vector4.prototype.constructor._init ||
-      (Vector4.prototype.constructor._init = Overload.Create()
-        .Add([], function () {
-          this.X = 0;
-          this.Y = 0;
-          this.Z = 0;
-          this.W = 0;
-        })
-        .Add([Number], function (value) {
-          this.X = value;
-          this.Y = value;
-          this.Z = value;
-          this.W = value;
-        })
-        .Add([Number, Number, Number, Number], function (x, y, z, w) {
-          this.X = x;
-          this.Y = y;
-          this.Z = z;
-          this.W = w;
-        })
-        .Add([Vector2, Number, Number], function (value, z, w) {
-          this.X = value.X;
-          this.Y = value.Y;
-          this.Z = z;
-          this.W = w;
-        })
-        .Add([Vector3, Number], function (value, w) {
-          this.X = value.X;
-          this.Y = value.Y;
-          this.Z = value.Z;
-          this.W = w;
-        }))
-    ).call(this, ...args);
-  }
+export class Vector4 {
+  /**
+   * 初始化新的 Vector4 实例。
+   * @constructs
+   * @param {Number} x 矢量 x 色差的初始值。
+   * @param {Number} y 矢量 y 色差的初始值。
+   * @param {Number} z 矢量 z 色差的初始值。
+   * @param {Number} w 矢量 w 色差的初始值。
+   * @returns {Vector4}
+   */
+  constructor(public X = 0, public Y = 0, public Z = 0, public W = 0) {}
 
   static get One() {
     return new Vector4(1, 1, 1, 1);
@@ -734,5 +669,3 @@ class Vector4 extends Object {
       })).call(this, ...args);
   }
 }
-
-export default Vector4;

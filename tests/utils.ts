@@ -1,4 +1,4 @@
-import { Vector2 } from '../src';
+import { Matrix, Vector2 } from '../src';
 import { Vector3 } from '../src';
 import { Scalar } from '../src';
 import { ArrayTools } from '../src';
@@ -54,5 +54,29 @@ export function getRandomVector3(
     Scalar.RandomRange(min, max),
     Scalar.RandomRange(min, max),
     Scalar.RandomRange(min, max)
+  );
+}
+
+export function getRandomMatrix() {
+  return new Matrix(
+    getRandomFloat(),
+    getRandomFloat(),
+    getRandomFloat(),
+    getRandomFloat(),
+
+    getRandomFloat(),
+    getRandomFloat(),
+    getRandomFloat(),
+    getRandomFloat(),
+
+    getRandomFloat(),
+    getRandomFloat(),
+    getRandomFloat(),
+    getRandomFloat(),
+
+    getRandomFloat(),
+    getRandomFloat(),
+    getRandomFloat(),
+    getRandomFloat()
   );
 }

@@ -1,7 +1,7 @@
-﻿import MathHelper from './MathHelper.js';
-import Vector3 from './Vector3.js';
+﻿import MathHelper from './MathHelper';
+import { Vector3 } from './Vector3';
 import BoundingSphere from './BoundingSphere.js';
-import Plane from './Plane.js';
+import Plane from './Plane';
 import BoundingFrustum from './BoundingFrustum.js';
 import BoundingBox from './BoundingBox.js';
 

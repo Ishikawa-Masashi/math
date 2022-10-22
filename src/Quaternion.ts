@@ -1,9 +1,9 @@
 ﻿import MathHelper from './MathHelper';
-import Vector2 from './Vector2';
-import Vector3 from './Vector3';
-import Matrix from './Matrix';
+import { Vector2 } from './Vector2';
+import { Vector3 } from './Vector3';
+import { Matrix } from './Matrix';
 
-class Quaternion {
+export class Quaternion {
   /**
    * 初始化新的 Quaternion 实例。
    * @constructs
@@ -224,19 +224,18 @@ class Quaternion {
     )).call(this, ...args);
   }
 
-  Equals(...args) {
-    return (Quaternion.prototype.Equals = Overload.Create()
-      .Add([Quaternion], function (obj) {
-        return (
-          this.X == obj.X &&
-          this.Y == obj.Y &&
-          this.Z == obj.Z &&
-          this.W == obj.W
-        );
-      })
-      .Add(['*'], function () {
-        return false;
-      })).call(this, ...args);
+  /**
+   * 确定指定的 Object 是否等于 Quaternion。
+   * @param {Quaternion} other 用于与当前 Quaternion 比较的 Quaternion。
+   * @returns {Boolean}
+   */
+  Equals(other: Quaternion) {
+    return (
+      this.X == other.X &&
+      this.Y == other.Y &&
+      this.Z == other.Z &&
+      this.W == other.W
+    );
   }
 
   GetHashCode(...args) {
@@ -505,5 +504,3 @@ class Quaternion {
       })).call(this, ...args);
   }
 }
-
-export default Quaternion;

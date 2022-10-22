@@ -1,15 +1,13 @@
-﻿import Overload from '../Core/Overload.js';
-import Object from '../Core/Object.js';
-import MathHelper from './MathHelper.js';
-import Vector3 from './Vector3.js';
-import ContainmentType from './ContainmentType.js';
-import BoundingFrustum from './BoundingFrustum.js';
-import BoundingBox from './BoundingBox.js';
-import Ray from './Ray.js';
-import Plane from './Plane.js';
-import PlaneIntersectionType from './PlaneIntersectionType.js';
-import Matrix from './Matrix.js';
-import TypeList from '../Core/TypeList.js';
+﻿import MathHelper from './MathHelper';
+import { Vector3 } from './Vector3';
+// import ContainmentType from './ContainmentType';
+import BoundingFrustum from './BoundingFrustum';
+import BoundingBox from './BoundingBox';
+import Ray from './Ray';
+import Plane from './Plane';
+import PlaneIntersectionType from './PlaneIntersectionType';
+import { Matrix } from './Matrix';
+// import TypeList from '../Core/TypeList.js';
 
 class BoundingSphere extends Object {
   constructor(...args) {

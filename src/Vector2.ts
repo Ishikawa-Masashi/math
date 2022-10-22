@@ -1,12 +1,10 @@
-﻿import Overload from '../Core/Overload.js';
-import Object from '../Core/Object.js';
-import MathHelper from './MathHelper.js';
-import Vector3 from './Vector3.js';
-import Quaternion from './Quaternion.js';
-import Matrix from './Matrix.js';
-import TypeList from '../Core/TypeList.js';
+﻿import MathHelper from './MathHelper';
+import { Vector3 } from './Vector3';
+import Quaternion from './Quaternion';
+import { Matrix } from './Matrix';
+// import TypeList from '../Core/TypeList.js';
 
-class Vector2 extends Object {
+export class Vector2 {
   /**
    * 初始化新的 Vector2 实例。
    * @constructs
@@ -14,9 +12,7 @@ class Vector2 extends Object {
    * @param {Number} y 矢量 y 色差的初始值。
    * @returns {Vector2}
    */
-  constructor(public X: number, public Y: number) {
-    super();
-  }
+  constructor(public X = 0, public Y = 0) {}
 
   /**
    * 返回两个组件均设置为一的 Vector2。
@@ -600,5 +596,3 @@ class Vector2 extends Object {
       })).call(this, ...args);
   }
 }
-
-export default Vector2;

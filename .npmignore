@@ -8,6 +8,9 @@
 .npmignore
 package-lock.json
 
+
+.prettierrc
+
 README.md
 tsconfig.json
 vite.config.ts

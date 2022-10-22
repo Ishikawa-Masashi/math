@@ -5,6 +5,6 @@ describe('Quaternion', () => {
   it('初期化テスト', () => {
     const a = new Quaternion();
     const b = Quaternion.Identity();
-    expect(a.equalsWithEpsilon(b)).toBeTruthy();
+    expect(a.equals(b)).toBeTruthy();
   });
 });

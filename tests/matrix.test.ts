@@ -19,7 +19,7 @@ describe('Matrix', () => {
     const d = BABYLON.Matrix.FromArray(b.m);
     const value2 = c.add(d);
 
-    expect(value1.equals(value2)).toBe(true);
+    expect(value1.equals(value2 as any)).toBe(true);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     expect(value2.equals(value1 as any)).toBe(true);
   });
@@ -33,7 +33,7 @@ describe('Matrix', () => {
     const d = BABYLON.Matrix.FromArray(b.m);
     const value2 = c.multiply(d);
 
-    expect(value1.equals(value2)).toBe(true);
+    expect(value1.equals(value2 as any)).toBe(true);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     expect(value2.equals(value1 as any)).toBe(true);
   });

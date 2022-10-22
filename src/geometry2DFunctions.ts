@@ -2,7 +2,8 @@
 // package sg.games.football.geom;
 
 import { ReadonlyVector2Like } from './like';
-import { Vector2 } from './vector2';
+import { Vector2 } from './math.vector';
+import { DeepImmutable } from './types';
 
 // import static sg.games.football.geom.Vector2D.*;
 // import static sg.games.football.geom.Utils.*;
@@ -34,19 +35,19 @@ export class Geometry2DFunctions {
   // given a plane and a ray this function determins how far along the ray
   // an interestion occurs. Returns negative if the ray is parallel
   public static distanceToRayPlaneIntersection(
-    RayOrigin: ReadonlyVector2Like,
-    RayHeading: ReadonlyVector2Like,
-    PlanePoint: ReadonlyVector2Like, //any point on the plane
-    PlaneNormal: ReadonlyVector2Like
+    RayOrigin: DeepImmutable<Vector2>,
+    RayHeading: DeepImmutable<Vector2>,
+    PlanePoint: DeepImmutable<Vector2>, //any point on the plane
+    PlaneNormal: DeepImmutable<Vector2>
   ) {
     //         double d = -PlaneNormal.dot(PlanePoint);
-    const d = -Vector2.dot(PlaneNormal, PlanePoint);
+    const d = -Vector2.Dot(PlaneNormal, PlanePoint);
 
     //         double numer = PlaneNormal.dot(RayOrigin) + d;
-    const numer = Vector2.dot(PlaneNormal, RayOrigin) + d;
+    const numer = Vector2.Dot(PlaneNormal, RayOrigin) + d;
 
     //         double denom = PlaneNormal.dot(RayHeading);
-    const denom = Vector2.dot(PlaneNormal, RayHeading);
+    const denom = Vector2.Dot(PlaneNormal, RayHeading);
 
     // normal is parallel to vector
     if (denom < 0.000001 && denom > -0.000001) {

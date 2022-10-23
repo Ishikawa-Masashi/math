@@ -1,6 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import { Matrix } from '../src';
-import { getRandomArray } from './utils';
+import {
+  getArrayFromMatrix,
+  getRandomArray,
+  getRandomFloat,
+  getRandomMatrix,
+  getRandomMatrixFromArray,
+} from './utils';
 import * as BABYLON from 'babylonjs';
 
 describe('Matrix', () => {
@@ -10,31 +16,47 @@ describe('Matrix', () => {
     expect(a.Equals(zero)).toBe(true);
   });
 
-  // it('add', () => {
-  //   const a = Matrix.FromArray(getRandomArray(16));
-  //   const b = Matrix.FromArray(getRandomArray(16));
-  //   const value1 = a.add(b);
+  it('Add', () => {
+    const array1 = getRandomArray(16);
+    const array2 = getRandomArray(16);
+    const a = getRandomMatrixFromArray(array1);
+    const b = getRandomMatrixFromArray(array2);
+    const value1 = Matrix.Add(a, b);
 
-  //   const c = BABYLON.Matrix.FromArray(a.m);
-  //   const d = BABYLON.Matrix.FromArray(b.m);
-  //   const value2 = c.add(d);
+    const c = BABYLON.Matrix.FromArray(array1);
+    const d = BABYLON.Matrix.FromArray(array2);
+    const value2 = c.add(d);
+    expect(
+      value2.equals(BABYLON.Matrix.FromArray(getArrayFromMatrix(value1)))
+    ).toBe(true);
+  });
 
-  //   expect(value1.equals(value2 as any)).toBe(true);
-  //   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  //   expect(value2.equals(value1 as any)).toBe(true);
-  // });
+  it('Multiply', () => {
+    const array1 = getRandomArray(16);
+    const array2 = getRandomArray(16);
+    const a = getRandomMatrixFromArray(array1);
+    const b = getRandomMatrixFromArray(array2);
+    const value1 = Matrix.Multiply(a, b);
 
-  // it('multiply', () => {
-  //   const a = Matrix.FromArray(getRandomArray(16));
-  //   const b = Matrix.FromArray(getRandomArray(16));
-  //   const value1 = a.multiply(b);
+    const c = BABYLON.Matrix.FromArray(array1);
+    const d = BABYLON.Matrix.FromArray(array2);
+    const value2 = c.multiply(d);
 
-  //   const c = BABYLON.Matrix.FromArray(a.m);
-  //   const d = BABYLON.Matrix.FromArray(b.m);
-  //   const value2 = c.multiply(d);
+    expect(
+      value2.equals(BABYLON.Matrix.FromArray(getArrayFromMatrix(value1)))
+    ).toBe(true);
+  });
 
-  //   expect(value1.equals(value2 as any)).toBe(true);
-  //   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  //   expect(value2.equals(value1 as any)).toBe(true);
-  // });
+  it('CreateRotationX', () => {
+    const array1 = getRandomArray(16);
+    const array2 = getRandomArray(16);
+    const angle = getRandomFloat();
+    const matrix1 = Matrix.CreateRotationX(angle);
+
+    const matrix2 = BABYLON.Matrix.RotationX(angle);
+
+    expect(
+      matrix2.equals(BABYLON.Matrix.FromArray(getArrayFromMatrix(matrix1)))
+    ).toBe(true);
+  });
 });

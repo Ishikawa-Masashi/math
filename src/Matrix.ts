@@ -1,7 +1,7 @@
 ﻿import MathHelper from './MathHelper';
-import Vector2 from './Vector2';
+import { Vector2 } from './Vector2';
 import { Vector3 } from './Vector3';
-import Quaternion from './Quaternion';
+import { Quaternion } from './Quaternion';
 import Plane from './Plane';
 
 export class Matrix {

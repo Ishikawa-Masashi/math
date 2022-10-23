@@ -8,14 +8,29 @@
     return 2.71828175;
   }
 
+  /**
+   * 呈现以 10 为底 e 的对数。
+   * @static
+   * @returns {Number}
+   */
   static get Log10E() {
     return 0.4342945;
   }
 
+  /**
+   * 呈现以 2 为底 e 的对数。
+   * @static
+   * @returns {Number}
+   */
   static get Log2E() {
     return 1.442695;
   }
 
+  /**
+   * 呈现 pi 的值。
+   * @static
+   * @returns {Number}
+   */
   static get Pi() {
     return 3.14159274;
   }

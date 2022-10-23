@@ -569,30 +569,4 @@ export class Vector2 {
         }
       )).call(this, ...args);
   }
-
-  Serialize(...args) {
-    const superSerialize = super.Serialize;
-    return (Vector2.prototype.Serialize = Overload.Create().Add(
-      [String],
-      function () {
-        return superSerialize.call(this, {
-          X: this.X,
-          Y: this.Y,
-        });
-      }
-    )).call(this, ...args);
-  }
-
-  static Deserialize(...args) {
-    return (Vector2.Deserialize = Overload.Create()
-      .Add([String], function (str) {
-        return this.Deserialize(JSON.parse(str));
-      })
-      .Add([window.Object], function (obj) {
-        if (obj['Symbol'] !== Vector2.name) {
-          throw new TypeError('Unrecognized type');
-        }
-        return new Vector2(obj.X, obj.Y);
-      })).call(this, ...args);
-  }
 }

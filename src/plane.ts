@@ -1,12 +1,12 @@
-﻿import MathHelper from './MathHelper';
+﻿import { MathHelper } from './MathHelper';
 import { Vector3 } from './Vector3';
-import Vector4 from './Vector4';
+import { Vector4 } from './Vector4';
 import { Matrix } from './Matrix';
-import Quaternion from './Quaternion';
+import { Quaternion } from './Quaternion';
 import BoundingSphere from './BoundingSphere';
 import BoundingFrustum from './BoundingFrustum';
 import BoundingBox from './BoundingBox';
-import PlaneIntersectionType from './PlaneIntersectionType';
+import { PlaneIntersectionType } from './PlaneIntersectionType';
 
 class Plane extends Object {
   /**

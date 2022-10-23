@@ -1,4 +1,4 @@
-import type { float, int, DeepImmutable } from './types';
+import type { float } from './types';
 
 /**
  * @hidden
@@ -105,10 +105,6 @@ export type ReadonlyVector2Like = {
 /**
  * @hidden
  */
-export interface IMatrixLike {
-  toArray(): DeepImmutable<Float32Array | Array<number>>;
-  updateFlag: int;
-}
 
 export type ReadonlyMatrixLike = { readonly m: ArrayLike<number> };
 

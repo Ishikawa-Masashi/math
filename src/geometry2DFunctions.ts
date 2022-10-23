@@ -3,7 +3,6 @@
 
 import { ReadonlyVector2Like } from './like';
 import { Vector2 } from './Vector2';
-import { DeepImmutable } from './types';
 
 // import static sg.games.football.geom.Vector2D.*;
 // import static sg.games.football.geom.Utils.*;
@@ -35,11 +34,11 @@ export class Geometry2DFunctions {
 
   // given a plane and a ray this function determins how far along the ray
   // an interestion occurs. Returns negative if the ray is parallel
-  public static distanceToRayPlaneIntersection(
-    RayOrigin: DeepImmutable<Vector2>,
-    RayHeading: DeepImmutable<Vector2>,
-    PlanePoint: DeepImmutable<Vector2>, //any point on the plane
-    PlaneNormal: DeepImmutable<Vector2>
+  public static distan(
+    RayOrigin: Vector2,
+    RayHeading: Vector2,
+    PlanePoint: Vector2, //any point on the plane
+    PlaneNormal: Vector2
   ) {
     //         double d = -PlaneNormal.dot(PlanePoint);
     const d = -Vector2.Dot(PlaneNormal, PlanePoint);

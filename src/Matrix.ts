@@ -1,8 +1,8 @@
-﻿import MathHelper from './MathHelper';
+﻿import { MathHelper } from './MathHelper';
 import { Vector2 } from './Vector2';
 import { Vector3 } from './Vector3';
 import { Quaternion } from './Quaternion';
-import Plane from './Plane';
+import { Plane } from './Plane';
 
 export class Matrix {
   /**
@@ -573,15 +573,15 @@ export class Matrix {
     const result = new Matrix();
 
     if (nearPlaneDistance <= 0) {
-      throw new TypeError(new Error('nearPlaneDistance <= 0'));
+      throw new TypeError('nearPlaneDistance <= 0');
     }
 
     if (farPlaneDistance <= 0) {
-      throw new TypeError(new Error('farPlaneDistance <= 0'));
+      throw new TypeError('farPlaneDistance <= 0');
     }
 
     if (nearPlaneDistance >= farPlaneDistance) {
-      throw new TypeError(new Error('nearPlaneDistance >= farPlaneDistance'));
+      throw new TypeError('nearPlaneDistance >= farPlaneDistance');
     }
 
     result.M11 = (2 * nearPlaneDistance) / width;
@@ -616,19 +616,19 @@ export class Matrix {
     const result = new Matrix();
 
     if (fieldOfView <= 0 || fieldOfView >= 3.141593) {
-      throw new TypeError(new Error('fieldOfView <= 0 or >= PI'));
+      throw new TypeError('fieldOfView <= 0 or >= PI');
     }
 
     if (nearPlaneDistance <= 0) {
-      throw new TypeError(new Error('nearPlaneDistance <= 0'));
+      throw new TypeError('nearPlaneDistance <= 0');
     }
 
     if (farPlaneDistance <= 0) {
-      throw new TypeError(new Error('farPlaneDistance <= 0'));
+      throw new TypeError('farPlaneDistance <= 0');
     }
 
     if (nearPlaneDistance >= farPlaneDistance) {
-      throw new TypeError(new Error('nearPlaneDistance >= farPlaneDistance'));
+      throw new TypeError('nearPlaneDistance >= farPlaneDistance');
     }
 
     const num = 1 / Math.tan(fieldOfView * 0.5);
@@ -669,15 +669,15 @@ export class Matrix {
     const result = new Matrix();
 
     if (nearPlaneDistance <= 0) {
-      throw new TypeError(new Error('nearPlaneDistance <= 0'));
+      throw new TypeError('nearPlaneDistance <= 0');
     }
 
     if (farPlaneDistance <= 0) {
-      throw new TypeError(new Error('farPlaneDistance <= 0'));
+      throw new TypeError('farPlaneDistance <= 0');
     }
 
     if (nearPlaneDistance >= farPlaneDistance) {
-      throw new TypeError(new Error('nearPlaneDistance >= farPlaneDistance'));
+      throw new TypeError('nearPlaneDistance >= farPlaneDistance');
     }
 
     result.M11 = (2 * nearPlaneDistance) / (right - left);

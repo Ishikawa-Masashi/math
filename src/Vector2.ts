@@ -1,6 +1,6 @@
-﻿import MathHelper from './MathHelper';
+﻿import { MathHelper } from './MathHelper';
 import { Vector3 } from './Vector3';
-import Quaternion from './Quaternion';
+import { Quaternion } from './Quaternion';
 import { Matrix } from './Matrix';
 // import TypeList from '../Core/TypeList.js';
 
@@ -107,466 +107,273 @@ export class Vector2 {
     );
   }
 
-  static Clamp(...args) {
-    return (Vector2.Clamp = Overload.Create().Add(
-      [Vector2, Vector2, Vector2],
-      function (value1, min, max) {
-        return new Vector2(
-          MathHelper.Clamp(value1.X, min.X, max.X),
-          MathHelper.Clamp(value1.Y, min.Y, max.Y)
-        );
-      }
-    )).call(this, ...args);
+  /**
+   * 将值限制在指定范围内。
+   * @static
+   * @param {Vector2} value1 要限制的值。
+   * @param {Vector2} min 最小值。
+   * @param {Vector2} max 最大值。
+   * @returns {Vector2}
+   */
+  static Clamp(value1: Vector2, min: Vector2, max: Vector2) {
+    return new Vector2(
+      MathHelper.Clamp(value1.X, min.X, max.X),
+      MathHelper.Clamp(value1.Y, min.Y, max.Y)
+    );
   }
 
-  static Distance(...args) {
-    return (Vector2.Distance = Overload.Create().Add(
-      [Vector2, Vector2],
-      function (value1, value2) {
-        const v1 = value1.X - value2.X;
-        const v2 = value1.Y - value2.Y;
-        return Math.sqrt(v1 * v1 + v2 * v2);
-      }
-    )).call(this, ...args);
+  /**
+   * 计算两个矢量之间的距离。
+   * @static
+   * @param {Vector2} value1 源矢量。
+   * @param {Vector2} value2 源矢量。
+   * @returns {Number}
+   */
+  static Distance(value1: Vector2, value2: Vector2) {
+    const v1 = value1.X - value2.X;
+    const v2 = value1.Y - value2.Y;
+    return Math.sqrt(v1 * v1 + v2 * v2);
+  }
+  /**
+   * 计算两个平方矢量之间的距离。
+   * @static
+   * @param {Vector2} value1 源矢量。
+   * @param {Vector2} value2 源矢量。
+   * @returns {Number}
+   */
+  static DistanceSquared(value1: Vector2, value2: Vector2) {
+    const v1 = value1.X - value2.X;
+    const v2 = value1.Y - value2.Y;
+    return v1 * v1 + v2 * v2;
   }
 
-  static DistanceSquared(...args) {
-    return (Vector2.DistanceSquared = Overload.Create().Add(
-      [Vector2, Vector2],
-      function (value1, value2) {
-        const v1 = value1.X - value2.X;
-        const v2 = value1.Y - value2.Y;
-        return v1 * v1 + v2 * v2;
-      }
-    )).call(this, ...args);
+  /**
+   * 用一个矢量除以一个标量值。
+   * @static
+   * @param {Vector2} value1 源矢量。
+   * @param {Number} divider 除数。
+   * @returns {Vector2}
+   */
+  static Divide(value1: Vector2, divider: number) {
+    const factor = 1 / divider;
+    return new Vector2(value1.X * factor, value1.Y * factor);
   }
 
-  static Divide(...args) {
-    return (Vector2.Divide = Overload.Create()
-      .Add([Vector2, Number], function (value1, divider) {
-        const factor = 1 / divider;
-        return new Vector2(value1.X * factor, value1.Y * factor);
-      })
-      .Add([Vector2, Vector2], function (value1, value2) {
-        return new Vector2(value1.X / value2.X, value1.Y / value2.Y);
-      })).call(this, ...args);
+  /**
+   * 计算两个矢量的点积。如果两个矢量均为单位矢量，则点积返回 -1 到 1 之间的浮点值，该值可以用来确定两个矢量之间的角度的一些性质。例如，它可以显示这些矢量是正交、平行，还是互为锐角或钝角。
+   * @static
+   * @param {Vector2} value1 源矢量。
+   * @param {Vector2} value2 源矢量。
+   * @returns {Number}
+   */
+  static Dot(value1: Vector2, value2: Vector2) {
+    return value1.X * value2.X + value1.Y * value2.Y;
   }
 
-  static Dot(...args) {
-    return (Vector2.Dot = Overload.Create().Add(
-      [Vector2, Vector2],
-      function (value1, value2) {
-        return value1.X * value2.X + value1.Y * value2.Y;
-      }
-    )).call(this, ...args);
+  /**
+   * 确定指定的 Object 是否等于 Vector2。
+   * @param {Vector2} other 用于与当前 Vector2 比较的 Object。
+   * @returns {Boolean}
+   */
+  Equals(other: Vector2) {
+    return (
+      Math.abs(this.X - other.X) < 1e-6 && Math.abs(this.Y - other.Y) < 1e-6
+    );
   }
 
-  Equals(...args) {
-    return (Vector2.prototype.Equals = Overload.Create()
-      .Add([Vector2], function (obj) {
-        return (
-          Math.abs(this.X - obj.X) < 1e-6 && Math.abs(this.Y - obj.Y) < 1e-6
-        );
-      })
-      .Add(['*'], function () {
-        return false;
-      })).call(this, ...args);
+  GetHashCode() {
+    return (this.X * 397) ^ this.Y;
   }
 
-  GetHashCode(...args) {
-    return (Vector2.prototype.GetHashCode = Overload.Create().Add(
-      [],
-      function () {
-        return (this.X * 397) ^ this.Y;
-      }
-    )).call(this, ...args);
+  /**
+   * 执行 Hermite 样条插值。
+   * @static
+   * @param {Vector2} value1 源位置矢量。
+   * @param {Vector2} tangent1 源切线矢量。
+   * @param {Vector2} value2 源位置矢量。
+   * @param {Vector2} tangent2 源切线矢量。
+   * @param {Number} amount 权重因子。
+   * @returns {Vector2}
+   */
+  static Hermite(
+    value1: Vector2,
+    tangent1: Vector2,
+    value2: Vector2,
+    tangent2: Vector2,
+    amount: number
+  ) {
+    return new Vector2(
+      MathHelper.Hermite(value1.X, tangent1.X, value2.X, tangent2.X, amount),
+      MathHelper.Hermite(value1.Y, tangent1.Y, value2.Y, tangent2.Y, amount)
+    );
   }
 
-  static Hermite(...args) {
-    return (Vector2.Hermite = Overload.Create().Add(
-      [Vector2, Vector2, Vector2, Vector2, Number],
-      function (value1, tangent1, value2, tangent2, amount) {
-        return new Vector2(
-          MathHelper.Hermite(
-            value1.X,
-            tangent1.X,
-            value2.X,
-            tangent2.X,
-            amount
-          ),
-          MathHelper.Hermite(value1.Y, tangent1.Y, value2.Y, tangent2.Y, amount)
-        );
-      }
-    )).call(this, ...args);
+  /**
+   * 计算矢量的长度。
+   * @returns {Number}
+   */
+  Length() {
+    return Math.sqrt(this.X * this.X + this.Y * this.Y);
   }
 
-  Length(...args) {
-    return (Vector2.prototype.Length = Overload.Create().Add([], function () {
-      return Math.sqrt(this.X * this.X + this.Y * this.Y);
-    })).call(this, ...args);
+  /**
+   * 计算平方矢量的长度。
+   * @returns {Number}
+   */
+  LengthSquared() {
+    return this.X * this.X + this.Y * this.Y;
   }
 
-  LengthSquared(...args) {
-    return (Vector2.prototype.LengthSquared = Overload.Create().Add(
-      [],
-      function () {
-        return this.X * this.X + this.Y * this.Y;
-      }
-    )).call(this, ...args);
+  /**
+   * 在两个矢量之间执行线性插值。
+   * @static
+   * @param {Vector2} value1 源矢量。
+   * @param {Vector2} value2 源矢量。
+   * @param {Number} amount 指示 value2 权重的 0 到 1 之间的值。
+   * @returns {Vector2}
+   */
+  static Lerp(value1: Vector2, value2: Vector2, amount: number) {
+    return new Vector2(
+      MathHelper.Lerp(value1.X, value2.X, amount),
+      MathHelper.Lerp(value1.Y, value2.Y, amount)
+    );
   }
 
-  static Lerp(...args) {
-    return (Vector2.Lerp = Overload.Create().Add(
-      [Vector2, Vector2, Number],
-      function (value1, value2, amount) {
-        return new Vector2(
-          MathHelper.Lerp(value1.X, value2.X, amount),
-          MathHelper.Lerp(value1.Y, value2.Y, amount)
-        );
-      }
-    )).call(this, ...args);
+  /**
+   * 从每个匹配的组件对中返回包含最大值的矢量。
+   * @static
+   * @param {Vector2} value1 源矢量。
+   * @param {Vector2} value2 源矢量。
+   * @returns {Vector2}
+   */
+  static Max(value1: Vector2, value2: Vector2) {
+    return new Vector2(
+      value1.X > value2.X ? value1.X : value2.X,
+      value1.Y > value2.Y ? value1.Y : value2.Y
+    );
   }
 
-  static Max(...args) {
-    return (Vector2.Max = Overload.Create().Add(
-      [Vector2, Vector2],
-      function (value1, value2) {
-        return new Vector2(
-          value1.X > value2.X ? value1.X : value2.X,
-          value1.Y > value2.Y ? value1.Y : value2.Y
-        );
-      }
-    )).call(this, ...args);
+  /**
+   * 从每个匹配的组件对中返回包含最小值的矢量。
+   * @static
+   * @param {Vector2} value1 源矢量。
+   * @param {Vector2} value2 源矢量。
+   * @returns {Vector2}
+   */
+  static Min(value1: Vector2, value2: Vector2) {
+    return new Vector2(
+      value1.X < value2.X ? value1.X : value2.X,
+      value1.Y < value2.Y ? value1.Y : value2.Y
+    );
   }
 
-  static Min(...args) {
-    return (Vector2.Min = Overload.Create().Add(
-      [Vector2, Vector2],
-      function (value1, value2) {
-        return new Vector2(
-          value1.X < value2.X ? value1.X : value2.X,
-          value1.Y < value2.Y ? value1.Y : value2.Y
-        );
-      }
-    )).call(this, ...args);
+  /**
+   * 将一个矢量乘以一个标量值。
+   * @static
+   * @param {Vector2} value1 源矢量。
+   * @param {Number} scaleFactor 标量值。
+   * @returns {Vector2}
+   */
+  static Multiply(value1: Vector2, scaleFactor: number) {
+    return new Vector2(value1.X * scaleFactor, value1.Y * scaleFactor);
   }
 
-  static Multiply(...args) {
-    return (Vector2.Multiply = Overload.Create()
-      .Add([Vector2, Number], function (value1, scaleFactor) {
-        return new Vector2(value1.X * scaleFactor, value1.Y * scaleFactor);
-      })
-      .Add([Vector2, Vector2], function (value1, value2) {
-        return new Vector2(value1.X * value2.X, value1.Y * value2.Y);
-      })).call(this, ...args);
+  /**
+   * 返回指向反方向的矢量。
+   * @static
+   * @param {Vector2} value 源矢量。
+   * @returns {Vector2}
+   */
+  static Negate(value: Vector2) {
+    return new Vector2(-value.X, -value.Y);
   }
 
-  static Negate(...args) {
-    return (Vector2.Negate = Overload.Create().Add([Vector2], function (value) {
-      return new Vector2(-value.X, -value.Y);
-    })).call(this, ...args);
+  /**
+   * 根据指定的矢量创建单位矢量。结果是与原始矢量相同方向的长度矢量单位。
+   * @static
+   * @param {Vector2} value 源 Vector2。
+   * @return {Vector2}
+   */
+  static Normalize(value: Vector2) {
+    const val = 1.0 / Math.sqrt(value.X * value.X + value.Y * value.Y);
+    return new Vector2(value.X * val, value.Y * val);
   }
 
-  static Normalize(...args) {
-    return (Vector2.Normalize = Overload.Create().Add(
-      [Vector2],
-      function (value) {
-        const val = 1.0 / Math.sqrt(value.X * value.X + value.Y * value.Y);
-        return new Vector2(value.X * val, value.Y * val);
-      }
-    )).call(this, ...args);
+  /**
+   * 将当前矢量转为单位矢量。结果是与原始矢量相同方向的长度矢量单位。
+   */
+  Normalize() {
+    const val = 1 / Math.sqrt(this.X * this.X + this.Y * this.Y);
+    this.X *= val;
+    this.Y *= val;
   }
 
-  Normalize(...args) {
-    return (Vector2.prototype.Normalize = Overload.Create().Add(
-      [],
-      function () {
-        const val = 1 / Math.sqrt(this.X * this.X + this.Y * this.Y);
-        this.X *= val;
-        this.Y *= val;
-      }
-    )).call(this, ...args);
+  /**
+   * 确定给定矢量和法线的反射矢量。
+   * @static
+   * @param {Vector2} vector 源矢量。
+   * @param {Vector2} normal vector 的法线。
+   * @returns {Vector2}
+   */
+  static Reflect(vector: Vector2, normal: Vector2) {
+    const val = 2.0 * (vector.X * normal.X + vector.Y * normal.Y);
+    return new Vector2(vector.X - normal.X * val, vector.Y - normal.Y * val);
   }
 
-  static Reflect(...args) {
-    return (Vector2.Reflect = Overload.Create().Add(
-      [Vector2, Vector2],
-      function (vector, normal) {
-        const val = 2.0 * (vector.X * normal.X + vector.Y * normal.Y);
-        return new Vector2(
-          vector.X - normal.X * val,
-          vector.Y - normal.Y * val
-        );
-      }
-    )).call(this, ...args);
+  /**
+   * 使用三次方程计算两个值之间的插值。
+   * @static
+   * @param {Vector2} value1 源值。
+   * @param {Vector2} value2 源值。
+   * @param {Number} amount 权重值。
+   * @returns {Vector2}
+   */
+  static SmoothStep(value1: Vector2, value2: Vector2, amount: number) {
+    return new Vector2(
+      MathHelper.SmoothStep(value1.X, value2.X, amount),
+      MathHelper.SmoothStep(value1.Y, value2.Y, amount)
+    );
   }
 
-  static SmoothStep(...args) {
-    return (Vector2.SmoothStep = Overload.Create().Add(
-      [Vector2, Vector2, Number],
-      function (value1, value2, amount) {
-        return new Vector2(
-          MathHelper.SmoothStep(value1.X, value2.X, amount),
-          MathHelper.SmoothStep(value1.Y, value2.Y, amount)
-        );
-      }
-    )).call(this, ...args);
+  /**
+   * 将一个矢量减去一个矢量。
+   * @static
+   * @param {Vector2} value1 源矢量。
+   * @param {Vector2} value2 源矢量。
+   * @returns {Vector2}
+   */
+  static Subtract(value1: Vector2, value2: Vector2) {
+    return new Vector2(value1.X - value2.X, value1.Y - value2.Y);
   }
 
-  static Subtract(...args) {
-    return (Vector2.Subtract = Overload.Create().Add(
-      [Vector2, Vector2],
-      function (value1, value2) {
-        return new Vector2(value1.X - value2.X, value1.Y - value2.Y);
-      }
-    )).call(this, ...args);
+  ToString() {
+    return `{X:${this.X} Y:${this.Y}}`;
   }
 
-  ToString(...args) {
-    return (Vector2.prototype.ToString = Overload.Create().Add([], function () {
-      return `{X:${this.X} Y:${this.Y}}`;
-    })).call(this, ...args);
+  /**
+   * 通过指定矩阵变换矢量 (x, y, 0, 1)。
+   * @static
+   * @param {Vector2} position 源矢量。
+   * @param {Matrix} matrix 变换矩阵。
+   * @returns {Vector2}
+   */
+  static Transform(position: Vector2, matrix: Matrix) {
+    const x = position.X * matrix.M11 + position.Y * matrix.M21 + matrix.M41;
+    const y = position.X * matrix.M12 + position.Y * matrix.M22 + matrix.M42;
+    return new Vector2(x, y);
   }
 
-  static Transform(...args) {
-    return (Vector2.Transform = Overload.Create()
-      .Add([Vector2, Matrix], function (position, matrix) {
-        const x =
-          position.X * matrix.M11 + position.Y * matrix.M21 + matrix.M41;
-        const y =
-          position.X * matrix.M12 + position.Y * matrix.M22 + matrix.M42;
-        return new Vector2(x, y);
-      })
-      .Add([Vector2, Quaternion], function (value, rotation) {
-        const rot1 = new Vector3(
-          rotation.X + rotation.X,
-          rotation.Y + rotation.Y,
-          rotation.Z + rotation.Z
-        );
-        const rot2 = new Vector3(rotation.X, rotation.X, rotation.W);
-        const rot3 = new Vector3(1, rotation.Y, rotation.Z);
-        const rot4 = Vector3.Multiply(rot1, rot2);
-        const rot5 = Vector3.Multiply(rot1, rot3);
-
-        const v = new Vector2();
-        v.X = value.X * (1.0 - rot5.Y - rot5.Z) + value.Y * (rot4.Y - rot4.Z);
-        v.Y = value.X * (rot4.Y + rot4.Z) + value.Y * (1.0 - rot4.X - rot5.Z);
-        return v;
-      })
-      .Add(
-        [
-          TypeList.T(Vector2),
-          Number,
-          Matrix,
-          TypeList.T(Vector2),
-          Number,
-          Number,
-        ],
-        function (
-          sourceArray,
-          sourceIndex,
-          matrix,
-          destinationArray,
-          destinationIndex,
-          length
-        ) {
-          if (sourceArray == null) {
-            throw new TypeError(new Error('sourceArray'));
-          }
-
-          if (destinationArray == null) {
-            throw new TypeError(new Error('destinationArray'));
-          }
-
-          if (sourceArray.Length < sourceIndex + length) {
-            throw new TypeError(
-              new Error(
-                'Source array length is lesser than sourceIndex + length'
-              )
-            );
-          }
-
-          if (destinationArray.Length < destinationIndex + length) {
-            throw new TypeError(
-              new Error(
-                'Destination array length is lesser than destinationIndex + length'
-              )
-            );
-          }
-
-          for (let i = 0; i < destinationArray.Length; i++) {
-            destinationArray[i] = destinationArray[i] || Vector2.Zero;
-          }
-
-          for (let x = 0; x < length; x++) {
-            const position = sourceArray[sourceIndex + x];
-            const destination = destinationArray[destinationIndex + x];
-            destination.X =
-              position.X * matrix.M11 + position.Y * matrix.M21 + matrix.M41;
-            destination.Y =
-              position.X * matrix.M12 + position.Y * matrix.M22 + matrix.M42;
-          }
-        }
-      )
-      .Add(
-        [
-          TypeList.T(Vector2),
-          Number,
-          Quaternion,
-          TypeList.T(Vector2),
-          Number,
-          Number,
-        ],
-        function (
-          sourceArray,
-          sourceIndex,
-          rotation,
-          destinationArray,
-          destinationIndex,
-          length
-        ) {
-          if (sourceArray == null) {
-            throw new TypeError(new Error('sourceArray'));
-          }
-
-          if (destinationArray == null) {
-            throw new TypeError(new Error('destinationArray'));
-          }
-
-          if (sourceArray.Length < sourceIndex + length) {
-            throw new TypeError(
-              new Error(
-                'Source array length is lesser than sourceIndex + length'
-              )
-            );
-          }
-
-          if (destinationArray.Length < destinationIndex + length) {
-            throw new TypeError(
-              new Error(
-                'Destination array length is lesser than destinationIndex + length'
-              )
-            );
-          }
-
-          for (let i = 0; i < destinationArray.Length; i++) {
-            destinationArray[i] = destinationArray[i] || Vector2.Zero;
-          }
-
-          for (let x = 0; x < length; x++) {
-            const position = sourceArray[sourceIndex + x];
-            const destination = destinationArray[destinationIndex + x];
-
-            const v = Vector2.Transform(position, rotation);
-
-            destination.X = v.X;
-            destination.Y = v.Y;
-          }
-        }
-      )
-      .Add(
-        [TypeList.T(Vector2), Matrix, TypeList.T(Vector2)],
-        function (sourceArray, matrix, destinationArray) {
-          Vector2.Transform(
-            sourceArray,
-            0,
-            matrix,
-            destinationArray,
-            0,
-            sourceArray.Length
-          );
-        }
-      )
-      .Add(
-        [TypeList.T(Vector2), Quaternion, TypeList.T(Vector2)],
-        function (sourceArray, rotation, destinationArray) {
-          Vector2.Transform(
-            sourceArray,
-            0,
-            rotation,
-            destinationArray,
-            0,
-            sourceArray.Length
-          );
-        }
-      )).call(this, ...args);
-  }
-
-  static TransformNormal(...args) {
-    return (Vector2.TransformNormal = Overload.Create()
-      .Add([Vector2, Matrix], function (normal, matrix) {
-        return new Vector2(
-          normal.X * matrix.M11 + normal.Y * matrix.M21,
-          normal.X * matrix.M12 + normal.Y * matrix.M22
-        );
-      })
-      .Add(
-        [
-          TypeList.T(Vector2),
-          Number,
-          Matrix,
-          TypeList.T(Vector2),
-          Number,
-          Number,
-        ],
-        function (
-          sourceArray,
-          sourceIndex,
-          matrix,
-          destinationArray,
-          destinationIndex,
-          length
-        ) {
-          if (sourceArray == null) {
-            throw new TypeError(new Error('sourceArray'));
-          }
-
-          if (destinationArray == null) {
-            throw new TypeError(new Error('destinationArray'));
-          }
-
-          if (sourceArray.Length < sourceIndex + length) {
-            throw new TypeError(
-              new Error(
-                'Source array length is lesser than sourceIndex + length'
-              )
-            );
-          }
-
-          if (destinationArray.Length < destinationIndex + length) {
-            throw new TypeError(
-              new Error(
-                'Destination array length is lesser than destinationIndex + length'
-              )
-            );
-          }
-
-          for (let i = 0; i < destinationArray.Length; i++) {
-            destinationArray[i] = destinationArray[i] || Vector2.Zero;
-          }
-
-          for (let i = 0; i < length; i++) {
-            const normal = sourceArray[sourceIndex + i];
-
-            destinationArray[destinationIndex + i] = new Vector2(
-              normal.X * matrix.M11 + normal.Y * matrix.M21,
-              normal.X * matrix.M12 + normal.Y * matrix.M22
-            );
-          }
-        }
-      )
-      .Add(
-        [TypeList.T(Vector2), Matrix, TypeList.T(Vector2)],
-        function (sourceArray, matrix, destinationArray) {
-          Vector2.TransformNormal(
-            sourceArray,
-            0,
-            matrix,
-            destinationArray,
-            0,
-            sourceArray.Length
-          );
-        }
-      )).call(this, ...args);
+  /**
+   * 通过矩阵变换 2D 矢量法线。
+   * @static
+   * @param {Vector2} normal 源矢量。
+   * @param {Matrix} matrix 变换矩阵。
+   * @returns {Vector2}
+   */
+  static TransformNormal(normal: Vector2, matrix: Matrix) {
+    return new Vector2(
+      normal.X * matrix.M11 + normal.Y * matrix.M21,
+      normal.X * matrix.M12 + normal.Y * matrix.M22
+    );
   }
 }

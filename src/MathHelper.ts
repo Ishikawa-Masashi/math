@@ -103,7 +103,7 @@
    * @param {Number} max 最大值。如果 value 大于 max，将返回 max。
    * @returns {Number}
    */
-  static Clamp(value: number, min: number, max: number) {
+  static Clamp(value: number, min = 0, max = 1) {
     return Math.min(max, Math.max(min, value));
     // return Math.max(min, Math.min(max, value));
   }

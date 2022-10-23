@@ -640,32 +640,4 @@ export class Vector4 {
         );
       })).call(this, ...args);
   }
-
-  Serialize(...args) {
-    const superSerialize = super.Serialize;
-    return (Vector4.prototype.Serialize = Overload.Create().Add(
-      [String],
-      function () {
-        return superSerialize.call(this, {
-          X: this.X,
-          Y: this.Y,
-          Z: this.Z,
-          W: this.W,
-        });
-      }
-    )).call(this, ...args);
-  }
-
-  static Deserialize(...args) {
-    return (Vector4.Deserialize = Overload.Create()
-      .Add([String], function (str) {
-        return this.Deserialize(JSON.parse(str));
-      })
-      .Add([window.Object], function (obj) {
-        if (obj['Symbol'] !== Vector4.name) {
-          throw new TypeError('Unrecognized type');
-        }
-        return new Vector4(obj.X, obj.Y, obj.Z, obj.W);
-      })).call(this, ...args);
-  }
 }

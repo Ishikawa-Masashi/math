@@ -20,17 +20,6 @@ describe('MathHelper', () => {
     expect(value2).toBe(Math.PI);
   });
 
-  // it('RandomRange', () => {
-  //   for (let i = 0; i < 10; ++i) {
-  //     const min = getRandomFloat();
-  //     const max = getRandomFloat(min);
-
-  //     const value = Scalar.RandomRange(min, max);
-  //     expect(value).toBeGreaterThanOrEqual(min);
-  //     expect(value).toBeLessThan(max);
-  //   }
-  // });
-
   it('Clamp', () => {
     const value1 = BABYLON.Scalar.RandomRange(
       Number.MIN_VALUE,

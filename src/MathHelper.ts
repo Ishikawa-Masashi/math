@@ -190,9 +190,9 @@
   /**
    * 返回两个值中较小值。
    * @static
-   * @param {Number} value1 源值。
-   * @param {Number} value2 源值。
-   * @returns {Number}
+   * @param {number} value1 源值。
+   * @param {number} value2 源值。
+   * @returns {number}
    */
   static Min(value1: number, value2: number) {
     return Math.min(value1, value2);

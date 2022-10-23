@@ -1,6 +1,4 @@
 ﻿import { MathHelper } from './MathHelper';
-import { Vector2 } from './Vector2';
-import { Quaternion } from './Quaternion';
 import { Matrix } from './Matrix';
 
 export class Vector3 {

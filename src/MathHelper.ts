@@ -104,7 +104,8 @@
    * @returns {Number}
    */
   static Clamp(value: number, min: number, max: number) {
-    return Math.max(min, Math.min(max, value));
+    return Math.min(max, Math.max(min, value));
+    // return Math.max(min, Math.min(max, value));
   }
 
   /**

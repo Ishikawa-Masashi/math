@@ -9,6 +9,18 @@ import {
 } from './utils';
 import * as BABYLON from 'babylonjs';
 
+function equalsWithEpsilon(
+  matrix1: Matrix,
+  matrix2: BABYLON.Matrix,
+  epsilon = 1e-6
+) {
+  const array1 = getArrayFromMatrix(matrix1);
+  const array2 = matrix2.m;
+  for (let i = 0; i < array1.length; ++i) {
+    expect(Math.abs(array1[i] - array2[i]) < epsilon).toBeTruthy();
+  }
+}
+
 describe('Matrix', () => {
   it('初期化テスト', () => {
     const a = new Matrix();
@@ -47,6 +59,19 @@ describe('Matrix', () => {
     ).toBe(true);
   });
 
+  it('Invert', () => {
+    const array1 = getRandomArray(16);
+
+    const angle = getRandomFloat();
+    const a = Matrix.CreateRotationX(angle);
+    const b = Matrix.Invert(a);
+
+    const c = BABYLON.Matrix.FromArray(getArrayFromMatrix(a));
+    c.invert();
+
+    equalsWithEpsilon(b, c);
+  });
+
   it('CreateRotationX', () => {
     const angle = getRandomFloat();
     const matrix1 = Matrix.CreateRotationX(angle);
@@ -63,6 +88,17 @@ describe('Matrix', () => {
     const matrix1 = Matrix.CreateRotationY(angle);
 
     const matrix2 = BABYLON.Matrix.RotationY(angle);
+
+    expect(
+      matrix2.equals(BABYLON.Matrix.FromArray(getArrayFromMatrix(matrix1)))
+    ).toBeTruthy();
+  });
+
+  it('CreateRotationZ', () => {
+    const angle = getRandomFloat();
+    const matrix1 = Matrix.CreateRotationZ(angle);
+
+    const matrix2 = BABYLON.Matrix.RotationZ(angle);
 
     expect(
       matrix2.equals(BABYLON.Matrix.FromArray(getArrayFromMatrix(matrix1)))

@@ -9,6 +9,9 @@
 // import Plane from './Plane.js';
 // import TypeList from '../Core/TypeList.js';
 
+import { Matrix } from './Matrix';
+import { Plane } from './Plane';
+
 // function createPlanes() {
 //   const planes = this._getPrivateVar('_planes');
 //   const matrix = this._getPrivateVar('_matrix');
@@ -96,6 +99,8 @@
 // }
 
 export class BoundingFrustum {
+  private _planes: Plane[] = [];
+  private _matrix = new Matrix();
   // constructor(...args) {
   //   super();
   //   window.Object.defineProperties(this, {

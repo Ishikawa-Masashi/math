@@ -1,4 +1,4 @@
-﻿class MathHelper {
+﻿export class MathHelper {
   /**
    * 呈现数学常量 e。
    * @static
@@ -258,5 +258,3 @@
     return angle;
   }
 }
-
-export default MathHelper;

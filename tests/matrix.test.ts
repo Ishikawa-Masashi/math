@@ -57,4 +57,15 @@ describe('Matrix', () => {
       matrix2.equals(BABYLON.Matrix.FromArray(getArrayFromMatrix(matrix1)))
     ).toBe(true);
   });
+
+  it('CreateRotationY', () => {
+    const angle = getRandomFloat();
+    const matrix1 = Matrix.CreateRotationY(angle);
+
+    const matrix2 = BABYLON.Matrix.RotationY(angle);
+
+    expect(
+      matrix2.equals(BABYLON.Matrix.FromArray(getArrayFromMatrix(matrix1)))
+    ).toBeTruthy();
+  });
 });

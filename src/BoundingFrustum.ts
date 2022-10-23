@@ -132,12 +132,15 @@ export class BoundingFrustum {
   //     ))
   //   ).call(this, ...args);
   // }
-  // static get PlaneCount() {
-  //   return 6;
-  // }
-  // static get CornerCount() {
-  //   return 8;
-  // }
+
+  static get PlaneCount() {
+    return 6;
+  }
+
+  static get CornerCount() {
+    return 8;
+  }
+
   // get Near() {
   //   return this._getPrivateVar('_planes')[0];
   // }

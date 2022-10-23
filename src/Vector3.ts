@@ -1,6 +1,6 @@
 ﻿import MathHelper from './MathHelper';
-import Vector2 from './Vector2';
-import Quaternion from './Quaternion';
+import { Vector2 } from './Vector2';
+import { Quaternion } from './Quaternion';
 import { Matrix } from './Matrix';
 
 export class Vector3 {
@@ -14,46 +14,101 @@ export class Vector3 {
    */
   constructor(public X = 0, public Y = 0, public Z = 0) {}
 
+  /**
+   * 返回所有组件为一体的 Vector3。
+   * @static
+   * @returns {Vector3}
+   */
   static get One() {
     return new Vector3(1, 1, 1);
   }
 
+  /**
+   * 返回 x 单位 Vector3 (1, 0, 0)。
+   * @static
+   * @returns {Vector3}
+   */
   static get UnitX() {
     return new Vector3(1, 0, 0);
   }
 
+  /**
+   * 返回 y 单位 Vector3 (0, 1, 0)。
+   * @static
+   * @returns {Vector3}
+   */
   static get UnitY() {
     return new Vector3(0, 1, 0);
   }
 
+  /**
+   * 返回 z 单位 Vector3 (0, 0, 1)。
+   * @static
+   * @returns {Vector3}
+   */
   static get UnitZ() {
     return new Vector3(0, 0, 1);
   }
 
+  /**
+   * 返回所有组件均设置为零的 Vector3。
+   * @static
+   * @returns {Vector3}
+   */
   static get Zero() {
     return new Vector3(0, 0, 0);
   }
 
+  /**
+   * 返回一个指定向上方向 (0, 1, 0) 的单位矢量。
+   * @static
+   * @returns {Vector3}
+   */
   static get Up() {
     return new Vector3(0, 1, 0);
   }
 
+  /**
+   * 返回指向右侧 (1, 0, 0) 的单位 Vector3。
+   * @static
+   * @returns {Vector3}
+   */
   static get Right() {
     return new Vector3(1, 0, 0);
   }
 
+  /**
+   * 返回指定向左方向 (−1, 0, 0) 的单位 Vector3。
+   * @static
+   * @returns {Vector3}
+   */
   static get Left() {
     return new Vector3(-1, 0, 0);
   }
 
+  /**
+   * 返回在右手坐标系 (0, 0,−1) 中指定向前方向的单位 Vector3。
+   * @static
+   * @returns {Vector3}
+   */
   static get Forward() {
     return new Vector3(0, 0, -1);
   }
 
+  /**
+   * 返回指定向下方向 (0, −1, 0) 的单位 Vector3。
+   * @static
+   * @returns {Vector3}
+   */
   static get Down() {
     return new Vector3(0, -1, 0);
   }
 
+  /**
+   * 返回在右手坐标系 (0, 0, 1) 中指定向后方向的单位 Vector3。
+   * @static
+   * @returns {Vector3}
+   */
   static get Backward() {
     return new Vector3(0, 0, 1);
   }
@@ -434,118 +489,20 @@ export class Vector3 {
     return new Vector3(x, y, z);
   }
 
-  static TransformNormal(...args) {
-    return (Vector3.TransformNormal = Overload.Create()
-      .Add([Vector3, Matrix], function (normal, matrix) {
-        const x =
-          normal.X * matrix.M11 + normal.Y * matrix.M21 + normal.Z * matrix.M31;
-        const y =
-          normal.X * matrix.M12 + normal.Y * matrix.M22 + normal.Z * matrix.M32;
-        const z =
-          normal.X * matrix.M13 + normal.Y * matrix.M23 + normal.Z * matrix.M33;
-        return new Vector3(x, y, z);
-      })
-      .Add(
-        [
-          TypeList.T(Vector3),
-          Number,
-          Matrix,
-          TypeList.T(Vector3),
-          Number,
-          Number,
-        ],
-        function (
-          sourceArray,
-          sourceIndex,
-          matrix,
-          destinationArray,
-          destinationIndex,
-          length
-        ) {
-          if (sourceArray == null) {
-            throw new TypeError(new Error('sourceArray'));
-          }
-
-          if (destinationArray == null) {
-            throw new TypeError(new Error('destinationArray'));
-          }
-
-          if (sourceArray.Length < sourceIndex + length) {
-            throw new TypeError(
-              new Error(
-                'Source array length is lesser than sourceIndex + length'
-              )
-            );
-          }
-
-          if (destinationArray.Length < destinationIndex + length) {
-            throw new TypeError(
-              new Error(
-                'Destination array length is lesser than destinationIndex + length'
-              )
-            );
-          }
-
-          for (let i = 0; i < destinationArray.Length; i++) {
-            destinationArray[i] = destinationArray[i] || Vector3.Zero;
-          }
-
-          for (let i = 0; i < length; i++) {
-            const normal = sourceArray[sourceIndex + x];
-
-            destinationArray[destinationIndex + x] = new Vector3(
-              normal.X * matrix.M11 +
-                normal.Y * matrix.M21 +
-                normal.Z * matrix.M31,
-              normal.X * matrix.M12 +
-                normal.Y * matrix.M22 +
-                normal.Z * matrix.M32,
-              normal.X * matrix.M13 +
-                normal.Y * matrix.M23 +
-                normal.Z * matrix.M33
-            );
-          }
-        }
-      )
-      .Add(
-        [TypeList.T(Vector3), Matrix, TypeList.T(Vector3)],
-        function (sourceArray, matrix, destinationArray) {
-          Vector3.TransformNormal(
-            sourceArray,
-            0,
-            matrix,
-            destinationArray,
-            0,
-            sourceArray.Length
-          );
-        }
-      )).call(this, ...args);
-  }
-
-  Serialize(...args) {
-    const superSerialize = super.Serialize;
-    return (Vector3.prototype.Serialize = Overload.Create().Add(
-      [String],
-      function () {
-        return superSerialize.call(this, {
-          X: this.X,
-          Y: this.Y,
-          Z: this.Z,
-        });
-      }
-    )).call(this, ...args);
-  }
-
-  static Deserialize(...args) {
-    return (Vector3.Deserialize = Overload.Create()
-      .Add([String], function (str) {
-        return this.Deserialize(JSON.parse(str));
-      })
-      .Add([window.Object], function (obj) {
-        if (obj['Symbol'] !== Vector3.name) {
-          throw new TypeError('Unrecognized type');
-        }
-        return new Vector3(obj.X, obj.Y, obj.Z);
-      })).call(this, ...args);
+  /**
+   * 通过矩阵变换 3D 矢量法线。
+   * @static
+   * @param {Vector3} normal 源矢量。
+   * @param {Matrix} matrix 变换矩阵。
+   * @returns {Vector3}
+   */
+  static TransformNormal(normal: Vector3, matrix: Matrix) {
+    const x =
+      normal.X * matrix.M11 + normal.Y * matrix.M21 + normal.Z * matrix.M31;
+    const y =
+      normal.X * matrix.M12 + normal.Y * matrix.M22 + normal.Z * matrix.M32;
+    const z =
+      normal.X * matrix.M13 + normal.Y * matrix.M23 + normal.Z * matrix.M33;
+    return new Vector3(x, y, z);
   }
 }

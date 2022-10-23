@@ -1024,7 +1024,7 @@ export class Matrix {
    * @param {Number} divider 除数。
    * @returns {Matrix}
    */
-  static Divide(matrix1: Matrix, divider: Number) {
+  static Divide(matrix1: Matrix, divider: number) {
     const result = new Matrix();
     const num = 1 / divider;
     result.M11 = matrix1.M11 * num;

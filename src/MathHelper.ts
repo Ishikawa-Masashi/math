@@ -135,12 +135,12 @@
     tangent2: number,
     amount: number
   ) {
-    let v1 = value1,
-      v2 = value2,
-      t1 = tangent1,
-      t2 = tangent2,
-      s = amount,
-      result;
+    const v1 = value1;
+    const v2 = value2;
+    const t1 = tangent1;
+    const t2 = tangent2;
+    const s = amount;
+    let result;
     const sCubed = s * s * s;
     const sSquared = s * s;
 
@@ -219,7 +219,8 @@
    * @returns {Number}
    */
   static ToDegrees(radians: number) {
-    return radians * 57.295779513082320876798154814105;
+    return (radians * 180) / Math.PI;
+    // return radians * 57.295779513082320876798154814105;
   }
 
   /**
@@ -229,7 +230,8 @@
    * @returns {Number}
    */
   static ToRadians(degrees: number) {
-    return degrees * 0.017453292519943295769236907684886;
+    return (degrees * Math.PI) / 180;
+    // return degrees * 0.017453292519943295769236907684886;
   }
 
   /**

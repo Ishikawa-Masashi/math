@@ -147,7 +147,7 @@ class BoundingBox extends Object {
       .Add([BoundingFrustum], function (frustum) {
         let i;
         let contained;
-        let corners = frustum.GetCorners();
+        const corners = frustum.GetCorners();
 
         for (i = 0; i < corners.length; i++) {
           contained = this.Contains(corners[i]);
@@ -195,8 +195,8 @@ class BoundingBox extends Object {
       [TypeList.T(Vector3)],
       function (points) {
         let empty = true;
-        let minVec = new Vector3(Number.MAX_VALUE);
-        let maxVec = new Vector3(Number.MIN_VALUE);
+        const minVec = new Vector3(Number.MAX_VALUE);
+        const maxVec = new Vector3(Number.MIN_VALUE);
 
         points.ForEach(function (ptVector, index) {
           minVec.X = minVec.X < ptVector.X ? minVec.X : ptVector.X;
@@ -223,8 +223,8 @@ class BoundingBox extends Object {
     return (BoundingBox.CreateFromSphere = Overload.Create().Add(
       [BoundingSphere],
       function (sphere) {
-        let result = new BoundingBox();
-        let corner = new Vector3(sphere.Radius);
+        const result = new BoundingBox();
+        const corner = new Vector3(sphere.Radius);
         result.Min = Vector3.Subtract(sphere.Center, corner);
         result.Max = Vector3.Add(sphere.Center, corner);
         return result;
@@ -236,7 +236,7 @@ class BoundingBox extends Object {
     return (BoundingBox.CreateMerged = Overload.Create().Add(
       [BoundingBox, BoundingBox],
       function (original, additional) {
-        let result = new BoundingBox();
+        const result = new BoundingBox();
         result.Min.X = Math.min(original.Min.X, additional.Min.X);
         result.Min.Y = Math.min(original.Min.Y, additional.Min.Y);
         result.Min.Z = Math.min(original.Min.Z, additional.Min.Z);
@@ -261,7 +261,7 @@ class BoundingBox extends Object {
   GetCorners(...args) {
     return (BoundingBox.prototype.GetCorners = Overload.Create()
       .Add([], function () {
-        let list = new TypeList(Vector3);
+        const list = new TypeList(Vector3);
         list.AddRange([
           new Vector3(this.Min.X, this.Max.Y, this.Max.Z),
           new Vector3(this.Max.X, this.Max.Y, this.Max.Z),
@@ -337,8 +337,8 @@ class BoundingBox extends Object {
         return ray.Intersects(this);
       })
       .Add([Plane], function (plane) {
-        let positiveVertex = new Vector3();
-        let negativeVertex = new Vector3();
+        const positiveVertex = new Vector3();
+        const negativeVertex = new Vector3();
 
         if (plane.Normal.X >= 0) {
           positiveVertex.X = this.Max.X;
@@ -417,8 +417,8 @@ class BoundingBox extends Object {
         if (obj['Symbol'] !== BoundingBox.name) {
           throw new TypeError('Unrecognized type');
         }
-        let min = Vector3.Deserialize(obj.Min);
-        let max = Vector3.Deserialize(obj.Max);
+        const min = Vector3.Deserialize(obj.Min);
+        const max = Vector3.Deserialize(obj.Max);
         return new BoundingBox(min, max);
       })).call(this, ...args);
   }

@@ -37,22 +37,22 @@ class Ray {
   Intersects(...args) {
     return (Ray.prototype.Intersects = Overload.Create()
       .Add([BoundingSphere], function (sphere) {
-        let difference = Vector3.Subtract(sphere.Center, this.Position);
+        const difference = Vector3.Subtract(sphere.Center, this.Position);
 
-        let differenceLengthSquared = difference.LengthSquared();
-        let sphereRadiusSquared = sphere.Radius * sphere.Radius;
+        const differenceLengthSquared = difference.LengthSquared();
+        const sphereRadiusSquared = sphere.Radius * sphere.Radius;
 
         if (differenceLengthSquared < sphereRadiusSquared) {
           return 0;
         }
 
-        let distanceAlongRay = Vector3.Dot(this.Direction, difference);
+        const distanceAlongRay = Vector3.Dot(this.Direction, difference);
 
         if (distanceAlongRay < 0) {
           return null;
         }
 
-        let dist =
+        const dist =
           sphereRadiusSquared +
           distanceAlongRay * distanceAlongRay -
           differenceLengthSquared;
@@ -67,19 +67,19 @@ class Ray {
         return frustum.Intersects(this);
       })
       .Add([BoundingBox], function (box) {
-        let Epsilon = 1e-6;
+        const Epsilon = 1e-6;
 
         let tMin = null;
         let tMax = null;
-        let positionX = this.Position.X;
-        let positionY = this.Position.Y;
-        let positionZ = this.Position.Z;
-        let directionX = this.Direction.X;
-        let directionY = this.Direction.Y;
-        let directionZ = this.Direction.Z;
+        const positionX = this.Position.X;
+        const positionY = this.Position.Y;
+        const positionZ = this.Position.Z;
+        const directionX = this.Direction.X;
+        const directionY = this.Direction.Y;
+        const directionZ = this.Direction.Z;
 
         if (Math.abs(directionX) < Epsilon) {
-          if (positionX < box.Min.X || positionX > box.Max.X) return null;
+          if (positionX < box.Min.X || positionX > box.Max.X) {return null;}
         } else {
           tMin = (box.Min.X - positionX) / directionX;
           tMax = (box.Max.X - positionX) / directionX;
@@ -92,10 +92,10 @@ class Ray {
         }
 
         if (Math.abs(directionY) < Epsilon) {
-          if (positionY < box.Min.Y || positionY > box.Max.Y) return null;
+          if (positionY < box.Min.Y || positionY > box.Max.Y) {return null;}
         } else {
-          var tMinY = (box.Min.Y - positionY) / directionY;
-          var tMaxY = (box.Max.Y - positionY) / directionY;
+          let tMinY = (box.Min.Y - positionY) / directionY;
+          let tMaxY = (box.Max.Y - positionY) / directionY;
 
           if (tMinY > tMaxY) {
             var temp = tMinY;
@@ -107,17 +107,17 @@ class Ray {
             (tMin !== null && tMin > tMaxY) ||
             (tMax !== null && tMinY > tMax)
           )
-            return null;
+            {return null;}
 
-          if (tMin === null || tMinY > tMin) tMin = tMinY;
-          if (tMax === null || tMaxY < tMax) tMax = tMaxY;
+          if (tMin === null || tMinY > tMin) {tMin = tMinY;}
+          if (tMax === null || tMaxY < tMax) {tMax = tMaxY;}
         }
 
         if (Math.abs(directionZ) < Epsilon) {
-          if (positionZ < box.Min.Z || positionZ > box.Max.Z) return null;
+          if (positionZ < box.Min.Z || positionZ > box.Max.Z) {return null;}
         } else {
-          var tMinZ = (box.Min.Z - positionZ) / directionZ;
-          var tMaxZ = (box.Max.Z - positionZ) / directionZ;
+          let tMinZ = (box.Min.Z - positionZ) / directionZ;
+          let tMaxZ = (box.Max.Z - positionZ) / directionZ;
 
           if (tMinZ > tMaxZ) {
             var temp = tMinZ;
@@ -129,20 +129,20 @@ class Ray {
             (tMin !== null && tMin > tMaxZ) ||
             (tMax !== null && tMinZ > tMax)
           )
-            return null;
+            {return null;}
 
-          if (tMin === null || tMinZ > tMin) tMin = tMinZ;
-          if (tMax === null || tMaxZ < tMax) tMax = tMaxZ;
+          if (tMin === null || tMinZ > tMin) {tMin = tMinZ;}
+          if (tMax === null || tMaxZ < tMax) {tMax = tMaxZ;}
         }
 
-        if (tMin !== null && tMin < 0 && tMax > 0) return 0;
+        if (tMin !== null && tMin < 0 && tMax > 0) {return 0;}
 
-        if (tMin < 0) return null;
+        if (tMin < 0) {return null;}
 
         return tMin;
       })
       .Add([Plane], function (plane) {
-        let den = Vector3.Dot(this.Direction, plane.Normal);
+        const den = Vector3.Dot(this.Direction, plane.Normal);
         if (Math.abs(den) < 0.00001) {
           return null;
         }

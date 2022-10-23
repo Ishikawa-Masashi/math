@@ -10,8 +10,8 @@ import Plane from './Plane.js';
 // import TypeList from '../Core/TypeList.js';
 
 function createPlanes() {
-  let planes = this._getPrivateVar('_planes');
-  let matrix = this._getPrivateVar('_matrix');
+  const planes = this._getPrivateVar('_planes');
+  const matrix = this._getPrivateVar('_matrix');
   planes[0] = new Plane(-matrix.M13, -matrix.M23, -matrix.M33, -matrix.M43);
   planes[1] = new Plane(
     matrix.M13 - matrix.M14,
@@ -53,8 +53,8 @@ function createPlanes() {
 }
 
 function createCorners() {
-  let planes = this._getPrivateVar('_planes');
-  let corners = this._getPrivateVar('_corners');
+  const planes = this._getPrivateVar('_planes');
+  const corners = this._getPrivateVar('_corners');
   corners[0] = intersectionPoint(planes[0], planes[2], planes[4]);
   corners[1] = intersectionPoint(planes[0], planes[3], planes[4]);
   corners[2] = intersectionPoint(planes[0], planes[3], planes[5]);
@@ -81,14 +81,14 @@ function intersectionPoint(a, b, c) {
   cross = Vector3.Cross(a.Normal, b.Normal);
   v3 = Vector3.Multiply(cross, c.D);
 
-  let x = (v1.X + v2.X + v3.X) / f;
-  let y = (v1.Y + v2.Y + v3.Y) / f;
-  let z = (v1.Z + v2.Z + v3.Z) / f;
+  const x = (v1.X + v2.X + v3.X) / f;
+  const y = (v1.Y + v2.Y + v3.Y) / f;
+  const z = (v1.Z + v2.Z + v3.Z) / f;
   return new Vector3(x, y, z);
 }
 
 function normalizePlane(p) {
-  let factor = 1 / p.Normal.Length();
+  const factor = 1 / p.Normal.Length();
   p.Normal.X *= factor;
   p.Normal.Y *= factor;
   p.Normal.Z *= factor;
@@ -168,7 +168,7 @@ class BoundingFrustum extends Object {
       .Add([BoundingSphere], function (sphere) {
         let intersects = false;
         for (let i = 0; i < BoundingFrustum.PlaneCount; ++i) {
-          let planeIntersectionType = sphere.Intersects(
+          const planeIntersectionType = sphere.Intersects(
             this._getPrivateVar('_planes')[i]
           );
           switch (planeIntersectionType) {
@@ -184,11 +184,11 @@ class BoundingFrustum extends Object {
           : ContainmentType.Contains;
       })
       .Add([BoundingFrustum], function (frustum) {
-        if (this == frustum) return ContainmentType.Contains;
+        if (this == frustum) {return ContainmentType.Contains;}
 
         let intersects = false;
         for (let i = 0; i < BoundingFrustum.PlaneCount; ++i) {
-          let planeIntersectionType = frustum.Intersects(
+          const planeIntersectionType = frustum.Intersects(
             this._getPrivateVar('_planes')[i]
           );
           switch (planeIntersectionType) {
@@ -206,7 +206,7 @@ class BoundingFrustum extends Object {
       .Add([BoundingBox], function (box) {
         let intersects = false;
         for (let i = 0; i < BoundingFrustum.PlaneCount; ++i) {
-          let planeIntersectionType = box.Intersects(
+          const planeIntersectionType = box.Intersects(
             this._getPrivateVar('_planes')[i]
           );
           switch (planeIntersectionType) {
@@ -223,7 +223,7 @@ class BoundingFrustum extends Object {
       })
       .Add([Vector3], function (point) {
         for (let i = 0; i < BoundingFrustum.PlaneCount; ++i) {
-          let plane = this._getPrivateVar('_planes')[i];
+          const plane = this._getPrivateVar('_planes')[i];
           if (
             point.X * plane.Normal.X +
               point.Y * plane.Normal.Y +
@@ -251,9 +251,9 @@ class BoundingFrustum extends Object {
   GetCorners(...args) {
     return (BoundingFrustum.prototype.GetCorners = Overload.Create()
       .Add([], function () {
-        let corners = new TypeList(Vector3, BoundingFrustum.CornerCount);
+        const corners = new TypeList(Vector3, BoundingFrustum.CornerCount);
 
-        let _corners = this._getPrivateVar('_corners');
+        const _corners = this._getPrivateVar('_corners');
 
         for (let i = 0; i < BoundingFrustum.CornerCount; i++) {
           corners[i] = _corners[i];
@@ -270,7 +270,7 @@ class BoundingFrustum extends Object {
           throw new RangeError('corners');
         }
 
-        let _corners = this._getPrivateVar('_corners');
+        const _corners = this._getPrivateVar('_corners');
 
         for (let i = 0; i < BoundingFrustum.CornerCount; i++) {
           corners[i] = _corners[i];
@@ -290,18 +290,18 @@ class BoundingFrustum extends Object {
   Intersects(...args) {
     return (BoundingFrustum.prototype.Intersects = Overload.Create()
       .Add([BoundingSphere], function (sphere) {
-        let containment = this.Contains(sphere);
+        const containment = this.Contains(sphere);
         return containment != ContainmentType.Disjoint;
       })
       .Add([BoundingFrustum], function (frustum) {
         return this.Contains(frustum) != ContainmentType.Disjoint;
       })
       .Add([BoundingBox], function (box) {
-        let containment = this.Contains(box);
+        const containment = this.Contains(box);
         return containment != ContainmentType.Disjoint;
       })
       .Add([Plane], function (plane) {
-        let _corners = this._getPrivateVar('_corners');
+        const _corners = this._getPrivateVar('_corners');
         let result = plane.Intersects(_corners[0]);
         for (let i = 1; i < _corners.length; i++) {
           if (plane.Intersects(_corners[i]) != result) {
@@ -311,7 +311,7 @@ class BoundingFrustum extends Object {
         return result;
       })
       .Add([Ray], function (ray) {
-        let ctype = this.Contains(ray.Position);
+        const ctype = this.Contains(ray.Position);
 
         switch (ctype) {
           case ContainmentType.Disjoint:
@@ -331,7 +331,7 @@ class BoundingFrustum extends Object {
     return (BoundingFrustum.prototype.ToString = Overload.Create().Add(
       [],
       function () {
-        let _planes = this._getPrivateVar('_planes');
+        const _planes = this._getPrivateVar('_planes');
         return (
           '{Near: ' +
           _planes[0].ToString() +
@@ -372,7 +372,7 @@ class BoundingFrustum extends Object {
         if (obj['Symbol'] !== BoundingFrustum.name) {
           throw new TypeError('Unrecognized type');
         }
-        let matrix = Matrix.Deserialize(obj.Matrix);
+        const matrix = Matrix.Deserialize(obj.Matrix);
         return new BoundingFrustum(matrix);
       })).call(this, ...args);
   }

@@ -49,24 +49,24 @@ class BoundingSphere extends Object {
   Contains(...args) {
     return (BoundingSphere.prototype.Contains = Overload.Create()
       .Add([BoundingSphere], function (sphere) {
-        let sqDistance = Vector3.DistanceSquared(sphere.Center, this.Center);
+        const sqDistance = Vector3.DistanceSquared(sphere.Center, this.Center);
 
         if (
           sqDistance >
           (sphere.Radius + this.Radius) * (sphere.Radius + this.Radius)
         )
-          return ContainmentType.Disjoint;
+          {return ContainmentType.Disjoint;}
         else if (
           sqDistance <=
           (this.Radius - sphere.Radius) * (this.Radius - sphere.Radius)
         )
-          return ContainmentType.Contains;
-        else return ContainmentType.Intersects;
+          {return ContainmentType.Contains;}
+        else {return ContainmentType.Intersects;}
       })
       .Add([BoundingFrustum], function (frustum) {
         let inside = true;
 
-        let corners = frustum.GetCorners();
+        const corners = frustum.GetCorners();
         for (let i = 0; i < corners.length; i++) {
           if (this.Contains(corners[i]) === ContainmentType.Disjoint) {
             inside = false;
@@ -78,7 +78,7 @@ class BoundingSphere extends Object {
           return ContainmentType.Contains;
         }
 
-        let dmin = 0;
+        const dmin = 0;
 
         if (dmin <= this.Radius * this.Radius) {
           return ContainmentType.Intersects;
@@ -88,7 +88,7 @@ class BoundingSphere extends Object {
       })
       .Add([BoundingBox], function (box) {
         let inside = true;
-        let corners = box.GetCorners();
+        const corners = box.GetCorners();
         for (let i = 0; i < corners.length; i++) {
           if (this.Contains(corners[i]) == ContainmentType.Disjoint) {
             inside = false;
@@ -109,23 +109,23 @@ class BoundingSphere extends Object {
         }
 
         if (this.Center.Y < box.Min.Y)
-          dmin += (this.Center.Y - box.Min.Y) * (this.Center.Y - box.Min.Y);
+          {dmin += (this.Center.Y - box.Min.Y) * (this.Center.Y - box.Min.Y);}
         else if (this.Center.Y > box.Max.Y)
-          dmin += (this.Center.Y - box.Max.Y) * (this.Center.Y - box.Max.Y);
+          {dmin += (this.Center.Y - box.Max.Y) * (this.Center.Y - box.Max.Y);}
 
         if (this.Center.Z < box.Min.Z)
-          dmin += (this.Center.Z - box.Min.Z) * (this.Center.Z - box.Min.Z);
+          {dmin += (this.Center.Z - box.Min.Z) * (this.Center.Z - box.Min.Z);}
         else if (this.Center.Z > box.Max.Z)
-          dmin += (this.Center.Z - box.Max.Z) * (this.Center.Z - box.Max.Z);
+          {dmin += (this.Center.Z - box.Max.Z) * (this.Center.Z - box.Max.Z);}
 
         if (dmin <= this.Radius * this.Radius)
-          return ContainmentType.Intersects;
+          {return ContainmentType.Intersects;}
 
         return ContainmentType.Disjoint;
       })
       .Add([Vector3], function (point) {
-        let sqRadius = this.Radius * this.Radius;
-        let sqDistance = Vector3.DistanceSquared(point, this.Center);
+        const sqRadius = this.Radius * this.Radius;
+        const sqDistance = Vector3.DistanceSquared(point, this.Center);
 
         if (sqDistance > sqRadius) {
           return ContainmentType.Disjoint;
@@ -141,13 +141,13 @@ class BoundingSphere extends Object {
     return (BoundingSphere.CreateFromBoundingBox = Overload.Create().Add(
       [BoundingBox],
       function (box) {
-        let center = new Vector3(
+        const center = new Vector3(
           (box.Min.X + box.Max.X) / 2.0,
           (box.Min.Y + box.Max.Y) / 2.0,
           (box.Min.Z + box.Max.Z) / 2.0
         );
 
-        let radius = Vector3.Distance(center, box.Max);
+        const radius = Vector3.Distance(center, box.Max);
 
         return new BoundingSphere(center, radius);
       }
@@ -182,21 +182,21 @@ class BoundingSphere extends Object {
         points.ForEach(function (pt) {
           ++numPoints;
 
-          if (pt.X < minx.X) minx = pt;
-          if (pt.X > maxx.X) maxx = pt;
-          if (pt.Y < miny.Y) miny = pt;
-          if (pt.Y > maxy.Y) maxy = pt;
-          if (pt.Z < minz.Z) minz = pt;
-          if (pt.Z > maxz.Z) maxz = pt;
+          if (pt.X < minx.X) {minx = pt;}
+          if (pt.X > maxx.X) {maxx = pt;}
+          if (pt.Y < miny.Y) {miny = pt;}
+          if (pt.Y > maxy.Y) {maxy = pt;}
+          if (pt.Z < minz.Z) {minz = pt;}
+          if (pt.Z > maxz.Z) {maxz = pt;}
         });
 
         if (numPoints == 0) {
           throw new TypeError('You should have at least one point in points.');
         }
 
-        let sqDistX = Vector3.DistanceSquared(maxx, minx);
-        let sqDistY = Vector3.DistanceSquared(maxy, miny);
-        let sqDistZ = Vector3.DistanceSquared(maxz, minz);
+        const sqDistX = Vector3.DistanceSquared(maxx, minx);
+        const sqDistY = Vector3.DistanceSquared(maxy, miny);
+        const sqDistZ = Vector3.DistanceSquared(maxz, minz);
 
         let min = minx;
         let max = maxx;
@@ -214,12 +214,12 @@ class BoundingSphere extends Object {
 
         let sqRadius = radius * radius;
         points.ForEach(function (pt) {
-          let diff = Vector3.Subtract(pt, center);
-          let sqDist = diff.LengthSquared();
+          const diff = Vector3.Subtract(pt, center);
+          const sqDist = diff.LengthSquared();
           if (sqDist > sqRadius) {
-            let distance = Math.sqrt(sqDist);
-            let direction = Vector3.Divide(diff, distance);
-            let G = Vector3.Subtract(
+            const distance = Math.sqrt(sqDist);
+            const direction = Vector3.Divide(diff, distance);
+            const G = Vector3.Subtract(
               center,
               Vector3.Multiply(direction, radius)
             );
@@ -242,7 +242,7 @@ class BoundingSphere extends Object {
           additional.Center,
           original.Center
         );
-        let distance = ocenterToaCenter.Length();
+        const distance = ocenterToaCenter.Length();
         if (distance <= original.Radius + additional.Radius) {
           if (distance <= original.Radius - additional.Radius) {
             return new BoundingSphere(original.Center, original.Radius);
@@ -251,11 +251,11 @@ class BoundingSphere extends Object {
             return new BoundingSphere(additional.Center, additional.Radius);
           }
         }
-        let leftRadius = Math.max(
+        const leftRadius = Math.max(
           original.Radius - distance,
           additional.Radius
         );
-        let Rightradius = Math.max(
+        const Rightradius = Math.max(
           original.radius + distance,
           additional.Radius
         );
@@ -264,7 +264,7 @@ class BoundingSphere extends Object {
           ((leftRadius - Rightradius) / (2 * ocenterToaCenter.Length())) *
             ocenterToaCenter;
 
-        let result = new BoundingSphere();
+        const result = new BoundingSphere();
         result.Center = original.Center + ocenterToaCenter;
         result.Radius = (leftRadius + Rightradius) / 2;
         return result;
@@ -297,7 +297,7 @@ class BoundingSphere extends Object {
   Intersects(...args) {
     return (BoundingSphere.prototype.Intersects = Overload.Create()
       .Add([BoundingSphere], function (sphere) {
-        let sqDistance = Vector3.DistanceSquared(sphere.Center, this.Center);
+        const sqDistance = Vector3.DistanceSquared(sphere.Center, this.Center);
 
         if (
           sqDistance >
@@ -320,9 +320,9 @@ class BoundingSphere extends Object {
       .Add([Plane], function (plane) {
         let distance = Vector3.Dot(plane.Normal, this.Center);
         distance += plane.D;
-        if (distance > this.Radius) return PlaneIntersectionType.Front;
-        else if (distance < -this.Radius) return PlaneIntersectionType.Back;
-        else return PlaneIntersectionType.Intersecting;
+        if (distance > this.Radius) {return PlaneIntersectionType.Front;}
+        else if (distance < -this.Radius) {return PlaneIntersectionType.Back;}
+        else {return PlaneIntersectionType.Intersecting;}
       })).call(this, ...args);
   }
 
@@ -339,7 +339,7 @@ class BoundingSphere extends Object {
     return (BoundingSphere.prototype.Transform = Overload.Create().Add(
       [Matrix],
       function (matrix) {
-        let sphere = new BoundingSphere();
+        const sphere = new BoundingSphere();
         sphere.Center = Vector3.Transform(this.Center, matrix);
         sphere.Radius =
           this.Radius *
@@ -385,7 +385,7 @@ class BoundingSphere extends Object {
         if (obj['Symbol'] !== BoundingSphere.name) {
           throw new TypeError('Unrecognized type');
         }
-        let center = Vector3.Deserialize(obj.Center);
+        const center = Vector3.Deserialize(obj.Center);
         return new BoundingSphere(center, obj.Radius);
       })).call(this, ...args);
   }

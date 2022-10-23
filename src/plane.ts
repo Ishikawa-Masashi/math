@@ -8,7 +8,7 @@ import { Quaternion } from './Quaternion';
 // import BoundingBox from './BoundingBox';
 // import { PlaneIntersectionType } from './PlaneIntersectionType';
 
-export class Plane extends Object {
+export class Plane {
   /**
    * 新建 Plane 实例。
    * @constructs
@@ -16,9 +16,7 @@ export class Plane extends Object {
    * @param {Number} d Plane 从原点位置起沿法线方向的距离。
    * @returns {Plane}
    */
-  constructor(public Normal = Vector3.Zero, public D = 0) {
-    super();
-  }
+  constructor(public Normal = Vector3.Zero, public D = 0) {}
 
   /**
    * 计算指定的 Vector4 和此 Plane 的点积。

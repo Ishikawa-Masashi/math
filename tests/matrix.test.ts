@@ -48,8 +48,6 @@ describe('Matrix', () => {
   });
 
   it('CreateRotationX', () => {
-    const array1 = getRandomArray(16);
-    const array2 = getRandomArray(16);
     const angle = getRandomFloat();
     const matrix1 = Matrix.CreateRotationX(angle);
 

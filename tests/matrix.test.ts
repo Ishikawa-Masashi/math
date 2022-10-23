@@ -25,7 +25,7 @@ describe('Matrix', () => {
   it('初期化テスト', () => {
     const a = new Matrix();
     const zero = new Matrix(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-    expect(a.Equals(zero)).toBe(true);
+    expect(a.Equals(zero)).toBeTruthy();
   });
 
   it('Add', () => {
@@ -40,7 +40,7 @@ describe('Matrix', () => {
     const value2 = c.add(d);
     expect(
       value2.equals(BABYLON.Matrix.FromArray(getArrayFromMatrix(value1)))
-    ).toBe(true);
+    ).toBeTruthy();
   });
 
   it('Multiply', () => {
@@ -56,12 +56,10 @@ describe('Matrix', () => {
 
     expect(
       value2.equals(BABYLON.Matrix.FromArray(getArrayFromMatrix(value1)))
-    ).toBe(true);
+    ).toBeTruthy();
   });
 
   it('Invert', () => {
-    const array1 = getRandomArray(16);
-
     const angle = getRandomFloat();
     const a = Matrix.CreateRotationX(angle);
     const b = Matrix.Invert(a);
@@ -80,7 +78,7 @@ describe('Matrix', () => {
 
     expect(
       matrix2.equals(BABYLON.Matrix.FromArray(getArrayFromMatrix(matrix1)))
-    ).toBe(true);
+    ).toBeTruthy();
   });
 
   it('CreateRotationY', () => {

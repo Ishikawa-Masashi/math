@@ -153,19 +153,19 @@ export class Plane {
    * @param {Matrix} matrix 要应用到 Plane 的变换 Matrix。
    * @returns {Plane}
    */
-  static Transform(plane: Plane, matrix: Matrix) {
-    const transformedMatrix = Matrix.Transpose(Matrix.Invert(matrix));
+  // static Transform(plane: Plane, matrix: Matrix) {
+  //   const transformedMatrix = Matrix.Transpose(Matrix.Invert(matrix));
 
-    // const vector = new Vector4(plane.Normal, plane.D);
-    const vector = new Vector4(
-      plane.Normal.x,
-      plane.Normal.y,
-      plane.Normal.z,
-      plane.D
-    );
+  //   // const vector = new Vector4(plane.Normal, plane.D);
+  //   const vector = new Vector4(
+  //     plane.Normal.x,
+  //     plane.Normal.y,
+  //     plane.Normal.z,
+  //     plane.D
+  //   );
 
-    const transformedVector = Vector4.Transform(vector, transformedMatrix);
+  //   const transformedVector = Vector4.Transform(vector, transformedMatrix);
 
-    return new Plane(transformedVector);
-  }
+  //   return new Plane(transformedVector);
+  // }
 }

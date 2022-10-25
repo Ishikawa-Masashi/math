@@ -13,7 +13,7 @@ export class Quaternion {
    * @param {Number} w 四元数的 w 值。
    * @returns {Quaternion}
    */
-  constructor(public X = 0, public Y = 0, public Z = 0, public W = 0) {}
+  constructor(public x = 0, public y = 0, public z = 0, public w = 0) {}
 
   /**
    * 返回呈现无旋转的 Quaternion。
@@ -42,10 +42,10 @@ export class Quaternion {
    */
   static Add(quaternion1: Quaternion, quaternion2: Quaternion) {
     const quaternion = new Quaternion();
-    quaternion.X = quaternion1.X + quaternion2.X;
-    quaternion.Y = quaternion1.Y + quaternion2.Y;
-    quaternion.Z = quaternion1.Z + quaternion2.Z;
-    quaternion.W = quaternion1.W + quaternion2.W;
+    quaternion.x = quaternion1.x + quaternion2.x;
+    quaternion.y = quaternion1.y + quaternion2.y;
+    quaternion.z = quaternion1.z + quaternion2.z;
+    quaternion.w = quaternion1.w + quaternion2.w;
     return quaternion;
   }
 
@@ -59,20 +59,20 @@ export class Quaternion {
   static Concatenate(value1: Quaternion, value2: Quaternion) {
     const quaternion = new Quaternion();
 
-    const x1 = value1.X;
-    const y1 = value1.Y;
-    const z1 = value1.Z;
-    const w1 = value1.W;
+    const x1 = value1.x;
+    const y1 = value1.y;
+    const z1 = value1.z;
+    const w1 = value1.w;
 
-    const x2 = value2.X;
-    const y2 = value2.Y;
-    const z2 = value2.Z;
-    const w2 = value2.W;
+    const x2 = value2.x;
+    const y2 = value2.y;
+    const z2 = value2.z;
+    const w2 = value2.w;
 
-    quaternion.X = x2 * w1 + x1 * w2 + (y2 * z1 - z2 * y1);
-    quaternion.Y = y2 * w1 + y1 * w2 + (z2 * x1 - x2 * z1);
-    quaternion.Z = z2 * w1 + z1 * w2 + (x2 * y1 - y2 * x1);
-    quaternion.W = w2 * w1 - (x2 * x1 + y2 * y1 + z2 * z1);
+    quaternion.x = x2 * w1 + x1 * w2 + (y2 * z1 - z2 * y1);
+    quaternion.y = y2 * w1 + y1 * w2 + (z2 * x1 - x2 * z1);
+    quaternion.z = z2 * w1 + z1 * w2 + (x2 * y1 - y2 * x1);
+    quaternion.w = w2 * w1 - (x2 * x1 + y2 * y1 + z2 * z1);
 
     return quaternion;
   }
@@ -84,16 +84,16 @@ export class Quaternion {
    * @return {Quaternion}
    */
   static Conjugate(value: Quaternion) {
-    return new Quaternion(-value.X, -value.Y, -value.Z, value.W);
+    return new Quaternion(-value.x, -value.y, -value.z, value.w);
   }
 
   /**
    * 将该 Quaternion 变换为其共轭。
    */
   Conjugate() {
-    this.X = -this.X;
-    this.Y = -this.Y;
-    this.Z = -this.Z;
+    this.x = -this.x;
+    this.y = -this.y;
+    this.z = -this.z;
   }
 
   /**
@@ -107,7 +107,7 @@ export class Quaternion {
     const half = angle * 0.5;
     const sin = Math.sin(half);
     const cos = Math.cos(half);
-    return new Quaternion(axis.X * sin, axis.Y * sin, axis.Z * sin, cos);
+    return new Quaternion(axis.x * sin, axis.y * sin, axis.z * sin, cos);
   }
 
   /**
@@ -124,12 +124,12 @@ export class Quaternion {
 
     if (scale > 0.0) {
       sqrt = Math.sqrt(scale + 1.0);
-      quaternion.W = sqrt * 0.5;
+      quaternion.w = sqrt * 0.5;
       sqrt = 0.5 / sqrt;
 
-      quaternion.X = (matrix.M23 - matrix.M32) * sqrt;
-      quaternion.Y = (matrix.M31 - matrix.M13) * sqrt;
-      quaternion.Z = (matrix.M12 - matrix.M21) * sqrt;
+      quaternion.x = (matrix.M23 - matrix.M32) * sqrt;
+      quaternion.y = (matrix.M31 - matrix.M13) * sqrt;
+      quaternion.z = (matrix.M12 - matrix.M21) * sqrt;
 
       return quaternion;
     }
@@ -137,10 +137,10 @@ export class Quaternion {
       sqrt = Math.sqrt(1.0 + matrix.M11 - matrix.M22 - matrix.M33);
       half = 0.5 / sqrt;
 
-      quaternion.X = 0.5 * sqrt;
-      quaternion.Y = (matrix.M12 + matrix.M21) * half;
-      quaternion.Z = (matrix.M13 + matrix.M31) * half;
-      quaternion.W = (matrix.M23 - matrix.M32) * half;
+      quaternion.x = 0.5 * sqrt;
+      quaternion.y = (matrix.M12 + matrix.M21) * half;
+      quaternion.z = (matrix.M13 + matrix.M31) * half;
+      quaternion.w = (matrix.M23 - matrix.M32) * half;
 
       return quaternion;
     }
@@ -148,20 +148,20 @@ export class Quaternion {
       sqrt = Math.sqrt(1.0 + matrix.M22 - matrix.M11 - matrix.M33);
       half = 0.5 / sqrt;
 
-      quaternion.X = (matrix.M21 + matrix.M12) * half;
-      quaternion.Y = 0.5 * sqrt;
-      quaternion.Z = (matrix.M32 + matrix.M23) * half;
-      quaternion.W = (matrix.M31 - matrix.M13) * half;
+      quaternion.x = (matrix.M21 + matrix.M12) * half;
+      quaternion.y = 0.5 * sqrt;
+      quaternion.z = (matrix.M32 + matrix.M23) * half;
+      quaternion.w = (matrix.M31 - matrix.M13) * half;
 
       return quaternion;
     }
     sqrt = Math.sqrt(1.0 + matrix.M33 - matrix.M11 - matrix.M22);
     half = 0.5 / sqrt;
 
-    quaternion.X = (matrix.M31 + matrix.M13) * half;
-    quaternion.Y = (matrix.M32 + matrix.M23) * half;
-    quaternion.Z = 0.5 * sqrt;
-    quaternion.W = (matrix.M12 - matrix.M21) * half;
+    quaternion.x = (matrix.M31 + matrix.M13) * half;
+    quaternion.y = (matrix.M32 + matrix.M23) * half;
+    quaternion.z = 0.5 * sqrt;
+    quaternion.w = (matrix.M12 - matrix.M21) * half;
 
     return quaternion;
   }
@@ -203,28 +203,28 @@ export class Quaternion {
    */
   static Divide(quaternion1: Quaternion, quaternion2: Quaternion) {
     const quaternion = new Quaternion();
-    const x = quaternion1.X;
-    const y = quaternion1.Y;
-    const z = quaternion1.Z;
-    const w = quaternion1.W;
+    const x = quaternion1.x;
+    const y = quaternion1.y;
+    const z = quaternion1.z;
+    const w = quaternion1.w;
     const num14 =
-      quaternion2.X * quaternion2.X +
-      quaternion2.Y * quaternion2.Y +
-      quaternion2.Z * quaternion2.Z +
-      quaternion2.W * quaternion2.W;
+      quaternion2.x * quaternion2.x +
+      quaternion2.y * quaternion2.y +
+      quaternion2.z * quaternion2.z +
+      quaternion2.w * quaternion2.w;
     const num5 = 1 / num14;
-    const num4 = -quaternion2.X * num5;
-    const num3 = -quaternion2.Y * num5;
-    const num2 = -quaternion2.Z * num5;
-    const num = quaternion2.W * num5;
+    const num4 = -quaternion2.x * num5;
+    const num3 = -quaternion2.y * num5;
+    const num2 = -quaternion2.z * num5;
+    const num = quaternion2.w * num5;
     const num13 = y * num2 - z * num3;
     const num12 = z * num4 - x * num2;
     const num11 = x * num3 - y * num4;
     const num10 = x * num4 + y * num3 + z * num2;
-    quaternion.X = x * num + num4 * w + num13;
-    quaternion.Y = y * num + num3 * w + num12;
-    quaternion.Z = z * num + num2 * w + num11;
-    quaternion.W = w * num - num10;
+    quaternion.x = x * num + num4 * w + num13;
+    quaternion.y = y * num + num3 * w + num12;
+    quaternion.z = z * num + num2 * w + num11;
+    quaternion.w = w * num - num10;
     return quaternion;
   }
 
@@ -237,10 +237,10 @@ export class Quaternion {
    */
   static Dot(quaternion1: Quaternion, quaternion2: Quaternion) {
     return (
-      quaternion1.X * quaternion2.X +
-      quaternion1.Y * quaternion2.Y +
-      quaternion1.Z * quaternion2.Z +
-      quaternion1.W * quaternion2.W
+      quaternion1.x * quaternion2.x +
+      quaternion1.y * quaternion2.y +
+      quaternion1.z * quaternion2.z +
+      quaternion1.w * quaternion2.w
     );
   }
 
@@ -251,15 +251,15 @@ export class Quaternion {
    */
   Equals(other: Quaternion) {
     return (
-      this.X == other.X &&
-      this.Y == other.Y &&
-      this.Z == other.Z &&
-      this.W == other.W
+      this.x == other.x &&
+      this.y == other.y &&
+      this.z == other.z &&
+      this.w == other.w
     );
   }
 
   GetHashCode() {
-    return this.X + this.Y + this.Z + this.W;
+    return this.x + this.y + this.z + this.w;
   }
 
   /**
@@ -271,15 +271,15 @@ export class Quaternion {
   static Inverse(quaternion: Quaternion) {
     const quaternion2 = new Quaternion();
     const num2 =
-      quaternion.X * quaternion.X +
-      quaternion.Y * quaternion.Y +
-      quaternion.Z * quaternion.Z +
-      quaternion.W * quaternion.W;
+      quaternion.x * quaternion.x +
+      quaternion.y * quaternion.y +
+      quaternion.z * quaternion.z +
+      quaternion.w * quaternion.w;
     const num = 1 / num2;
-    quaternion2.X = -quaternion.X * num;
-    quaternion2.Y = -quaternion.Y * num;
-    quaternion2.Z = -quaternion.Z * num;
-    quaternion2.W = quaternion.W * num;
+    quaternion2.x = -quaternion.x * num;
+    quaternion2.y = -quaternion.y * num;
+    quaternion2.z = -quaternion.z * num;
+    quaternion2.w = quaternion.w * num;
     return quaternion2;
   }
 
@@ -289,7 +289,7 @@ export class Quaternion {
    */
   Length() {
     return Math.sqrt(
-      this.X * this.X + this.Y * this.Y + this.Z * this.Z + this.W * this.W
+      this.x * this.x + this.y * this.y + this.z * this.z + this.w * this.w
     );
   }
 
@@ -299,7 +299,7 @@ export class Quaternion {
    */
   LengthSquared() {
     return (
-      this.X * this.X + this.Y * this.Y + this.Z * this.Z + this.W * this.W
+      this.x * this.x + this.y * this.y + this.z * this.z + this.w * this.w
     );
   }
 
@@ -320,31 +320,31 @@ export class Quaternion {
     const num2 = 1 - num;
     const quaternion = new Quaternion();
     const num5 =
-      quaternion1.X * quaternion2.X +
-      quaternion1.Y * quaternion2.Y +
-      quaternion1.Z * quaternion2.Z +
-      quaternion1.W * quaternion2.W;
+      quaternion1.x * quaternion2.x +
+      quaternion1.y * quaternion2.y +
+      quaternion1.z * quaternion2.z +
+      quaternion1.w * quaternion2.w;
     if (num5 >= 0) {
-      quaternion.X = num2 * quaternion1.X + num * quaternion2.X;
-      quaternion.Y = num2 * quaternion1.Y + num * quaternion2.Y;
-      quaternion.Z = num2 * quaternion1.Z + num * quaternion2.Z;
-      quaternion.W = num2 * quaternion1.W + num * quaternion2.W;
+      quaternion.x = num2 * quaternion1.x + num * quaternion2.x;
+      quaternion.y = num2 * quaternion1.y + num * quaternion2.y;
+      quaternion.z = num2 * quaternion1.z + num * quaternion2.z;
+      quaternion.w = num2 * quaternion1.w + num * quaternion2.w;
     } else {
-      quaternion.X = num2 * quaternion1.X - num * quaternion2.X;
-      quaternion.Y = num2 * quaternion1.Y - num * quaternion2.Y;
-      quaternion.Z = num2 * quaternion1.Z - num * quaternion2.Z;
-      quaternion.W = num2 * quaternion1.W - num * quaternion2.W;
+      quaternion.x = num2 * quaternion1.x - num * quaternion2.x;
+      quaternion.y = num2 * quaternion1.y - num * quaternion2.y;
+      quaternion.z = num2 * quaternion1.z - num * quaternion2.z;
+      quaternion.w = num2 * quaternion1.w - num * quaternion2.w;
     }
     const num4 =
-      quaternion.X * quaternion.X +
-      quaternion.Y * quaternion.Y +
-      quaternion.Z * quaternion.Z +
-      quaternion.W * quaternion.W;
+      quaternion.x * quaternion.x +
+      quaternion.y * quaternion.y +
+      quaternion.z * quaternion.z +
+      quaternion.w * quaternion.w;
     const num3 = 1 / Math.sqrt(num4);
-    quaternion.X *= num3;
-    quaternion.Y *= num3;
-    quaternion.Z *= num3;
-    quaternion.W *= num3;
+    quaternion.x *= num3;
+    quaternion.y *= num3;
+    quaternion.z *= num3;
+    quaternion.w *= num3;
     return quaternion;
   }
 
@@ -357,22 +357,22 @@ export class Quaternion {
    */
   static Multiply(quaternion1: Quaternion, quaternion2: Quaternion) {
     const quaternion = new Quaternion();
-    const x = quaternion1.X;
-    const y = quaternion1.Y;
-    const z = quaternion1.Z;
-    const w = quaternion1.W;
-    const num4 = quaternion2.X;
-    const num3 = quaternion2.Y;
-    const num2 = quaternion2.Z;
-    const num = quaternion2.W;
+    const x = quaternion1.x;
+    const y = quaternion1.y;
+    const z = quaternion1.z;
+    const w = quaternion1.w;
+    const num4 = quaternion2.x;
+    const num3 = quaternion2.y;
+    const num2 = quaternion2.z;
+    const num = quaternion2.w;
     const num12 = y * num2 - z * num3;
     const num11 = z * num4 - x * num2;
     const num10 = x * num3 - y * num4;
     const num9 = x * num4 + y * num3 + z * num2;
-    quaternion.X = x * num + num4 * w + num12;
-    quaternion.Y = y * num + num3 * w + num11;
-    quaternion.Z = z * num + num2 * w + num10;
-    quaternion.W = w * num - num9;
+    quaternion.x = x * num + num4 * w + num12;
+    quaternion.y = y * num + num3 * w + num11;
+    quaternion.z = z * num + num2 * w + num10;
+    quaternion.w = w * num - num9;
     return quaternion;
   }
 
@@ -384,10 +384,10 @@ export class Quaternion {
    */
   static Negate(quaternion: Quaternion) {
     return new Quaternion(
-      -quaternion.X,
-      -quaternion.Y,
-      -quaternion.Z,
-      -quaternion.W
+      -quaternion.x,
+      -quaternion.y,
+      -quaternion.z,
+      -quaternion.w
     );
   }
 
@@ -402,15 +402,15 @@ export class Quaternion {
     const num =
       1 /
       Math.sqrt(
-        quaternion.X * quaternion.X +
-          quaternion.Y * quaternion.Y +
-          quaternion.Z * quaternion.Z +
-          quaternion.W * quaternion.W
+        quaternion.x * quaternion.x +
+          quaternion.y * quaternion.y +
+          quaternion.z * quaternion.z +
+          quaternion.w * quaternion.w
       );
-    result.X = quaternion.X * num;
-    result.Y = quaternion.Y * num;
-    result.Z = quaternion.Z * num;
-    result.W = quaternion.W * num;
+    result.x = quaternion.x * num;
+    result.y = quaternion.y * num;
+    result.z = quaternion.z * num;
+    result.w = quaternion.w * num;
     return result;
   }
 
@@ -421,12 +421,12 @@ export class Quaternion {
     const num =
       1 /
       Math.sqrt(
-        this.X * this.X + this.Y * this.Y + this.Z * this.Z + this.W * this.W
+        this.x * this.x + this.y * this.y + this.z * this.z + this.w * this.w
       );
-    this.X *= num;
-    this.Y *= num;
-    this.Z *= num;
-    this.W *= num;
+    this.x *= num;
+    this.y *= num;
+    this.z *= num;
+    this.w *= num;
   }
 
   /**
@@ -447,10 +447,10 @@ export class Quaternion {
     const quaternion = new Quaternion();
     const num = amount;
     let num4 =
-      quaternion1.X * quaternion2.X +
-      quaternion1.Y * quaternion2.Y +
-      quaternion1.Z * quaternion2.Z +
-      quaternion1.W * quaternion2.W;
+      quaternion1.x * quaternion2.x +
+      quaternion1.y * quaternion2.y +
+      quaternion1.z * quaternion2.z +
+      quaternion1.w * quaternion2.w;
     let flag = false;
     if (num4 < 0) {
       flag = true;
@@ -465,10 +465,10 @@ export class Quaternion {
       num3 = Math.sin((1 - num) * num5) * num6;
       num2 = flag ? -Math.sin(num * num5) * num6 : Math.sin(num * num5) * num6;
     }
-    quaternion.X = num3 * quaternion1.X + num2 * quaternion2.X;
-    quaternion.Y = num3 * quaternion1.Y + num2 * quaternion2.Y;
-    quaternion.Z = num3 * quaternion1.Z + num2 * quaternion2.Z;
-    quaternion.W = num3 * quaternion1.W + num2 * quaternion2.W;
+    quaternion.x = num3 * quaternion1.x + num2 * quaternion2.x;
+    quaternion.y = num3 * quaternion1.y + num2 * quaternion2.y;
+    quaternion.z = num3 * quaternion1.z + num2 * quaternion2.z;
+    quaternion.w = num3 * quaternion1.w + num2 * quaternion2.w;
     return quaternion;
   }
 
@@ -481,14 +481,14 @@ export class Quaternion {
    */
   static Subtract(quaternion1: Quaternion, quaternion2: Quaternion) {
     const quaternion = new Quaternion();
-    quaternion.X = quaternion1.X - quaternion2.X;
-    quaternion.Y = quaternion1.Y - quaternion2.Y;
-    quaternion.Z = quaternion1.Z - quaternion2.Z;
-    quaternion.W = quaternion1.W - quaternion2.W;
+    quaternion.x = quaternion1.x - quaternion2.x;
+    quaternion.y = quaternion1.y - quaternion2.y;
+    quaternion.z = quaternion1.z - quaternion2.z;
+    quaternion.w = quaternion1.w - quaternion2.w;
     return quaternion;
   }
 
   ToString() {
-    return `{X:${this.X} Y:${this.Y} Z:${this.Z} W:${this.W}}`;
+    return `{X:${this.x} Y:${this.y} Z:${this.z} W:${this.w}}`;
   }
 }

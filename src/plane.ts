@@ -25,10 +25,10 @@ export class Plane {
    */
   Dot(value: Vector4) {
     return (
-      this.Normal.X * value.X +
-      this.Normal.Y * value.Y +
-      this.Normal.Z * value.Z +
-      this.D * value.W
+      this.Normal.x * value.x +
+      this.Normal.y * value.y +
+      this.Normal.z * value.z +
+      this.D * value.w
     );
   }
 
@@ -39,9 +39,9 @@ export class Plane {
    */
   DotCoordinate(value: Vector3) {
     return (
-      this.Normal.X * value.X +
-      this.Normal.Y * value.Y +
-      this.Normal.Z * value.Z +
+      this.Normal.x * value.x +
+      this.Normal.y * value.y +
+      this.Normal.z * value.z +
       this.D
     );
   }
@@ -53,9 +53,9 @@ export class Plane {
    */
   DotNormal(value: Vector3) {
     return (
-      this.Normal.X * value.X +
-      this.Normal.Y * value.Y +
-      this.Normal.Z * value.Z
+      this.Normal.x * value.x +
+      this.Normal.y * value.y +
+      this.Normal.z * value.z
     );
   }
 
@@ -111,14 +111,14 @@ export class Plane {
     result.Normal = Vector3.Normalize(value.Normal);
     const factor =
       Math.sqrt(
-        result.Normal.X * result.Normal.X +
-          result.Normal.Y * result.Normal.Y +
-          result.Normal.Z * result.Normal.Z
+        result.Normal.x * result.Normal.x +
+          result.Normal.y * result.Normal.y +
+          result.Normal.z * result.Normal.z
       ) /
       Math.sqrt(
-        value.Normal.X * value.Normal.X +
-          value.Normal.Y * value.Normal.Y +
-          value.Normal.Z * value.Normal.Z
+        value.Normal.x * value.Normal.x +
+          value.Normal.y * value.Normal.y +
+          value.Normal.z * value.Normal.z
       );
     result.D = value.D * factor;
     return result;
@@ -131,12 +131,12 @@ export class Plane {
     const normal = Vector3.Normalize(this.Normal);
     const factor =
       Math.sqrt(
-        normal.X * normal.X + normal.Y * normal.Y + normal.Z * normal.Z
+        normal.x * normal.x + normal.y * normal.y + normal.z * normal.z
       ) /
       Math.sqrt(
-        this.Normal.X * this.Normal.X +
-          this.Normal.Y * this.Normal.Y +
-          this.Normal.Z * this.Normal.Z
+        this.Normal.x * this.Normal.x +
+          this.Normal.y * this.Normal.y +
+          this.Normal.z * this.Normal.z
       );
     this.Normal = normal;
     this.D *= factor;
@@ -158,9 +158,9 @@ export class Plane {
 
     // const vector = new Vector4(plane.Normal, plane.D);
     const vector = new Vector4(
-      plane.Normal.X,
-      plane.Normal.Y,
-      plane.Normal.Z,
+      plane.Normal.x,
+      plane.Normal.y,
+      plane.Normal.z,
       plane.D
     );
 

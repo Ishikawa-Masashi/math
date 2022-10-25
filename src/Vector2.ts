@@ -10,7 +10,7 @@ export class Vector2 {
    * @param {Number} y 矢量 y 色差的初始值。
    * @returns {Vector2}
    */
-  constructor(public X = 0, public Y = 0) {}
+  constructor(public x = 0, public y = 0) {}
 
   /**
    * 返回两个组件均设置为一的 Vector2。
@@ -56,7 +56,7 @@ export class Vector2 {
    * @returns {Vector2}
    */
   static Add(value1: Vector2, value2: Vector2) {
-    return new Vector2(value1.X + value2.X, value1.Y + value2.Y);
+    return new Vector2(value1.x + value2.x, value1.y + value2.y);
   }
 
   /**
@@ -77,8 +77,8 @@ export class Vector2 {
     amount2: number
   ) {
     return new Vector2(
-      MathHelper.Barycentric(value1.X, value2.X, value3.X, amount1, amount2),
-      MathHelper.Barycentric(value1.Y, value2.Y, value3.Y, amount1, amount2)
+      MathHelper.Barycentric(value1.x, value2.x, value3.x, amount1, amount2),
+      MathHelper.Barycentric(value1.y, value2.y, value3.y, amount1, amount2)
     );
   }
 
@@ -100,8 +100,8 @@ export class Vector2 {
     amount: number
   ) {
     return new Vector2(
-      MathHelper.CatmullRom(value1.X, value2.X, value3.X, value4.X, amount),
-      MathHelper.CatmullRom(value1.Y, value2.Y, value3.Y, value4.Y, amount)
+      MathHelper.CatmullRom(value1.x, value2.x, value3.x, value4.x, amount),
+      MathHelper.CatmullRom(value1.y, value2.y, value3.y, value4.y, amount)
     );
   }
 
@@ -115,8 +115,8 @@ export class Vector2 {
    */
   static Clamp(value1: Vector2, min: Vector2, max: Vector2) {
     return new Vector2(
-      MathHelper.Clamp(value1.X, min.X, max.X),
-      MathHelper.Clamp(value1.Y, min.Y, max.Y)
+      MathHelper.Clamp(value1.x, min.x, max.x),
+      MathHelper.Clamp(value1.y, min.y, max.y)
     );
   }
 
@@ -128,8 +128,8 @@ export class Vector2 {
    * @returns {Number}
    */
   static Distance(value1: Vector2, value2: Vector2) {
-    const v1 = value1.X - value2.X;
-    const v2 = value1.Y - value2.Y;
+    const v1 = value1.x - value2.x;
+    const v2 = value1.y - value2.y;
     return Math.sqrt(v1 * v1 + v2 * v2);
   }
   /**
@@ -140,8 +140,8 @@ export class Vector2 {
    * @returns {Number}
    */
   static DistanceSquared(value1: Vector2, value2: Vector2) {
-    const v1 = value1.X - value2.X;
-    const v2 = value1.Y - value2.Y;
+    const v1 = value1.x - value2.x;
+    const v2 = value1.y - value2.y;
     return v1 * v1 + v2 * v2;
   }
 
@@ -154,7 +154,7 @@ export class Vector2 {
    */
   static Divide(value1: Vector2, divider: number) {
     const factor = 1 / divider;
-    return new Vector2(value1.X * factor, value1.Y * factor);
+    return new Vector2(value1.x * factor, value1.y * factor);
   }
 
   /**
@@ -165,7 +165,7 @@ export class Vector2 {
    * @returns {Number}
    */
   static Dot(value1: Vector2, value2: Vector2) {
-    return value1.X * value2.X + value1.Y * value2.Y;
+    return value1.x * value2.x + value1.y * value2.y;
   }
 
   /**
@@ -175,12 +175,12 @@ export class Vector2 {
    */
   Equals(other: Vector2) {
     return (
-      Math.abs(this.X - other.X) < 1e-6 && Math.abs(this.Y - other.Y) < 1e-6
+      Math.abs(this.x - other.x) < 1e-6 && Math.abs(this.y - other.y) < 1e-6
     );
   }
 
   GetHashCode() {
-    return (this.X * 397) ^ this.Y;
+    return (this.x * 397) ^ this.y;
   }
 
   /**
@@ -201,8 +201,8 @@ export class Vector2 {
     amount: number
   ) {
     return new Vector2(
-      MathHelper.Hermite(value1.X, tangent1.X, value2.X, tangent2.X, amount),
-      MathHelper.Hermite(value1.Y, tangent1.Y, value2.Y, tangent2.Y, amount)
+      MathHelper.Hermite(value1.x, tangent1.x, value2.x, tangent2.x, amount),
+      MathHelper.Hermite(value1.y, tangent1.y, value2.y, tangent2.y, amount)
     );
   }
 
@@ -211,7 +211,7 @@ export class Vector2 {
    * @returns {Number}
    */
   Length() {
-    return Math.sqrt(this.X * this.X + this.Y * this.Y);
+    return Math.sqrt(this.x * this.x + this.y * this.y);
   }
 
   /**
@@ -219,7 +219,7 @@ export class Vector2 {
    * @returns {Number}
    */
   LengthSquared() {
-    return this.X * this.X + this.Y * this.Y;
+    return this.x * this.x + this.y * this.y;
   }
 
   /**
@@ -232,8 +232,8 @@ export class Vector2 {
    */
   static Lerp(value1: Vector2, value2: Vector2, amount: number) {
     return new Vector2(
-      MathHelper.Lerp(value1.X, value2.X, amount),
-      MathHelper.Lerp(value1.Y, value2.Y, amount)
+      MathHelper.Lerp(value1.x, value2.x, amount),
+      MathHelper.Lerp(value1.y, value2.y, amount)
     );
   }
 
@@ -246,8 +246,8 @@ export class Vector2 {
    */
   static Max(value1: Vector2, value2: Vector2) {
     return new Vector2(
-      value1.X > value2.X ? value1.X : value2.X,
-      value1.Y > value2.Y ? value1.Y : value2.Y
+      value1.x > value2.x ? value1.x : value2.x,
+      value1.y > value2.y ? value1.y : value2.y
     );
   }
 
@@ -260,8 +260,8 @@ export class Vector2 {
    */
   static Min(value1: Vector2, value2: Vector2) {
     return new Vector2(
-      value1.X < value2.X ? value1.X : value2.X,
-      value1.Y < value2.Y ? value1.Y : value2.Y
+      value1.x < value2.x ? value1.x : value2.x,
+      value1.y < value2.y ? value1.y : value2.y
     );
   }
 
@@ -273,7 +273,7 @@ export class Vector2 {
    * @returns {Vector2}
    */
   static Multiply(value1: Vector2, scaleFactor: number) {
-    return new Vector2(value1.X * scaleFactor, value1.Y * scaleFactor);
+    return new Vector2(value1.x * scaleFactor, value1.y * scaleFactor);
   }
 
   /**
@@ -283,7 +283,7 @@ export class Vector2 {
    * @returns {Vector2}
    */
   static Negate(value: Vector2) {
-    return new Vector2(-value.X, -value.Y);
+    return new Vector2(-value.x, -value.y);
   }
 
   /**
@@ -293,17 +293,17 @@ export class Vector2 {
    * @return {Vector2}
    */
   static Normalize(value: Vector2) {
-    const val = 1.0 / Math.sqrt(value.X * value.X + value.Y * value.Y);
-    return new Vector2(value.X * val, value.Y * val);
+    const val = 1.0 / Math.sqrt(value.x * value.x + value.y * value.y);
+    return new Vector2(value.x * val, value.y * val);
   }
 
   /**
    * 将当前矢量转为单位矢量。结果是与原始矢量相同方向的长度矢量单位。
    */
   Normalize() {
-    const val = 1 / Math.sqrt(this.X * this.X + this.Y * this.Y);
-    this.X *= val;
-    this.Y *= val;
+    const val = 1 / Math.sqrt(this.x * this.x + this.y * this.y);
+    this.x *= val;
+    this.y *= val;
   }
 
   /**
@@ -314,8 +314,8 @@ export class Vector2 {
    * @returns {Vector2}
    */
   static Reflect(vector: Vector2, normal: Vector2) {
-    const val = 2.0 * (vector.X * normal.X + vector.Y * normal.Y);
-    return new Vector2(vector.X - normal.X * val, vector.Y - normal.Y * val);
+    const val = 2.0 * (vector.x * normal.x + vector.y * normal.y);
+    return new Vector2(vector.x - normal.x * val, vector.y - normal.y * val);
   }
 
   /**
@@ -328,8 +328,8 @@ export class Vector2 {
    */
   static SmoothStep(value1: Vector2, value2: Vector2, amount: number) {
     return new Vector2(
-      MathHelper.SmoothStep(value1.X, value2.X, amount),
-      MathHelper.SmoothStep(value1.Y, value2.Y, amount)
+      MathHelper.SmoothStep(value1.x, value2.x, amount),
+      MathHelper.SmoothStep(value1.y, value2.y, amount)
     );
   }
 
@@ -341,11 +341,11 @@ export class Vector2 {
    * @returns {Vector2}
    */
   static Subtract(value1: Vector2, value2: Vector2) {
-    return new Vector2(value1.X - value2.X, value1.Y - value2.Y);
+    return new Vector2(value1.x - value2.x, value1.y - value2.y);
   }
 
   ToString() {
-    return `{X:${this.X} Y:${this.Y}}`;
+    return `{X:${this.x} Y:${this.y}}`;
   }
 
   /**
@@ -356,8 +356,8 @@ export class Vector2 {
    * @returns {Vector2}
    */
   static Transform(position: Vector2, matrix: Matrix) {
-    const x = position.X * matrix.M11 + position.Y * matrix.M21 + matrix.M41;
-    const y = position.X * matrix.M12 + position.Y * matrix.M22 + matrix.M42;
+    const x = position.x * matrix.M11 + position.y * matrix.M21 + matrix.M41;
+    const y = position.x * matrix.M12 + position.y * matrix.M22 + matrix.M42;
     return new Vector2(x, y);
   }
 
@@ -370,8 +370,8 @@ export class Vector2 {
    */
   static TransformNormal(normal: Vector2, matrix: Matrix) {
     return new Vector2(
-      normal.X * matrix.M11 + normal.Y * matrix.M21,
-      normal.X * matrix.M12 + normal.Y * matrix.M22
+      normal.x * matrix.M11 + normal.y * matrix.M21,
+      normal.x * matrix.M12 + normal.y * matrix.M22
     );
   }
 }

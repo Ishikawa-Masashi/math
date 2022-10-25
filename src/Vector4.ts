@@ -15,7 +15,7 @@ export class Vector4 {
    * @param {Number} w 矢量 w 色差的初始值。
    * @returns {Vector4}
    */
-  constructor(public X = 0, public Y = 0, public Z = 0, public W = 0) {}
+  constructor(public x = 0, public y = 0, public z = 0, public w = 0) {}
 
   /**
    * 返回所有组件均设置为一的 Vector4。
@@ -80,10 +80,10 @@ export class Vector4 {
    */
   static Add(value1: Vector4, value2: Vector4) {
     return new Vector4(
-      value1.X + value2.X,
-      value1.Y + value2.Y,
-      value1.Z + value2.Z,
-      value1.W + value2.W
+      value1.x + value2.x,
+      value1.y + value2.y,
+      value1.z + value2.z,
+      value1.w + value2.w
     );
   }
 
@@ -105,10 +105,10 @@ export class Vector4 {
     amount2: number
   ) {
     return new Vector4(
-      MathHelper.Barycentric(value1.X, value2.X, value3.X, amount1, amount2),
-      MathHelper.Barycentric(value1.Y, value2.Y, value3.Y, amount1, amount2),
-      MathHelper.Barycentric(value1.Z, value2.Z, value3.Z, amount1, amount2),
-      MathHelper.Barycentric(value1.W, value2.W, value3.W, amount1, amount2)
+      MathHelper.Barycentric(value1.x, value2.x, value3.x, amount1, amount2),
+      MathHelper.Barycentric(value1.y, value2.y, value3.y, amount1, amount2),
+      MathHelper.Barycentric(value1.z, value2.z, value3.z, amount1, amount2),
+      MathHelper.Barycentric(value1.w, value2.w, value3.w, amount1, amount2)
     );
   }
 
@@ -130,10 +130,10 @@ export class Vector4 {
     amount: number
   ) {
     return new Vector4(
-      MathHelper.CatmullRom(value1.X, value2.X, value3.X, value4.X, amount),
-      MathHelper.CatmullRom(value1.Y, value2.Y, value3.Y, value4.Y, amount),
-      MathHelper.CatmullRom(value1.Z, value2.Z, value3.Z, value4.Z, amount),
-      MathHelper.CatmullRom(value1.W, value2.W, value3.W, value3.W, amount)
+      MathHelper.CatmullRom(value1.x, value2.x, value3.x, value4.x, amount),
+      MathHelper.CatmullRom(value1.y, value2.y, value3.y, value4.y, amount),
+      MathHelper.CatmullRom(value1.z, value2.z, value3.z, value4.z, amount),
+      MathHelper.CatmullRom(value1.w, value2.w, value3.w, value3.w, amount)
     );
   }
 
@@ -147,10 +147,10 @@ export class Vector4 {
    */
   static Clamp(value1: Vector4, min: Vector4, max: Vector4) {
     return new Vector4(
-      MathHelper.Clamp(value1.X, min.X, max.X),
-      MathHelper.Clamp(value1.Y, min.Y, max.Y),
-      MathHelper.Clamp(value1.Z, min.Z, max.Z),
-      MathHelper.Clamp(value1.W, min.W, max.W)
+      MathHelper.Clamp(value1.x, min.x, max.x),
+      MathHelper.Clamp(value1.y, min.y, max.y),
+      MathHelper.Clamp(value1.z, min.z, max.z),
+      MathHelper.Clamp(value1.w, min.w, max.w)
     );
   }
 
@@ -174,10 +174,10 @@ export class Vector4 {
    * @returns {Number}
    */
   static DistanceSquared(value1: Vector4, value2: Vector4) {
-    const v1 = value1.X - value2.X;
-    const v2 = value1.Y - value2.Y;
-    const v3 = value1.Z - value2.Z;
-    const v4 = value1.W - value2.W;
+    const v1 = value1.x - value2.x;
+    const v2 = value1.y - value2.y;
+    const v3 = value1.z - value2.z;
+    const v4 = value1.w - value2.w;
     return v1 * v1 + v2 * v2 + v3 * v3 + v4 * v4;
   }
 
@@ -191,10 +191,10 @@ export class Vector4 {
   static Divide(value1: Vector4, divider: number) {
     const factor = 1 / divider;
     return new Vector4(
-      value1.X * factor,
-      value1.Y * factor,
-      value1.Z * factor,
-      value1.W * factor
+      value1.x * factor,
+      value1.y * factor,
+      value1.z * factor,
+      value1.w * factor
     );
   }
 
@@ -207,10 +207,10 @@ export class Vector4 {
    */
   static Dot(vector1: Vector4, vector2: Vector4) {
     return (
-      vector1.X * vector2.X +
-      vector1.Y * vector2.Y +
-      vector1.Z * vector2.Z +
-      vector1.W * vector2.W
+      vector1.x * vector2.x +
+      vector1.y * vector2.y +
+      vector1.z * vector2.z +
+      vector1.w * vector2.w
     );
   }
 
@@ -221,18 +221,18 @@ export class Vector4 {
    */
   Equals(other: Vector4) {
     return (
-      Math.abs(this.X - other.X) < 1e-6 &&
-      Math.abs(this.Y - other.Y) < 1e-6 &&
-      Math.abs(this.Z - other.Z) < 1e-6 &&
-      Math.abs(this.W - other.W) < 1e-6
+      Math.abs(this.x - other.x) < 1e-6 &&
+      Math.abs(this.y - other.y) < 1e-6 &&
+      Math.abs(this.z - other.z) < 1e-6 &&
+      Math.abs(this.w - other.w) < 1e-6
     );
   }
 
   GetHashCode() {
-    let hashCode = this.W;
-    hashCode = (hashCode * 397) ^ this.X;
-    hashCode = (hashCode * 397) ^ this.Y;
-    hashCode = (hashCode * 397) ^ this.Z;
+    let hashCode = this.w;
+    hashCode = (hashCode * 397) ^ this.x;
+    hashCode = (hashCode * 397) ^ this.y;
+    hashCode = (hashCode * 397) ^ this.z;
     return hashCode;
   }
 
@@ -254,10 +254,10 @@ export class Vector4 {
     amount: number
   ) {
     return new Vector4(
-      MathHelper.Hermite(value1.X, tangent1.X, value2.X, tangent2.X, amount),
-      MathHelper.Hermite(value1.Y, tangent1.Y, value2.Y, tangent2.Y, amount),
-      MathHelper.Hermite(value1.Z, tangent1.Z, value2.Z, tangent2.Z, amount),
-      MathHelper.Hermite(value1.W, tangent1.W, value2.W, tangent2.W, amount)
+      MathHelper.Hermite(value1.x, tangent1.x, value2.x, tangent2.x, amount),
+      MathHelper.Hermite(value1.y, tangent1.y, value2.y, tangent2.y, amount),
+      MathHelper.Hermite(value1.z, tangent1.z, value2.z, tangent2.z, amount),
+      MathHelper.Hermite(value1.w, tangent1.w, value2.w, tangent2.w, amount)
     );
   }
 
@@ -288,10 +288,10 @@ export class Vector4 {
    */
   static Lerp(value1: Vector4, value2: Vector4, amount: number) {
     return new Vector4(
-      MathHelper.Lerp(value1.X, value2.X, amount),
-      MathHelper.Lerp(value1.Y, value2.Y, amount),
-      MathHelper.Lerp(value1.Z, value2.Z, amount),
-      MathHelper.Lerp(value1.W, value2.W, amount)
+      MathHelper.Lerp(value1.x, value2.x, amount),
+      MathHelper.Lerp(value1.y, value2.y, amount),
+      MathHelper.Lerp(value1.z, value2.z, amount),
+      MathHelper.Lerp(value1.w, value2.w, amount)
     );
   }
 
@@ -304,10 +304,10 @@ export class Vector4 {
    */
   static Max(value1: Vector4, value2: Vector4) {
     return new Vector4(
-      value1.X > value2.X ? value1.X : value2.X,
-      value1.Y > value2.Y ? value1.Y : value2.Y,
-      value1.Z > value2.Z ? value1.Z : value2.Z,
-      value1.W > value2.W ? value1.W : value2.W
+      value1.x > value2.x ? value1.x : value2.x,
+      value1.y > value2.y ? value1.y : value2.y,
+      value1.z > value2.z ? value1.z : value2.z,
+      value1.w > value2.w ? value1.w : value2.w
     );
   }
 
@@ -320,10 +320,10 @@ export class Vector4 {
    */
   static Min(value1: Vector4, value2: Vector4) {
     return new Vector4(
-      value1.X < value2.X ? value1.X : value2.X,
-      value1.Y < value2.Y ? value1.Y : value2.Y,
-      value1.Z < value2.Z ? value1.Z : value2.Z,
-      value1.W < value2.W ? value1.W : value2.W
+      value1.x < value2.x ? value1.x : value2.x,
+      value1.y < value2.y ? value1.y : value2.y,
+      value1.z < value2.z ? value1.z : value2.z,
+      value1.w < value2.w ? value1.w : value2.w
     );
   }
 
@@ -336,10 +336,10 @@ export class Vector4 {
    */
   static Multiply(value1: Vector4, scaleFactor: number) {
     return new Vector4(
-      value1.X * scaleFactor,
-      value1.Y * scaleFactor,
-      value1.Z * scaleFactor,
-      value1.W * scaleFactor
+      value1.x * scaleFactor,
+      value1.y * scaleFactor,
+      value1.z * scaleFactor,
+      value1.w * scaleFactor
     );
   }
 
@@ -350,7 +350,7 @@ export class Vector4 {
    * @returns {Vector4}
    */
   static Negate(value: Vector4) {
-    return new Vector4(-value.X, -value.Y, -value.Z, -value.W);
+    return new Vector4(-value.x, -value.y, -value.z, -value.w);
   }
 
   /**
@@ -363,10 +363,10 @@ export class Vector4 {
     let factor = Vector4.Distance(value, Vector4.Zero);
     factor = 1 / factor;
     return new Vector4(
-      value.X * factor,
-      value.Y * factor,
-      value.Z * factor,
-      value.W * factor
+      value.x * factor,
+      value.y * factor,
+      value.z * factor,
+      value.w * factor
     );
   }
 
@@ -376,10 +376,10 @@ export class Vector4 {
   Normalize() {
     let factor = Vector4.Distance(this, Vector4.Zero);
     factor = 1 / factor;
-    this.X *= factor;
-    this.Y *= factor;
-    this.Z *= factor;
-    this.W *= factor;
+    this.x *= factor;
+    this.y *= factor;
+    this.z *= factor;
+    this.w *= factor;
   }
 
   /**
@@ -392,10 +392,10 @@ export class Vector4 {
    */
   static SmoothStep(value1: Vector4, value2: Vector4, amount: number) {
     return new Vector4(
-      MathHelper.SmoothStep(value1.X, value2.X, amount),
-      MathHelper.SmoothStep(value1.Y, value2.Y, amount),
-      MathHelper.SmoothStep(value1.Z, value2.Z, amount),
-      MathHelper.SmoothStep(value1.W, value2.W, amount)
+      MathHelper.SmoothStep(value1.x, value2.x, amount),
+      MathHelper.SmoothStep(value1.y, value2.y, amount),
+      MathHelper.SmoothStep(value1.z, value2.z, amount),
+      MathHelper.SmoothStep(value1.w, value2.w, amount)
     );
   }
 
@@ -408,15 +408,15 @@ export class Vector4 {
    */
   static Subtract(value1: Vector4, value2: Vector4) {
     return new Vector4(
-      value1.X - value2.X,
-      value1.Y - value2.Y,
-      value1.Z - value2.Z,
-      value1.W - value2.W
+      value1.x - value2.x,
+      value1.y - value2.y,
+      value1.z - value2.z,
+      value1.w - value2.w
     );
   }
 
   ToString() {
-    return `{X:${this.X} Y:${this.Y} Z:${this.Z} W:${this.W}}`;
+    return `{X:${this.x} Y:${this.y} Z:${this.z} W:${this.w}}`;
   }
 
   /**
@@ -427,10 +427,10 @@ export class Vector4 {
    * @returns {Vector4}
    */
   static Transform(position: Vector4, matrix: Matrix) {
-    const x = position.X * matrix.M11 + position.Y * matrix.M21 + matrix.M41;
-    const y = position.X * matrix.M12 + position.Y * matrix.M22 + matrix.M42;
-    const z = position.X * matrix.M13 + position.Y * matrix.M23 + matrix.M43;
-    const w = position.X * matrix.M14 + position.Y * matrix.M24 + matrix.M44;
+    const x = position.x * matrix.M11 + position.y * matrix.M21 + matrix.M41;
+    const y = position.x * matrix.M12 + position.y * matrix.M22 + matrix.M42;
+    const z = position.x * matrix.M13 + position.y * matrix.M23 + matrix.M43;
+    const w = position.x * matrix.M14 + position.y * matrix.M24 + matrix.M44;
     return new Vector4(x, y, z, w);
   }
 }

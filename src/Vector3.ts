@@ -10,7 +10,7 @@ export class Vector3 {
    * @param {number} z 矢量 z 色差的初始值。
    * @returns {Vector3}
    */
-  constructor(public X = 0, public Y = 0, public Z = 0) {}
+  constructor(public x = 0, public y = 0, public z = 0) {}
 
   /**
    * 返回所有组件为一体的 Vector3。
@@ -119,9 +119,9 @@ export class Vector3 {
    */
   static Add(value1: Vector3, value2: Vector3) {
     return new Vector3(
-      value1.X + value2.X,
-      value1.Y + value2.Y,
-      value1.Z + value2.Z
+      value1.x + value2.x,
+      value1.y + value2.y,
+      value1.z + value2.z
     );
   }
 
@@ -143,9 +143,9 @@ export class Vector3 {
     amount2: number
   ) {
     return new Vector3(
-      MathHelper.Barycentric(value1.X, value2.X, value3.X, amount1, amount2),
-      MathHelper.Barycentric(value1.Y, value2.Y, value3.Y, amount1, amount2),
-      MathHelper.Barycentric(value1.Z, value2.Z, value3.Z, amount1, amount2)
+      MathHelper.Barycentric(value1.x, value2.x, value3.x, amount1, amount2),
+      MathHelper.Barycentric(value1.y, value2.y, value3.y, amount1, amount2),
+      MathHelper.Barycentric(value1.z, value2.z, value3.z, amount1, amount2)
     );
   }
 
@@ -167,9 +167,9 @@ export class Vector3 {
     amount: number
   ) {
     return new Vector3(
-      MathHelper.CatmullRom(value1.X, value2.X, value3.X, value4.X, amount),
-      MathHelper.CatmullRom(value1.Y, value2.Y, value3.Y, value4.Y, amount),
-      MathHelper.CatmullRom(value1.Z, value2.Z, value3.Z, value4.Z, amount)
+      MathHelper.CatmullRom(value1.x, value2.x, value3.x, value4.x, amount),
+      MathHelper.CatmullRom(value1.y, value2.y, value3.y, value4.y, amount),
+      MathHelper.CatmullRom(value1.z, value2.z, value3.z, value4.z, amount)
     );
   }
 
@@ -183,9 +183,9 @@ export class Vector3 {
    */
   static Clamp(value1: Vector3, min: Vector3, max: Vector3) {
     return new Vector3(
-      MathHelper.Clamp(value1.X, min.X, max.X),
-      MathHelper.Clamp(value1.Y, min.Y, max.Y),
-      MathHelper.Clamp(value1.Z, min.Z, max.Z)
+      MathHelper.Clamp(value1.x, min.x, max.x),
+      MathHelper.Clamp(value1.y, min.y, max.y),
+      MathHelper.Clamp(value1.z, min.z, max.z)
     );
   }
 
@@ -196,9 +196,9 @@ export class Vector3 {
    * @return {Vector3}
    */
   static Cross(vector1: Vector3, vector2: Vector3) {
-    const x = vector1.Y * vector2.Z - vector2.Y * vector1.Z;
-    const y = -(vector1.X * vector2.Z - vector2.X * vector1.Z);
-    const z = vector1.X * vector2.Y - vector2.X * vector1.Y;
+    const x = vector1.y * vector2.z - vector2.y * vector1.z;
+    const y = -(vector1.x * vector2.z - vector2.x * vector1.z);
+    const z = vector1.x * vector2.y - vector2.x * vector1.y;
     return new Vector3(x, y, z);
   }
 
@@ -222,9 +222,9 @@ export class Vector3 {
    * @returns {Number}
    */
   static DistanceSquared(value1: Vector3, value2: Vector3) {
-    const v1 = value1.X - value2.X;
-    const v2 = value1.Y - value2.Y;
-    const v3 = value1.Z - value2.Z;
+    const v1 = value1.x - value2.x;
+    const v2 = value1.y - value2.y;
+    const v3 = value1.z - value2.z;
     return v1 * v1 + v2 * v2 + v3 * v3;
   }
 
@@ -237,7 +237,7 @@ export class Vector3 {
    */
   static Divide(value1: Vector3, divider: number) {
     const factor = 1 / divider;
-    return new Vector3(value1.X * factor, value1.Y * factor, value1.Z * factor);
+    return new Vector3(value1.x * factor, value1.y * factor, value1.z * factor);
   }
 
   /**
@@ -249,7 +249,7 @@ export class Vector3 {
    */
   static Dot(vector1: Vector3, vector2: Vector3) {
     return (
-      vector1.X * vector2.X + vector1.Y * vector2.Y + vector1.Z * vector2.Z
+      vector1.x * vector2.x + vector1.y * vector2.y + vector1.z * vector2.z
     );
   }
 
@@ -260,16 +260,16 @@ export class Vector3 {
    */
   Equals(other: Vector3) {
     return (
-      Math.abs(this.X - other.X) < 1e-6 &&
-      Math.abs(this.Y - other.Y) < 1e-6 &&
-      Math.abs(this.Z - other.Z) < 1e-6
+      Math.abs(this.x - other.x) < 1e-6 &&
+      Math.abs(this.y - other.y) < 1e-6 &&
+      Math.abs(this.z - other.z) < 1e-6
     );
   }
 
   GetHashCode() {
-    let hashCode = this.X;
-    hashCode = (hashCode * 397) ^ this.Y;
-    hashCode = (hashCode * 397) ^ this.Z;
+    let hashCode = this.x;
+    hashCode = (hashCode * 397) ^ this.y;
+    hashCode = (hashCode * 397) ^ this.z;
     return hashCode | 0;
   }
 
@@ -291,9 +291,9 @@ export class Vector3 {
     amount: number
   ) {
     return new Vector3(
-      MathHelper.Hermite(value1.X, tangent1.X, value2.X, tangent2.X, amount),
-      MathHelper.Hermite(value1.Y, tangent1.Y, value2.Y, tangent2.Y, amount),
-      MathHelper.Hermite(value1.Z, tangent1.Z, value2.Z, tangent2.Z, amount)
+      MathHelper.Hermite(value1.x, tangent1.x, value2.x, tangent2.x, amount),
+      MathHelper.Hermite(value1.y, tangent1.y, value2.y, tangent2.y, amount),
+      MathHelper.Hermite(value1.z, tangent1.z, value2.z, tangent2.z, amount)
     );
   }
 
@@ -324,9 +324,9 @@ export class Vector3 {
    */
   static Lerp(value1: Vector3, value2: Vector3, amount: number) {
     return new Vector3(
-      MathHelper.Lerp(value1.X, value2.X, amount),
-      MathHelper.Lerp(value1.Y, value2.Y, amount),
-      MathHelper.Lerp(value1.Z, value2.Z, amount)
+      MathHelper.Lerp(value1.x, value2.x, amount),
+      MathHelper.Lerp(value1.y, value2.y, amount),
+      MathHelper.Lerp(value1.z, value2.z, amount)
     );
   }
 
@@ -339,9 +339,9 @@ export class Vector3 {
    */
   static Max(value1: Vector3, value2: Vector3) {
     return new Vector3(
-      value1.X > value2.X ? value1.X : value2.X,
-      value1.Y > value2.Y ? value1.Y : value2.Y,
-      value1.Z > value2.Z ? value1.Z : value2.Z
+      value1.x > value2.x ? value1.x : value2.x,
+      value1.y > value2.y ? value1.y : value2.y,
+      value1.z > value2.z ? value1.z : value2.z
     );
   }
 
@@ -354,9 +354,9 @@ export class Vector3 {
    */
   static Min(value1: Vector3, value2: Vector3) {
     return new Vector3(
-      value1.X < value2.X ? value1.X : value2.X,
-      value1.Y < value2.Y ? value1.Y : value2.Y,
-      value1.Z < value2.Z ? value1.Z : value2.Z
+      value1.x < value2.x ? value1.x : value2.x,
+      value1.y < value2.y ? value1.y : value2.y,
+      value1.z < value2.z ? value1.z : value2.z
     );
   }
 
@@ -369,9 +369,9 @@ export class Vector3 {
    */
   static Multiply(value1: Vector3, scaleFactor: number) {
     return new Vector3(
-      value1.X * scaleFactor,
-      value1.Y * scaleFactor,
-      value1.Z * scaleFactor
+      value1.x * scaleFactor,
+      value1.y * scaleFactor,
+      value1.z * scaleFactor
     );
   }
 
@@ -382,7 +382,7 @@ export class Vector3 {
    * @returns {Vector3}
    */
   static Negate(value: Vector3) {
-    return new Vector3(-value.X, -value.Y, -value.Z);
+    return new Vector3(-value.x, -value.y, -value.z);
   }
 
   /**
@@ -394,7 +394,7 @@ export class Vector3 {
   static Normalize(value: Vector3) {
     let factor = Vector3.Distance(value, Vector3.Zero);
     factor = 1 / factor;
-    return new Vector3(value.X * factor, value.Y * factor, value.Z * factor);
+    return new Vector3(value.x * factor, value.y * factor, value.z * factor);
   }
 
   /**
@@ -403,9 +403,9 @@ export class Vector3 {
   Normalize() {
     let factor = Vector3.Distance(this, Vector3.Zero);
     factor = 1 / factor;
-    this.X *= factor;
-    this.Y *= factor;
-    this.Z *= factor;
+    this.x *= factor;
+    this.y *= factor;
+    this.z *= factor;
   }
 
   /**
@@ -417,11 +417,11 @@ export class Vector3 {
    */
   static Reflect(vector: Vector3, normal: Vector3) {
     const dotProduct =
-      vector.X * normal.X + vector.Y * normal.Y + vector.Z * normal.Z;
+      vector.x * normal.x + vector.y * normal.y + vector.z * normal.z;
     return new Vector3(
-      vector.X - 2.0 * normal.X * dotProduct,
-      vector.Y - 2.0 * normal.Y * dotProduct,
-      vector.Z - 2.0 * normal.Z * dotProduct
+      vector.x - 2.0 * normal.x * dotProduct,
+      vector.y - 2.0 * normal.y * dotProduct,
+      vector.z - 2.0 * normal.z * dotProduct
     );
   }
 
@@ -435,9 +435,9 @@ export class Vector3 {
    */
   static SmoothStep(value1: Vector3, value2: Vector3, amount: number) {
     return new Vector3(
-      MathHelper.SmoothStep(value1.X, value2.X, amount),
-      MathHelper.SmoothStep(value1.Y, value2.Y, amount),
-      MathHelper.SmoothStep(value1.Z, value2.Z, amount)
+      MathHelper.SmoothStep(value1.x, value2.x, amount),
+      MathHelper.SmoothStep(value1.y, value2.y, amount),
+      MathHelper.SmoothStep(value1.z, value2.z, amount)
     );
   }
 
@@ -450,14 +450,14 @@ export class Vector3 {
    */
   static Subtract(value1: Vector3, value2: Vector3) {
     return new Vector3(
-      value1.X - value2.X,
-      value1.Y - value2.Y,
-      value1.Z - value2.Z
+      value1.x - value2.x,
+      value1.y - value2.y,
+      value1.z - value2.z
     );
   }
 
   ToString() {
-    return `{X:${this.X} Y:${this.Y} Z:${this.Z}}`;
+    return `{X:${this.x} Y:${this.y} Z:${this.z}}`;
   }
 
   /**
@@ -469,19 +469,19 @@ export class Vector3 {
    */
   static Transform(position: Vector3, matrix: Matrix) {
     const x =
-      position.X * matrix.M11 +
-      position.Y * matrix.M21 +
-      position.Z * matrix.M31 +
+      position.x * matrix.M11 +
+      position.y * matrix.M21 +
+      position.z * matrix.M31 +
       matrix.M41;
     const y =
-      position.X * matrix.M12 +
-      position.Y * matrix.M22 +
-      position.Z * matrix.M32 +
+      position.x * matrix.M12 +
+      position.y * matrix.M22 +
+      position.z * matrix.M32 +
       matrix.M42;
     const z =
-      position.X * matrix.M13 +
-      position.Y * matrix.M23 +
-      position.Z * matrix.M33 +
+      position.x * matrix.M13 +
+      position.y * matrix.M23 +
+      position.z * matrix.M33 +
       matrix.M43;
     return new Vector3(x, y, z);
   }
@@ -518,9 +518,9 @@ export class Vector3 {
     result: Vector3
   ) {
     Vector3.TransformCoordinatesFromFloatsToRef(
-      vector.X,
-      vector.Y,
-      vector.Z,
+      vector.x,
+      vector.y,
+      vector.z,
       transformation,
       result
     );
@@ -568,9 +568,9 @@ export class Vector3 {
     const rz = x * M13 + y * M23 + z * M33 + M43;
     const rw = 1 / (x * M14 + y * M24 + z * M34 + M44);
 
-    result.X = rx * rw;
-    result.Y = ry * rw;
-    result.Z = rz * rw;
+    result.x = rx * rw;
+    result.y = ry * rw;
+    result.z = rz * rw;
     return result;
   }
 
@@ -583,11 +583,11 @@ export class Vector3 {
    */
   static TransformNormal(normal: Vector3, matrix: Matrix) {
     const x =
-      normal.X * matrix.M11 + normal.Y * matrix.M21 + normal.Z * matrix.M31;
+      normal.x * matrix.M11 + normal.y * matrix.M21 + normal.z * matrix.M31;
     const y =
-      normal.X * matrix.M12 + normal.Y * matrix.M22 + normal.Z * matrix.M32;
+      normal.x * matrix.M12 + normal.y * matrix.M22 + normal.z * matrix.M32;
     const z =
-      normal.X * matrix.M13 + normal.Y * matrix.M23 + normal.Z * matrix.M33;
+      normal.x * matrix.M13 + normal.y * matrix.M23 + normal.z * matrix.M33;
     return new Vector3(x, y, z);
   }
 }

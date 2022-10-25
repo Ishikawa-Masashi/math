@@ -59,9 +59,9 @@ export class Matrix {
    * @param {Vector3} value 值。
    */
   set Backward(value: Vector3) {
-    this.M31 = value.X;
-    this.M32 = value.Y;
-    this.M33 = value.Z;
+    this.M31 = value.x;
+    this.M32 = value.y;
+    this.M33 = value.z;
   }
 
   /**
@@ -77,9 +77,9 @@ export class Matrix {
    * @param {Vector3} value 值。
    */
   set Down(value: Vector3) {
-    this.M21 = -value.X;
-    this.M22 = -value.Y;
-    this.M23 = -value.Z;
+    this.M21 = -value.x;
+    this.M22 = -value.y;
+    this.M23 = -value.z;
   }
 
   /**
@@ -95,9 +95,9 @@ export class Matrix {
    * @param {Vector3} value 值。
    */
   set Forward(value: Vector3) {
-    this.M31 = -value.X;
-    this.M32 = -value.Y;
-    this.M33 = -value.Z;
+    this.M31 = -value.x;
+    this.M32 = -value.y;
+    this.M33 = -value.z;
   }
 
   /**
@@ -113,9 +113,9 @@ export class Matrix {
    * @param {Vector3} value 值。
    */
   set Left(value: Vector3) {
-    this.M11 = -value.X;
-    this.M12 = -value.Y;
-    this.M13 = -value.Z;
+    this.M11 = -value.x;
+    this.M12 = -value.y;
+    this.M13 = -value.z;
   }
 
   /**
@@ -131,9 +131,9 @@ export class Matrix {
    * @param {Vector3} value 值。
    */
   set Right(value: Vector3) {
-    this.M11 = value.X;
-    this.M12 = value.Y;
-    this.M13 = value.Z;
+    this.M11 = value.x;
+    this.M12 = value.y;
+    this.M13 = value.z;
   }
 
   /**
@@ -149,9 +149,9 @@ export class Matrix {
    * @param {Vector3} value 值。
    */
   set Up(value: Vector3) {
-    this.M21 = value.X;
-    this.M22 = value.Y;
-    this.M23 = value.Z;
+    this.M21 = value.x;
+    this.M22 = value.y;
+    this.M23 = value.z;
   }
 
   /**
@@ -167,9 +167,9 @@ export class Matrix {
    * @param {Vector3} value 值。
    */
   set Scale(value: Vector3) {
-    this.M11 = value.X;
-    this.M22 = value.Y;
-    this.M33 = value.Z;
+    this.M11 = value.x;
+    this.M22 = value.y;
+    this.M33 = value.z;
   }
 
   /**
@@ -185,9 +185,9 @@ export class Matrix {
    * @param {Vector3} value 值。
    */
   set Translation(value: Vector3) {
-    this.M41 = value.X;
-    this.M42 = value.Y;
-    this.M43 = value.Z;
+    this.M41 = value.x;
+    this.M42 = value.y;
+    this.M43 = value.z;
   }
 
   static get Identity() {
@@ -306,17 +306,17 @@ export class Matrix {
     let vector = new Vector3();
     let vector2 = new Vector3();
     let vector3 = new Vector3();
-    vector.X = objectPosition.X - cameraPosition.X;
-    vector.Y = objectPosition.Y - cameraPosition.Y;
-    vector.Z = objectPosition.Z - cameraPosition.Z;
+    vector.x = objectPosition.x - cameraPosition.x;
+    vector.y = objectPosition.y - cameraPosition.y;
+    vector.z = objectPosition.z - cameraPosition.z;
     const num = vector.LengthSquared();
     if (num < 0.0001) {
       if (!(cameraForwardVector instanceof Vector3)) {
         vector = Vector3.Forward;
       } else {
-        vector.X = -cameraForwardVector.X;
-        vector.Y = -cameraForwardVector.Y;
-        vector.Z = -cameraForwardVector.Z;
+        vector.x = -cameraForwardVector.x;
+        vector.y = -cameraForwardVector.y;
+        vector.z = -cameraForwardVector.z;
       }
     } else {
       vector = Vector3.Multiply(vector, 1 / Math.sqrt(num));
@@ -324,21 +324,21 @@ export class Matrix {
     vector3 = Vector3.Cross(cameraUpVector, vector);
     vector3.Normalize();
     vector2 = Vector3.Cross(vector, vector3);
-    result.M11 = vector3.X;
-    result.M12 = vector3.Y;
-    result.M13 = vector3.Z;
+    result.M11 = vector3.x;
+    result.M12 = vector3.y;
+    result.M13 = vector3.z;
     result.M14 = 0;
-    result.M21 = vector2.X;
-    result.M22 = vector2.Y;
-    result.M23 = vector2.Z;
+    result.M21 = vector2.x;
+    result.M22 = vector2.y;
+    result.M23 = vector2.z;
     result.M24 = 0;
-    result.M31 = vector.X;
-    result.M32 = vector.Y;
-    result.M33 = vector.Z;
+    result.M31 = vector.x;
+    result.M32 = vector.y;
+    result.M33 = vector.z;
     result.M34 = 0;
-    result.M41 = objectPosition.X;
-    result.M42 = objectPosition.Y;
-    result.M43 = objectPosition.Z;
+    result.M41 = objectPosition.x;
+    result.M42 = objectPosition.y;
+    result.M43 = objectPosition.z;
     result.M44 = 1;
     return result;
   }
@@ -435,9 +435,9 @@ export class Matrix {
    */
   static CreateFromAxisAngle(axis: Vector3, angle: number) {
     const result = new Matrix();
-    const x = axis.X;
-    const y = axis.Y;
-    const z = axis.Z;
+    const x = axis.x;
+    const y = axis.y;
+    const z = axis.z;
     const num2 = Math.sin(angle);
     const num = Math.cos(angle);
     const num11 = x * x;
@@ -472,15 +472,15 @@ export class Matrix {
    */
   static CreateFromQuaternion(quaternion: Quaternion) {
     const result = new Matrix();
-    const num9 = quaternion.X * quaternion.X;
-    const num8 = quaternion.Y * quaternion.Y;
-    const num7 = quaternion.Z * quaternion.Z;
-    const num6 = quaternion.X * quaternion.Y;
-    const num5 = quaternion.Z * quaternion.W;
-    const num4 = quaternion.Z * quaternion.X;
-    const num3 = quaternion.Y * quaternion.W;
-    const num2 = quaternion.Y * quaternion.Z;
-    const num = quaternion.X * quaternion.W;
+    const num9 = quaternion.x * quaternion.x;
+    const num8 = quaternion.y * quaternion.y;
+    const num7 = quaternion.z * quaternion.z;
+    const num6 = quaternion.x * quaternion.y;
+    const num5 = quaternion.z * quaternion.w;
+    const num4 = quaternion.z * quaternion.x;
+    const num3 = quaternion.y * quaternion.w;
+    const num2 = quaternion.y * quaternion.z;
+    const num = quaternion.x * quaternion.w;
     result.M11 = 1 - 2 * (num8 + num7);
     result.M12 = 2 * (num6 + num5);
     result.M13 = 2 * (num4 - num3);
@@ -531,17 +531,17 @@ export class Matrix {
     );
     const vector2 = Vector3.Normalize(Vector3.Cross(cameraUpVector, vector));
     const vector3 = Vector3.Cross(vector, vector2);
-    result.M11 = vector2.X;
-    result.M12 = vector3.X;
-    result.M13 = vector.X;
+    result.M11 = vector2.x;
+    result.M12 = vector3.x;
+    result.M13 = vector.x;
     result.M14 = 0;
-    result.M21 = vector2.Y;
-    result.M22 = vector3.Y;
-    result.M23 = vector.Y;
+    result.M21 = vector2.y;
+    result.M22 = vector3.y;
+    result.M23 = vector.y;
     result.M24 = 0;
-    result.M31 = vector2.Z;
-    result.M32 = vector3.Z;
-    result.M33 = vector.Z;
+    result.M31 = vector2.z;
+    result.M32 = vector3.z;
+    result.M33 = vector.z;
     result.M34 = 0;
     result.M41 = -Vector3.Dot(vector2, cameraPosition);
     result.M42 = -Vector3.Dot(vector3, cameraPosition);
@@ -767,9 +767,9 @@ export class Matrix {
     const result = new Matrix();
     const plane = Plane.Normalize(value);
     value.Normalize();
-    const x = plane.Normal.X;
-    const y = plane.Normal.Y;
-    const z = plane.Normal.Z;
+    const x = plane.Normal.x;
+    const y = plane.Normal.y;
+    const z = plane.Normal.z;
     const num3 = -2 * x;
     const num2 = -2 * y;
     const num = -2 * z;
@@ -962,29 +962,29 @@ export class Matrix {
     const result = new Matrix();
     plane = Plane.Normalize(plane);
     const dot =
-      plane.Normal.X * lightDirection.X +
-      plane.Normal.Y * lightDirection.Y +
-      plane.Normal.Z * lightDirection.Z;
-    const x = -plane.Normal.X;
-    const y = -plane.Normal.Y;
-    const z = -plane.Normal.Z;
+      plane.Normal.x * lightDirection.x +
+      plane.Normal.y * lightDirection.y +
+      plane.Normal.z * lightDirection.z;
+    const x = -plane.Normal.x;
+    const y = -plane.Normal.y;
+    const z = -plane.Normal.z;
     const d = -plane.D;
 
-    result.M11 = x * lightDirection.X + dot;
-    result.M12 = x * lightDirection.Y;
-    result.M13 = x * lightDirection.Z;
+    result.M11 = x * lightDirection.x + dot;
+    result.M12 = x * lightDirection.y;
+    result.M13 = x * lightDirection.z;
     result.M14 = 0;
-    result.M21 = y * lightDirection.X;
-    result.M22 = y * lightDirection.Y + dot;
-    result.M23 = y * lightDirection.Z;
+    result.M21 = y * lightDirection.x;
+    result.M22 = y * lightDirection.y + dot;
+    result.M23 = y * lightDirection.z;
     result.M24 = 0;
-    result.M31 = z * lightDirection.X;
-    result.M32 = z * lightDirection.Y;
-    result.M33 = z * lightDirection.Z + dot;
+    result.M31 = z * lightDirection.x;
+    result.M32 = z * lightDirection.y;
+    result.M33 = z * lightDirection.z + dot;
     result.M34 = 0;
-    result.M41 = d * lightDirection.X;
-    result.M42 = d * lightDirection.Y;
-    result.M43 = d * lightDirection.Z;
+    result.M41 = d * lightDirection.x;
+    result.M42 = d * lightDirection.y;
+    result.M43 = d * lightDirection.z;
     result.M44 = dot;
     return result;
   }
@@ -1148,9 +1148,9 @@ export class Matrix {
    * @returns {Boolean} 是否可以被分解
    */
   Decompose(scale: Vector3, rotation: Quaternion, translation: Vector3) {
-    translation.X = this.M41;
-    translation.Y = this.M42;
-    translation.Z = this.M43;
+    translation.x = this.M41;
+    translation.y = this.M42;
+    translation.z = this.M43;
 
     const xs =
       Math.sign(this.M11 * this.M12 * this.M13 * this.M14) < 0 ? -1 : 1;
@@ -1159,43 +1159,43 @@ export class Matrix {
     const zs =
       Math.sign(this.M31 * this.M32 * this.M33 * this.M34) < 0 ? -1 : 1;
 
-    scale.X =
+    scale.x =
       xs *
       Math.sqrt(
         this.M11 * this.M11 + this.M12 * this.M12 + this.M13 * this.M13
       );
-    scale.Y =
+    scale.y =
       ys *
       Math.sqrt(
         this.M21 * this.M21 + this.M22 * this.M22 + this.M23 * this.M23
       );
-    scale.Z =
+    scale.z =
       zs *
       Math.sqrt(
         this.M31 * this.M31 + this.M32 * this.M32 + this.M33 * this.M33
       );
 
-    if (scale.X == 0.0 || scale.Y == 0.0 || scale.Z == 0.0) {
+    if (scale.x == 0.0 || scale.y == 0.0 || scale.z == 0.0) {
       const quaternion = Quaternion.Identity;
-      rotation.X = quaternion.X;
-      rotation.Y = quaternion.Y;
-      rotation.Z = quaternion.Z;
-      rotation.W = quaternion.W;
+      rotation.x = quaternion.x;
+      rotation.y = quaternion.y;
+      rotation.z = quaternion.z;
+      rotation.w = quaternion.w;
       return false;
     }
 
     const m1 = new Matrix(
-      this.M11 / scale.X,
-      this.M12 / scale.X,
-      this.M13 / scale.X,
+      this.M11 / scale.x,
+      this.M12 / scale.x,
+      this.M13 / scale.x,
       0,
-      this.M21 / scale.Y,
-      this.M22 / scale.Y,
-      this.M23 / scale.Y,
+      this.M21 / scale.y,
+      this.M22 / scale.y,
+      this.M23 / scale.y,
       0,
-      this.M31 / scale.Z,
-      this.M32 / scale.Z,
-      this.M33 / scale.Z,
+      this.M31 / scale.z,
+      this.M32 / scale.z,
+      this.M33 / scale.z,
       0,
       0,
       0,
@@ -1204,10 +1204,10 @@ export class Matrix {
     );
 
     const quaternion = Quaternion.CreateFromRotationMatrix(m1);
-    rotation.X = quaternion.X;
-    rotation.Y = quaternion.Y;
-    rotation.Z = quaternion.Z;
-    rotation.W = quaternion.W;
+    rotation.x = quaternion.x;
+    rotation.y = quaternion.y;
+    rotation.z = quaternion.z;
+    rotation.w = quaternion.w;
     return true;
   }
 
@@ -1823,19 +1823,19 @@ export class Matrix {
    * @returns {Matrix}
    */
   static Transform(value: Matrix, rotation: Quaternion) {
-    const x2 = rotation.X + rotation.X;
-    const y2 = rotation.Y + rotation.Y;
-    const z2 = rotation.Z + rotation.Z;
+    const x2 = rotation.x + rotation.x;
+    const y2 = rotation.y + rotation.y;
+    const z2 = rotation.z + rotation.z;
 
-    const wx2 = rotation.W * x2;
-    const wy2 = rotation.W * y2;
-    const wz2 = rotation.W * z2;
-    const xx2 = rotation.X * x2;
-    const xy2 = rotation.X * y2;
-    const xz2 = rotation.X * z2;
-    const yy2 = rotation.Y * y2;
-    const yz2 = rotation.Y * z2;
-    const zz2 = rotation.Z * z2;
+    const wx2 = rotation.w * x2;
+    const wy2 = rotation.w * y2;
+    const wz2 = rotation.w * z2;
+    const xx2 = rotation.x * x2;
+    const xy2 = rotation.x * y2;
+    const xz2 = rotation.x * z2;
+    const yy2 = rotation.y * y2;
+    const yz2 = rotation.y * z2;
+    const zz2 = rotation.z * z2;
 
     const q11 = 1.0 - yy2 - zz2;
     const q21 = xy2 - wz2;

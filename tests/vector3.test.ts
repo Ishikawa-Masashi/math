@@ -6,9 +6,9 @@ import { getRandomVector3 } from './utils';
 describe('Vector3', () => {
   it('初期化テスト', () => {
     const a = new Vector3();
-    expect(a.X).toEqual(0);
-    expect(a.Y).toEqual(0);
-    expect(a.Z).toEqual(0);
+    expect(a.x).toEqual(0);
+    expect(a.y).toEqual(0);
+    expect(a.z).toEqual(0);
   });
 
   // it('add', () => {

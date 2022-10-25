@@ -611,6 +611,83 @@ export class Matrix {
   }
 
   /**
+   * Gets a new rotation matrix used to rotate an entity so as it looks at the target vector3, from the eye vector3 position, the up vector3 being oriented like "up"
+   * This function works in right handed mode
+   * @param eye defines the final position of the entity
+   * @param target defines where the entity should look at
+   * @param up defines the up vector for the entity
+   * @returns the new matrix
+   */
+  public static LookAtRH(eye: Vector3, target: Vector3, up: Vector3): Matrix {
+    const result = new Matrix();
+    Matrix.LookAtRHToRef(eye, target, up, result);
+    return result;
+  }
+
+  /**
+   * Sets the given "result" Matrix to a rotation matrix used to rotate an entity so that it looks at the target vector3, from the eye vector3 position, the up vector3 being oriented like "up".
+   * This function works in right handed mode
+   * @param eye defines the final position of the entity
+   * @param target defines where the entity should look at
+   * @param up defines the up vector for the entity
+   * @param result defines the target matrix
+   * @returns result input
+   */
+  public static LookAtRHToRef(
+    eye: Vector3,
+    target: Vector3,
+    up: Vector3,
+    result: Matrix
+  ) {
+    const xAxis = MathTmp.Vector3[0];
+    const yAxis = MathTmp.Vector3[1];
+    const zAxis = MathTmp.Vector3[2];
+
+    // Z axis
+    eye.subtractToRef(target, zAxis);
+    zAxis.normalize();
+
+    // X axis
+    Vector3.CrossToRef(up, zAxis, xAxis);
+
+    const xSquareLength = xAxis.lengthSquared();
+    if (xSquareLength === 0) {
+      xAxis.x = 1.0;
+    } else {
+      xAxis.normalizeFromLength(Math.sqrt(xSquareLength));
+    }
+
+    // Y axis
+    Vector3.CrossToRef(zAxis, xAxis, yAxis);
+    yAxis.normalize();
+
+    // Eye angles
+    const ex = -Vector3.Dot(xAxis, eye);
+    const ey = -Vector3.Dot(yAxis, eye);
+    const ez = -Vector3.Dot(zAxis, eye);
+
+    Matrix.FromValuesToRef(
+      xAxis.x,
+      yAxis.x,
+      zAxis.x,
+      0.0,
+      xAxis.y,
+      yAxis.y,
+      zAxis.y,
+      0.0,
+      xAxis.z,
+      yAxis.z,
+      zAxis.z,
+      0.0,
+      ex,
+      ey,
+      ez,
+      1.0,
+      result
+    );
+    return result;
+  }
+  /**
    * 构建一个正交投影矩阵。
    * @static
    * @param {Number} width 视图体积宽度。
@@ -718,6 +795,62 @@ export class Matrix {
       (nearPlaneDistance * farPlaneDistance) /
       (nearPlaneDistance - farPlaneDistance);
     return result;
+  }
+
+  /**
+   * Creates a left-handed perspective projection matrix
+   * @param width defines the viewport width
+   * @param height defines the viewport height
+   * @param znear defines the near clip plane
+   * @param zfar defines the far clip plane
+   * @param halfZRange true to generate NDC coordinates between 0 and 1 instead of -1 and 1 (default: false)
+   * @param projectionPlaneTilt optional tilt angle of the projection plane around the X axis (horizontal)
+   * @returns a new matrix as a left-handed perspective projection matrix
+   */
+  public static PerspectiveLH(
+    width: number,
+    height: number,
+    znear: number,
+    zfar: number,
+    halfZRange?: boolean,
+    projectionPlaneTilt = 0
+  ): Matrix {
+    const matrix = new Matrix();
+
+    const n = znear;
+    const f = zfar;
+
+    const a = (2.0 * n) / width;
+    const b = (2.0 * n) / height;
+    const c = (f + n) / (f - n);
+    const d = (-2.0 * f * n) / (f - n);
+    const rot = Math.tan(projectionPlaneTilt);
+
+    Matrix.FromValuesToRef(
+      a,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      b,
+      0.0,
+      rot,
+      0.0,
+      0.0,
+      c,
+      1.0,
+      0.0,
+      0.0,
+      d,
+      0.0,
+      matrix
+    );
+
+    if (halfZRange) {
+      matrix.multiplyToRef(mtxConvertNDCToHalfZRange, matrix);
+    }
+
+    return matrix;
   }
 
   /**

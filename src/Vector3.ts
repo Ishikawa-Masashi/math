@@ -109,6 +109,39 @@ export class Vector3 {
   static get Backward() {
     return new Vector3(0, 0, 1);
   }
+  /**
+   * Creates a new Vector3 copied from the current Vector3
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#11
+   * @returns the new Vector3
+   */
+  public clone() {
+    return new Vector3(this.x, this.y, this.z);
+  }
+
+  /**
+   * Copies the given vector coordinates to the current Vector3 ones
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#12
+   * @param source defines the source Vector3
+   * @returns the current updated Vector3
+   */
+  public copyFrom(source: Vector3): this {
+    return this.copyFromFloats(source.x, source.y, source.z);
+  }
+
+  /**
+   * Copies the given floats to the current Vector3 coordinates
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#13
+   * @param x defines the x coordinate of the operand
+   * @param y defines the y coordinate of the operand
+   * @param z defines the z coordinate of the operand
+   * @returns the current updated Vector3
+   */
+  public copyFromFloats(x: number, y: number, z: number): this {
+    this.x = x;
+    this.y = y;
+    this.z = z;
+    return this;
+  }
 
   /**
    * 将两个矢量相加。
@@ -189,17 +222,48 @@ export class Vector3 {
     );
   }
 
+  // /**
+  //  * 计算两个矢量的叉积。
+  //  * @param {Vector3} vector1 源矢量。
+  //  * @param {Vector3} vector2 源矢量。
+  //  * @return {Vector3}
+  //  */
+  // static Cross(vector1: Vector3, vector2: Vector3) {
+  //   const x = vector1.y * vector2.z - vector2.y * vector1.z;
+  //   const y = -(vector1.x * vector2.z - vector2.x * vector1.z);
+  //   const z = vector1.x * vector2.y - vector2.x * vector1.y;
+  //   return new Vector3(x, y, z);
+  // }
+
   /**
-   * 计算两个矢量的叉积。
-   * @param {Vector3} vector1 源矢量。
-   * @param {Vector3} vector2 源矢量。
-   * @return {Vector3}
+   * Returns a new Vector3 as the cross product of the vectors "left" and "right"
+   * The cross product is then orthogonal to both "left" and "right"
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#15
+   * @param left defines the left operand
+   * @param right defines the right operand
+   * @returns the cross product
    */
-  static Cross(vector1: Vector3, vector2: Vector3) {
-    const x = vector1.y * vector2.z - vector2.y * vector1.z;
-    const y = -(vector1.x * vector2.z - vector2.x * vector1.z);
-    const z = vector1.x * vector2.y - vector2.x * vector1.y;
-    return new Vector3(x, y, z);
+  public static Cross(left: Vector3, right: Vector3) {
+    const result = new Vector3();
+    Vector3.CrossToRef(left, right, result);
+    return result;
+  }
+
+  /**
+   * Sets the given vector "result" with the cross product of "left" and "right"
+   * The cross product is then orthogonal to both "left" and "right"
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#78
+   * @param left defines the left operand
+   * @param right defines the right operand
+   * @param result defines the Vector3 where to store the result
+   * @returns result input
+   */
+  public static CrossToRef(left: Vector3, right: Vector3, result: Vector3) {
+    const x = left.y * right.z - left.z * right.y;
+    const y = left.z * right.x - left.x * right.z;
+    const z = left.x * right.y - left.y * right.x;
+    result.copyFromFloats(x, y, z);
+    return result;
   }
 
   /**
@@ -376,6 +440,19 @@ export class Vector3 {
   }
 
   /**
+   * Multiplies the Vector3 coordinates by the float "scale"
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#56
+   * @param scale defines the multiplier factor
+   * @returns the current updated Vector3
+   */
+  public scaleInPlace(scale: number): this {
+    this.x *= scale;
+    this.y *= scale;
+    this.z *= scale;
+    return this;
+  }
+
+  /**
    * 返回指向反方向的矢量。
    * @static
    * @param {Vector3} value 源矢量。
@@ -408,6 +485,49 @@ export class Vector3 {
     this.z *= factor;
   }
 
+  // Properties
+  /**
+   * Gets the length of the Vector3
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#25
+   * @returns the length of the Vector3
+   */
+  public length(): number {
+    return Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
+  }
+
+  /**
+   * Gets the squared length of the Vector3
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#26
+   * @returns squared length of the Vector3
+   */
+  public lengthSquared(): number {
+    return this.x * this.x + this.y * this.y + this.z * this.z;
+  }
+
+  /**
+   * Normalize the current Vector3 with the given input length.
+   * Please note that this is an in place operation.
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#123
+   * @param len the length of the vector
+   * @returns the current updated Vector3
+   */
+  public normalizeFromLength(len: number): this {
+    if (len === 0 || len === 1.0) {
+      return this;
+    }
+
+    return this.scaleInPlace(1.0 / len);
+  }
+
+  /**
+   * Normalize the current Vector3.
+   * Please note that this is an in place operation.
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#122
+   * @returns the current updated Vector3
+   */
+  public normalize(): this {
+    return this.normalizeFromLength(this.length());
+  }
   /**
    * 返回具有指定法线的表面的矢量反射。
    * @static
@@ -454,6 +574,66 @@ export class Vector3 {
       value1.y - value2.y,
       value1.z - value2.z
     );
+  }
+
+  /**
+   * Returns a new Vector3, result of the subtraction of the given vector from the current Vector3
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#60
+   * @param otherVector defines the second operand
+   * @returns the resulting Vector3
+   */
+  public subtract(otherVector: Vector3) {
+    return new Vector3(
+      this.x - otherVector.x,
+      this.y - otherVector.y,
+      this.z - otherVector.z
+    );
+  }
+
+  /**
+   * Subtracts the given vector from the current Vector3 and stores the result in the vector "result".
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#63
+   * @param otherVector defines the second operand
+   * @param result defines the Vector3 object where to store the result
+   * @returns the result
+   */
+  public subtractToRef(otherVector: Vector3, result: Vector3) {
+    return this.subtractFromFloatsToRef(
+      otherVector.x,
+      otherVector.y,
+      otherVector.z,
+      result
+    );
+  }
+
+  /**
+   * Returns a new Vector3 set with the subtraction of the given floats from the current Vector3 coordinates
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#62
+   * @param x defines the x coordinate of the operand
+   * @param y defines the y coordinate of the operand
+   * @param z defines the z coordinate of the operand
+   * @returns the resulting Vector3
+   */
+  public subtractFromFloats(x: number, y: number, z: number) {
+    return new Vector3(this.x - x, this.y - y, this.z - z);
+  }
+
+  /**
+   * Subtracts the given floats from the current Vector3 coordinates and set the given vector "result" with this result
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#64
+   * @param x defines the x coordinate of the operand
+   * @param y defines the y coordinate of the operand
+   * @param z defines the z coordinate of the operand
+   * @param result defines the Vector3 object where to store the result
+   * @returns the result
+   */
+  public subtractFromFloatsToRef<T extends Vector3>(
+    x: number,
+    y: number,
+    z: number,
+    result: T
+  ): T {
+    return result.copyFromFloats(this.x - x, this.y - y, this.z - z);
   }
 
   ToString() {

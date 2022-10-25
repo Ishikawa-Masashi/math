@@ -796,15 +796,8 @@ export class Matrix {
    * @returns {Matrix}
    */
   static CreateRotationX(radians: number) {
-    const result = Matrix.Identity;
-
-    const val1 = Math.cos(radians);
-    const val2 = Math.sin(radians);
-
-    result.M22 = val1;
-    result.M23 = val2;
-    result.M32 = -val2;
-    result.M33 = val1;
+    const result = new Matrix();
+    Matrix.RotationXToRef(radians, result);
     return result;
   }
 

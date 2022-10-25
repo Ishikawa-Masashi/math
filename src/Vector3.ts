@@ -49,12 +49,11 @@ export class Vector3 {
   }
 
   /**
-   * 返回所有组件均设置为零的 Vector3。
-   * @static
-   * @returns {Vector3}
+   * Returns a new Vector3 set to (0.0, 0.0, 0.0)
+   * @returns a new empty Vector3
    */
-  static get Zero() {
-    return new Vector3(0, 0, 0);
+  public static get Zero(): Vector3 {
+    return new Vector3(0.0, 0.0, 0.0);
   }
 
   /**
@@ -488,6 +487,23 @@ export class Vector3 {
   }
 
   /**
+   * Returns a new Vector3 set with the result of the transformation by the given matrix of the given vector.
+   * This method computes transformed coordinates only, not transformed direction vectors (ie. it takes translation in account)
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#111
+   * @param vector defines the Vector3 to transform
+   * @param transformation defines the transformation matrix
+   * @returns the transformed Vector3
+   */
+  public static TransformCoordinates(
+    vector: Vector3,
+    transformation: Matrix
+  ): Vector3 {
+    const result = Vector3.Zero;
+    Vector3.TransformCoordinatesToRef(vector, transformation, result);
+    return result;
+  }
+
+  /**
    * Sets the given vector "result" coordinates with the result of the transformation by the given matrix of the given vector
    * This method computes transformed coordinates only, not transformed direction vectors (ie. it takes translation in account)
    * Example Playground https://playground.babylonjs.com/#R1F8YU#113
@@ -529,7 +545,6 @@ export class Vector3 {
     transformation: Matrix,
     result: Vector3
   ) {
-    // const m = transformation.m;
     const {
       M11,
       M12,
@@ -548,7 +563,6 @@ export class Vector3 {
       M43,
       M44,
     } = transformation;
-    // const rx = x * m[0] + y * m[4] + z * m[8] + m[12];
     const rx = x * M11 + y * M21 + z * M31 + M41;
     const ry = x * M12 + y * M22 + z * M32 + M42;
     const rz = x * M13 + y * M23 + z * M33 + M43;

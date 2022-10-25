@@ -1225,6 +1225,81 @@ export class Matrix {
   }
 
   /**
+   * Inverts the current matrix in place
+   * @returns the current inverted matrix
+   */
+  public invert(): this {
+    this.invertToRef(this);
+    return this;
+  }
+
+  /**
+   * Sets the given matrix to the current inverted Matrix
+   * @param other defines the target matrix
+   * @returns result input
+   */
+  invertToRef(other: Matrix) {
+    const num1 = this.M11;
+    const num2 = this.M12;
+    const num3 = this.M13;
+    const num4 = this.M14;
+    const num5 = this.M21;
+    const num6 = this.M22;
+    const num7 = this.M23;
+    const num8 = this.M24;
+    const num9 = this.M31;
+    const num10 = this.M32;
+    const num11 = this.M33;
+    const num12 = this.M34;
+    const num13 = this.M41;
+    const num14 = this.M42;
+    const num15 = this.M43;
+    const num16 = this.M44;
+    const num17 = num11 * num16 - num12 * num15;
+    const num18 = num10 * num16 - num12 * num14;
+    const num19 = num10 * num15 - num11 * num14;
+    const num20 = num9 * num16 - num12 * num13;
+    const num21 = num9 * num15 - num11 * num13;
+    const num22 = num9 * num14 - num10 * num13;
+    const num23 = num6 * num17 - num7 * num18 + num8 * num19;
+    const num24 = -(num5 * num17 - num7 * num20 + num8 * num21);
+    const num25 = num5 * num18 - num6 * num20 + num8 * num22;
+    const num26 = -(num5 * num19 - num6 * num21 + num7 * num22);
+    const num27 =
+      1.0 / (num1 * num23 + num2 * num24 + num3 * num25 + num4 * num26);
+
+    other.M11 = num23 * num27;
+    other.M21 = num24 * num27;
+    other.M31 = num25 * num27;
+    other.M41 = num26 * num27;
+    other.M12 = -(num2 * num17 - num3 * num18 + num4 * num19) * num27;
+    other.M22 = (num1 * num17 - num3 * num20 + num4 * num21) * num27;
+    other.M32 = -(num1 * num18 - num2 * num20 + num4 * num22) * num27;
+    other.M42 = (num1 * num19 - num2 * num21 + num3 * num22) * num27;
+    const num28 = num7 * num16 - num8 * num15;
+    const num29 = num6 * num16 - num8 * num14;
+    const num30 = num6 * num15 - num7 * num14;
+    const num31 = num5 * num16 - num8 * num13;
+    const num32 = num5 * num15 - num7 * num13;
+    const num33 = num5 * num14 - num6 * num13;
+    other.M13 = (num2 * num28 - num3 * num29 + num4 * num30) * num27;
+    other.M23 = -(num1 * num28 - num3 * num31 + num4 * num32) * num27;
+    other.M33 = (num1 * num29 - num2 * num31 + num4 * num33) * num27;
+    other.M43 = -(num1 * num30 - num2 * num32 + num3 * num33) * num27;
+    const num34 = num7 * num12 - num8 * num11;
+    const num35 = num6 * num12 - num8 * num10;
+    const num36 = num6 * num11 - num7 * num10;
+    const num37 = num5 * num12 - num8 * num9;
+    const num38 = num5 * num11 - num7 * num9;
+    const num39 = num5 * num10 - num6 * num9;
+    other.M14 = -(num2 * num34 - num3 * num35 + num4 * num36) * num27;
+    other.M24 = (num1 * num34 - num3 * num37 + num4 * num38) * num27;
+    other.M34 = -(num1 * num35 - num2 * num37 + num4 * num39) * num27;
+    other.M44 = (num1 * num36 - num2 * num38 + num3 * num39) * num27;
+    return other;
+  }
+
+  /**
    * 计算矩阵的逆矩阵。
    * @static
    * @param {Matrix} matrix 源矩阵。

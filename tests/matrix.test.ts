@@ -79,6 +79,18 @@ describe('Matrix', () => {
     ).toBeTruthy();
   });
 
+  it('invert', () => {
+    const angle = getRandomFloat();
+
+    const a = Matrix.CreateRotationX(angle);
+    const b = BABYLON.Matrix.FromArray(getArrayFromMatrix(a));
+
+    a.invert();
+    b.invert();
+
+    equalsWithEpsilon(a, b);
+  });
+
   it('Invert', () => {
     const angle = getRandomFloat();
     const a = Matrix.CreateRotationX(angle);

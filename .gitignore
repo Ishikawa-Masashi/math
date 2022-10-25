@@ -2,4 +2,5 @@
 /dist
 /types
 
+package-lock.json
 yarn.lock

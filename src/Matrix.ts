@@ -192,6 +192,67 @@ export class Matrix {
   }
 
   /**
+   * Stores a list of values (16) inside a given matrix
+   * @param initialM11 defines 1st value of 1st row
+   * @param initialM12 defines 2nd value of 1st row
+   * @param initialM13 defines 3rd value of 1st row
+   * @param initialM14 defines 4th value of 1st row
+   * @param initialM21 defines 1st value of 2nd row
+   * @param initialM22 defines 2nd value of 2nd row
+   * @param initialM23 defines 3rd value of 2nd row
+   * @param initialM24 defines 4th value of 2nd row
+   * @param initialM31 defines 1st value of 3rd row
+   * @param initialM32 defines 2nd value of 3rd row
+   * @param initialM33 defines 3rd value of 3rd row
+   * @param initialM34 defines 4th value of 3rd row
+   * @param initialM41 defines 1st value of 4th row
+   * @param initialM42 defines 2nd value of 4th row
+   * @param initialM43 defines 3rd value of 4th row
+   * @param initialM44 defines 4th value of 4th row
+   * @param result defines the target matrix
+   * @returns result input
+   */
+  public static FromValuesToRef(
+    initialM11: number,
+    initialM12: number,
+    initialM13: number,
+    initialM14: number,
+    initialM21: number,
+    initialM22: number,
+    initialM23: number,
+    initialM24: number,
+    initialM31: number,
+    initialM32: number,
+    initialM33: number,
+    initialM34: number,
+    initialM41: number,
+    initialM42: number,
+    initialM43: number,
+    initialM44: number,
+    result: Matrix
+  ): void {
+    result.M11 = initialM11;
+    result.M12 = initialM12;
+    result.M13 = initialM13;
+    result.M14 = initialM14;
+
+    result.M21 = initialM21;
+    result.M22 = initialM22;
+    result.M23 = initialM23;
+    result.M24 = initialM24;
+
+    result.M31 = initialM31;
+    result.M32 = initialM32;
+    result.M33 = initialM33;
+    result.M34 = initialM34;
+
+    result.M41 = initialM41;
+    result.M42 = initialM42;
+    result.M43 = initialM43;
+    result.M44 = initialM44;
+  }
+
+  /**
    * 将一个矩阵添加到另一个矩阵。
    * @static
    * @param {Matrix} matrix1 源矩阵。

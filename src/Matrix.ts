@@ -809,6 +809,38 @@ export class Matrix {
   }
 
   /**
+   * Creates a new rotation matrix for "angle" radians around the X axis and stores it in a given matrix
+   * @param angle defines the angle (in radians) to use
+   * @param result defines the target matrix
+   * @returns result input
+   */
+  public static RotationXToRef(angle: number, result: Matrix) {
+    const s = Math.sin(angle);
+    const c = Math.cos(angle);
+    Matrix.FromValuesToRef(
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      c,
+      s,
+      0.0,
+      0.0,
+      -s,
+      c,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      result
+    );
+
+    return result;
+  }
+
+  /**
    * 返回一个可绕 y 轴旋转一组顶点的矩阵。
    * @static
    * @param {Number} radians 绕 y 轴旋转的程度，以弧度计。请注意，您可以使用 ToRadians 将角度转换为弧度。

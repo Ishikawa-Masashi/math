@@ -790,14 +790,13 @@ export class Matrix {
   }
 
   /**
-   * 返回一个可绕 x 轴旋转一组顶点的矩阵。
-   * @static
-   * @param {Number} radians 绕 x 轴旋转的程度，以弧度计。请注意，您可以使用 ToRadians 将角度转换为弧度。
-   * @returns {Matrix}
+   * Creates a new rotation matrix for "angle" radians around the X axis
+   * @param angle defines the angle (in radians) to use
+   * @returns the new matrix
    */
-  static CreateRotationX(radians: number) {
+  static CreateRotationX(angle: number) {
     const result = new Matrix();
-    Matrix.RotationXToRef(radians, result);
+    Matrix.RotationXToRef(angle, result);
     return result;
   }
 
@@ -1363,6 +1362,121 @@ export class Matrix {
       matrix1.M42 * matrix2.M24 +
       matrix1.M43 * matrix2.M34 +
       matrix1.M44 * matrix2.M44;
+    result.M11 = m11;
+    result.M12 = m12;
+    result.M13 = m13;
+    result.M14 = m14;
+    result.M21 = m21;
+    result.M22 = m22;
+    result.M23 = m23;
+    result.M24 = m24;
+    result.M31 = m31;
+    result.M32 = m32;
+    result.M33 = m33;
+    result.M34 = m34;
+    result.M41 = m41;
+    result.M42 = m42;
+    result.M43 = m43;
+    result.M44 = m44;
+    return result;
+  }
+
+  /**
+   * Multiply two matrices
+   * @param other defines the second operand
+   * @returns a new matrix set with the multiplication result of the current Matrix and the given one
+   */
+  public multiply(other: Matrix): this {
+    this.multiplyToRef(other, this);
+    return this;
+  }
+  /**
+   * Sets the given matrix "result" with the multiplication result of the current Matrix and the given one
+   * @param other defines the second operand
+   * @param result defines the matrix where to store the multiplication
+   * @returns result input
+   */
+  public multiplyToRef(other: Matrix, result: Matrix) {
+    const m11 =
+      other.M11 * result.M11 +
+      other.M12 * result.M21 +
+      other.M13 * result.M31 +
+      other.M14 * result.M41;
+    const m12 =
+      other.M11 * result.M12 +
+      other.M12 * result.M22 +
+      other.M13 * result.M32 +
+      other.M14 * result.M42;
+    const m13 =
+      other.M11 * result.M13 +
+      other.M12 * result.M23 +
+      other.M13 * result.M33 +
+      other.M14 * result.M43;
+    const m14 =
+      other.M11 * result.M14 +
+      other.M12 * result.M24 +
+      other.M13 * result.M34 +
+      other.M14 * result.M44;
+    const m21 =
+      other.M21 * result.M11 +
+      other.M22 * result.M21 +
+      other.M23 * result.M31 +
+      other.M24 * result.M41;
+    const m22 =
+      other.M21 * result.M12 +
+      other.M22 * result.M22 +
+      other.M23 * result.M32 +
+      other.M24 * result.M42;
+    const m23 =
+      other.M21 * result.M13 +
+      other.M22 * result.M23 +
+      other.M23 * result.M33 +
+      other.M24 * result.M43;
+    const m24 =
+      other.M21 * result.M14 +
+      other.M22 * result.M24 +
+      other.M23 * result.M34 +
+      other.M24 * result.M44;
+    const m31 =
+      other.M31 * result.M11 +
+      other.M32 * result.M21 +
+      other.M33 * result.M31 +
+      other.M34 * result.M41;
+    const m32 =
+      other.M31 * result.M12 +
+      other.M32 * result.M22 +
+      other.M33 * result.M32 +
+      other.M34 * result.M42;
+    const m33 =
+      other.M31 * result.M13 +
+      other.M32 * result.M23 +
+      other.M33 * result.M33 +
+      other.M34 * result.M43;
+    const m34 =
+      other.M31 * result.M14 +
+      other.M32 * result.M24 +
+      other.M33 * result.M34 +
+      other.M34 * result.M44;
+    const m41 =
+      other.M41 * result.M11 +
+      other.M42 * result.M21 +
+      other.M43 * result.M31 +
+      other.M44 * result.M41;
+    const m42 =
+      other.M41 * result.M12 +
+      other.M42 * result.M22 +
+      other.M43 * result.M32 +
+      other.M44 * result.M42;
+    const m43 =
+      other.M41 * result.M13 +
+      other.M42 * result.M23 +
+      other.M43 * result.M33 +
+      other.M44 * result.M43;
+    const m44 =
+      other.M41 * result.M14 +
+      other.M42 * result.M24 +
+      other.M43 * result.M34 +
+      other.M44 * result.M44;
     result.M11 = m11;
     result.M12 = m12;
     result.M13 = m13;

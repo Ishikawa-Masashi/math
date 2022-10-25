@@ -43,6 +43,26 @@ describe('Matrix', () => {
     ).toBeTruthy();
   });
 
+  it('multiply', () => {
+    const array1 = getRandomArray(16);
+    const array2 = getRandomArray(16);
+    const a = getRandomMatrixFromArray(array1);
+    const b = getRandomMatrixFromArray(array2);
+    const value1 = a.multiply(b);
+
+    const c = BABYLON.Matrix.FromArray(array1);
+    const d = BABYLON.Matrix.FromArray(array2);
+    const value2 = c.multiply(d);
+
+    expect(
+      value2.equals(BABYLON.Matrix.FromArray(getArrayFromMatrix(a)))
+    ).toBeTruthy();
+
+    expect(
+      value2.equals(BABYLON.Matrix.FromArray(getArrayFromMatrix(value1)))
+    ).toBeTruthy();
+  });
+
   it('Multiply', () => {
     const array1 = getRandomArray(16);
     const array2 = getRandomArray(16);

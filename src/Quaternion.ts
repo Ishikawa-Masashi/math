@@ -120,48 +120,48 @@ export class Quaternion {
     const quaternion = new Quaternion();
     let sqrt;
     let half;
-    const scale = matrix.M11 + matrix.M22 + matrix.M33;
+    const scale = matrix.m11 + matrix.m22 + matrix.m33;
 
     if (scale > 0.0) {
       sqrt = Math.sqrt(scale + 1.0);
       quaternion.w = sqrt * 0.5;
       sqrt = 0.5 / sqrt;
 
-      quaternion.x = (matrix.M23 - matrix.M32) * sqrt;
-      quaternion.y = (matrix.M31 - matrix.M13) * sqrt;
-      quaternion.z = (matrix.M12 - matrix.M21) * sqrt;
+      quaternion.x = (matrix.m23 - matrix.m32) * sqrt;
+      quaternion.y = (matrix.m31 - matrix.m13) * sqrt;
+      quaternion.z = (matrix.m12 - matrix.m21) * sqrt;
 
       return quaternion;
     }
-    if (matrix.M11 >= matrix.M22 && matrix.M11 >= matrix.M33) {
-      sqrt = Math.sqrt(1.0 + matrix.M11 - matrix.M22 - matrix.M33);
+    if (matrix.m11 >= matrix.m22 && matrix.m11 >= matrix.m33) {
+      sqrt = Math.sqrt(1.0 + matrix.m11 - matrix.m22 - matrix.m33);
       half = 0.5 / sqrt;
 
       quaternion.x = 0.5 * sqrt;
-      quaternion.y = (matrix.M12 + matrix.M21) * half;
-      quaternion.z = (matrix.M13 + matrix.M31) * half;
-      quaternion.w = (matrix.M23 - matrix.M32) * half;
+      quaternion.y = (matrix.m12 + matrix.m21) * half;
+      quaternion.z = (matrix.m13 + matrix.m31) * half;
+      quaternion.w = (matrix.m23 - matrix.m32) * half;
 
       return quaternion;
     }
-    if (matrix.M22 > matrix.M33) {
-      sqrt = Math.sqrt(1.0 + matrix.M22 - matrix.M11 - matrix.M33);
+    if (matrix.m22 > matrix.m33) {
+      sqrt = Math.sqrt(1.0 + matrix.m22 - matrix.m11 - matrix.m33);
       half = 0.5 / sqrt;
 
-      quaternion.x = (matrix.M21 + matrix.M12) * half;
+      quaternion.x = (matrix.m21 + matrix.m12) * half;
       quaternion.y = 0.5 * sqrt;
-      quaternion.z = (matrix.M32 + matrix.M23) * half;
-      quaternion.w = (matrix.M31 - matrix.M13) * half;
+      quaternion.z = (matrix.m32 + matrix.m23) * half;
+      quaternion.w = (matrix.m31 - matrix.m13) * half;
 
       return quaternion;
     }
-    sqrt = Math.sqrt(1.0 + matrix.M33 - matrix.M11 - matrix.M22);
+    sqrt = Math.sqrt(1.0 + matrix.m33 - matrix.m11 - matrix.m22);
     half = 0.5 / sqrt;
 
-    quaternion.x = (matrix.M31 + matrix.M13) * half;
-    quaternion.y = (matrix.M32 + matrix.M23) * half;
+    quaternion.x = (matrix.m31 + matrix.m13) * half;
+    quaternion.y = (matrix.m32 + matrix.m23) * half;
     quaternion.z = 0.5 * sqrt;
-    quaternion.w = (matrix.M12 - matrix.M21) * half;
+    quaternion.w = (matrix.m12 - matrix.m21) * half;
 
     return quaternion;
   }

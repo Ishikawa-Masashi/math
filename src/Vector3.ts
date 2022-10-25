@@ -469,20 +469,20 @@ export class Vector3 {
    */
   static Transform(position: Vector3, matrix: Matrix) {
     const x =
-      position.x * matrix.M11 +
-      position.y * matrix.M21 +
-      position.z * matrix.M31 +
-      matrix.M41;
+      position.x * matrix.m11 +
+      position.y * matrix.m21 +
+      position.z * matrix.m31 +
+      matrix.m41;
     const y =
-      position.x * matrix.M12 +
-      position.y * matrix.M22 +
-      position.z * matrix.M32 +
-      matrix.M42;
+      position.x * matrix.m12 +
+      position.y * matrix.m22 +
+      position.z * matrix.m32 +
+      matrix.m42;
     const z =
-      position.x * matrix.M13 +
-      position.y * matrix.M23 +
-      position.z * matrix.M33 +
-      matrix.M43;
+      position.x * matrix.m13 +
+      position.y * matrix.m23 +
+      position.z * matrix.m33 +
+      matrix.m43;
     return new Vector3(x, y, z);
   }
 
@@ -546,22 +546,22 @@ export class Vector3 {
     result: Vector3
   ) {
     const {
-      M11,
-      M12,
-      M13,
-      M14,
-      M21,
-      M22,
-      M23,
-      M24,
-      M31,
-      M32,
-      M33,
-      M34,
-      M41,
-      M42,
-      M43,
-      M44,
+      m11: M11,
+      m12: M12,
+      m13: M13,
+      m14: M14,
+      m21: M21,
+      m22: M22,
+      m23: M23,
+      m24: M24,
+      m31: M31,
+      m32: M32,
+      m33: M33,
+      m34: M34,
+      m41: M41,
+      m42: M42,
+      m43: M43,
+      m44: M44,
     } = transformation;
     const rx = x * M11 + y * M21 + z * M31 + M41;
     const ry = x * M12 + y * M22 + z * M32 + M42;
@@ -583,11 +583,11 @@ export class Vector3 {
    */
   static TransformNormal(normal: Vector3, matrix: Matrix) {
     const x =
-      normal.x * matrix.M11 + normal.y * matrix.M21 + normal.z * matrix.M31;
+      normal.x * matrix.m11 + normal.y * matrix.m21 + normal.z * matrix.m31;
     const y =
-      normal.x * matrix.M12 + normal.y * matrix.M22 + normal.z * matrix.M32;
+      normal.x * matrix.m12 + normal.y * matrix.m22 + normal.z * matrix.m32;
     const z =
-      normal.x * matrix.M13 + normal.y * matrix.M23 + normal.z * matrix.M33;
+      normal.x * matrix.m13 + normal.y * matrix.m23 + normal.z * matrix.m33;
     return new Vector3(x, y, z);
   }
 }

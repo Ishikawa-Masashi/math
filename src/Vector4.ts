@@ -427,10 +427,10 @@ export class Vector4 {
    * @returns {Vector4}
    */
   static Transform(position: Vector4, matrix: Matrix) {
-    const x = position.x * matrix.M11 + position.y * matrix.M21 + matrix.M41;
-    const y = position.x * matrix.M12 + position.y * matrix.M22 + matrix.M42;
-    const z = position.x * matrix.M13 + position.y * matrix.M23 + matrix.M43;
-    const w = position.x * matrix.M14 + position.y * matrix.M24 + matrix.M44;
+    const x = position.x * matrix.m11 + position.y * matrix.m21 + matrix.m41;
+    const y = position.x * matrix.m12 + position.y * matrix.m22 + matrix.m42;
+    const z = position.x * matrix.m13 + position.y * matrix.m23 + matrix.m43;
+    const w = position.x * matrix.m14 + position.y * matrix.m24 + matrix.m44;
     return new Vector4(x, y, z, w);
   }
 }

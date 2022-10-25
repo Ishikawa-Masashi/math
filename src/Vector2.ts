@@ -356,8 +356,8 @@ export class Vector2 {
    * @returns {Vector2}
    */
   static Transform(position: Vector2, matrix: Matrix) {
-    const x = position.x * matrix.M11 + position.y * matrix.M21 + matrix.M41;
-    const y = position.x * matrix.M12 + position.y * matrix.M22 + matrix.M42;
+    const x = position.x * matrix.m11 + position.y * matrix.m21 + matrix.m41;
+    const y = position.x * matrix.m12 + position.y * matrix.m22 + matrix.m42;
     return new Vector2(x, y);
   }
 
@@ -370,8 +370,8 @@ export class Vector2 {
    */
   static TransformNormal(normal: Vector2, matrix: Matrix) {
     return new Vector2(
-      normal.x * matrix.M11 + normal.y * matrix.M21,
-      normal.x * matrix.M12 + normal.y * matrix.M22
+      normal.x * matrix.m11 + normal.y * matrix.m21,
+      normal.x * matrix.m12 + normal.y * matrix.m22
     );
   }
 }

@@ -9,41 +9,41 @@ export class Matrix {
   /**
    * 初始化新的 Matrix 实例。
    * @constructs
-   * @param {number} M11 M11 的初始化值。
-   * @param {number} M12 M12 的初始化值。
-   * @param {number} M13 M13 的初始化值。
-   * @param {number} M14 M14 的初始化值。
-   * @param {number} M21 M21 的初始化值。
-   * @param {number} M22 M22 的初始化值。
-   * @param {number} M23 M23 的初始化值。
-   * @param {number} M24 M24 的初始化值。
-   * @param {number} M31 M31 的初始化值。
-   * @param {number} M32 M32 的初始化值。
-   * @param {number} M33 M33 的初始化值。
-   * @param {number} M34 M34 的初始化值。
-   * @param {number} M41 M41 的初始化值。
-   * @param {number} M42 M42 的初始化值。
-   * @param {number} M43 M43 的初始化值。
-   * @param {number} M44 M44 的初始化值。
+   * @param {number} m11 M11 的初始化值。
+   * @param {number} m12 M12 的初始化值。
+   * @param {number} m13 M13 的初始化值。
+   * @param {number} m14 M14 的初始化值。
+   * @param {number} m21 M21 的初始化值。
+   * @param {number} m22 M22 的初始化值。
+   * @param {number} m23 M23 的初始化值。
+   * @param {number} m24 M24 的初始化值。
+   * @param {number} m31 M31 的初始化值。
+   * @param {number} m32 M32 的初始化值。
+   * @param {number} m33 M33 的初始化值。
+   * @param {number} m34 M34 的初始化值。
+   * @param {number} m41 M41 的初始化值。
+   * @param {number} m42 M42 的初始化值。
+   * @param {number} m43 M43 的初始化值。
+   * @param {number} m44 M44 的初始化值。
    * @returns {Matrix}
    */
   constructor(
-    public M11 = 0,
-    public M12 = 0,
-    public M13 = 0,
-    public M14 = 0,
-    public M21 = 0,
-    public M22 = 0,
-    public M23 = 0,
-    public M24 = 0,
-    public M31 = 0,
-    public M32 = 0,
-    public M33 = 0,
-    public M34 = 0,
-    public M41 = 0,
-    public M42 = 0,
-    public M43 = 0,
-    public M44 = 0
+    public m11 = 0,
+    public m12 = 0,
+    public m13 = 0,
+    public m14 = 0,
+    public m21 = 0,
+    public m22 = 0,
+    public m23 = 0,
+    public m24 = 0,
+    public m31 = 0,
+    public m32 = 0,
+    public m33 = 0,
+    public m34 = 0,
+    public m41 = 0,
+    public m42 = 0,
+    public m43 = 0,
+    public m44 = 0
   ) {}
 
   /**
@@ -51,7 +51,7 @@ export class Matrix {
    * @returns {Vector3}
    */
   get Backward() {
-    return new Vector3(this.M31, this.M32, this.M33);
+    return new Vector3(this.m31, this.m32, this.m33);
   }
 
   /**
@@ -59,9 +59,9 @@ export class Matrix {
    * @param {Vector3} value 值。
    */
   set Backward(value: Vector3) {
-    this.M31 = value.x;
-    this.M32 = value.y;
-    this.M33 = value.z;
+    this.m31 = value.x;
+    this.m32 = value.y;
+    this.m33 = value.z;
   }
 
   /**
@@ -69,7 +69,7 @@ export class Matrix {
    * @returns {Vector3}
    */
   get Down() {
-    return new Vector3(-this.M21, -this.M22, -this.M23);
+    return new Vector3(-this.m21, -this.m22, -this.m23);
   }
 
   /**
@@ -77,9 +77,9 @@ export class Matrix {
    * @param {Vector3} value 值。
    */
   set Down(value: Vector3) {
-    this.M21 = -value.x;
-    this.M22 = -value.y;
-    this.M23 = -value.z;
+    this.m21 = -value.x;
+    this.m22 = -value.y;
+    this.m23 = -value.z;
   }
 
   /**
@@ -87,7 +87,7 @@ export class Matrix {
    * @returns {Vector3}
    */
   get Forward() {
-    return new Vector3(-this.M31, -this.M32, -this.M33);
+    return new Vector3(-this.m31, -this.m32, -this.m33);
   }
 
   /**
@@ -95,9 +95,9 @@ export class Matrix {
    * @param {Vector3} value 值。
    */
   set Forward(value: Vector3) {
-    this.M31 = -value.x;
-    this.M32 = -value.y;
-    this.M33 = -value.z;
+    this.m31 = -value.x;
+    this.m32 = -value.y;
+    this.m33 = -value.z;
   }
 
   /**
@@ -105,7 +105,7 @@ export class Matrix {
    * @returns {Vector3}
    */
   get Left() {
-    return new Vector3(-this.M11, -this.M12, -this.M13);
+    return new Vector3(-this.m11, -this.m12, -this.m13);
   }
 
   /**
@@ -113,9 +113,9 @@ export class Matrix {
    * @param {Vector3} value 值。
    */
   set Left(value: Vector3) {
-    this.M11 = -value.x;
-    this.M12 = -value.y;
-    this.M13 = -value.z;
+    this.m11 = -value.x;
+    this.m12 = -value.y;
+    this.m13 = -value.z;
   }
 
   /**
@@ -123,7 +123,7 @@ export class Matrix {
    * @returns {Vector3}
    */
   get Right() {
-    return new Vector3(this.M11, this.M12, this.M13);
+    return new Vector3(this.m11, this.m12, this.m13);
   }
 
   /**
@@ -131,9 +131,9 @@ export class Matrix {
    * @param {Vector3} value 值。
    */
   set Right(value: Vector3) {
-    this.M11 = value.x;
-    this.M12 = value.y;
-    this.M13 = value.z;
+    this.m11 = value.x;
+    this.m12 = value.y;
+    this.m13 = value.z;
   }
 
   /**
@@ -141,7 +141,7 @@ export class Matrix {
    * @returns {Vector3}
    */
   get Up() {
-    return new Vector3(this.M21, this.M22, this.M23);
+    return new Vector3(this.m21, this.m22, this.m23);
   }
 
   /**
@@ -149,9 +149,9 @@ export class Matrix {
    * @param {Vector3} value 值。
    */
   set Up(value: Vector3) {
-    this.M21 = value.x;
-    this.M22 = value.y;
-    this.M23 = value.z;
+    this.m21 = value.x;
+    this.m22 = value.y;
+    this.m23 = value.z;
   }
 
   /**
@@ -159,7 +159,7 @@ export class Matrix {
    * @returns {Vector3}
    */
   get Scale() {
-    return new Vector3(this.M11, this.M22, this.M33);
+    return new Vector3(this.m11, this.m22, this.m33);
   }
 
   /**
@@ -167,9 +167,9 @@ export class Matrix {
    * @param {Vector3} value 值。
    */
   set Scale(value: Vector3) {
-    this.M11 = value.x;
-    this.M22 = value.y;
-    this.M33 = value.z;
+    this.m11 = value.x;
+    this.m22 = value.y;
+    this.m33 = value.z;
   }
 
   /**
@@ -177,7 +177,7 @@ export class Matrix {
    * @returns {Vector3}
    */
   get Translation() {
-    return new Vector3(this.M41, this.M42, this.M43);
+    return new Vector3(this.m41, this.m42, this.m43);
   }
 
   /**
@@ -185,9 +185,9 @@ export class Matrix {
    * @param {Vector3} value 值。
    */
   set Translation(value: Vector3) {
-    this.M41 = value.x;
-    this.M42 = value.y;
-    this.M43 = value.z;
+    this.m41 = value.x;
+    this.m42 = value.y;
+    this.m43 = value.z;
   }
 
   static get Identity() {
@@ -234,25 +234,25 @@ export class Matrix {
     initialM44: number,
     result: Matrix
   ): void {
-    result.M11 = initialM11;
-    result.M12 = initialM12;
-    result.M13 = initialM13;
-    result.M14 = initialM14;
+    result.m11 = initialM11;
+    result.m12 = initialM12;
+    result.m13 = initialM13;
+    result.m14 = initialM14;
 
-    result.M21 = initialM21;
-    result.M22 = initialM22;
-    result.M23 = initialM23;
-    result.M24 = initialM24;
+    result.m21 = initialM21;
+    result.m22 = initialM22;
+    result.m23 = initialM23;
+    result.m24 = initialM24;
 
-    result.M31 = initialM31;
-    result.M32 = initialM32;
-    result.M33 = initialM33;
-    result.M34 = initialM34;
+    result.m31 = initialM31;
+    result.m32 = initialM32;
+    result.m33 = initialM33;
+    result.m34 = initialM34;
 
-    result.M41 = initialM41;
-    result.M42 = initialM42;
-    result.M43 = initialM43;
-    result.M44 = initialM44;
+    result.m41 = initialM41;
+    result.m42 = initialM42;
+    result.m43 = initialM43;
+    result.m44 = initialM44;
   }
 
   /**
@@ -265,25 +265,25 @@ export class Matrix {
   static Add(matrix1: Matrix, matrix2: Matrix) {
     const matrix = new Matrix();
 
-    matrix.M11 = matrix1.M11 + matrix2.M11;
-    matrix.M12 = matrix1.M12 + matrix2.M12;
-    matrix.M13 = matrix1.M13 + matrix2.M13;
-    matrix.M14 = matrix1.M14 + matrix2.M14;
+    matrix.m11 = matrix1.m11 + matrix2.m11;
+    matrix.m12 = matrix1.m12 + matrix2.m12;
+    matrix.m13 = matrix1.m13 + matrix2.m13;
+    matrix.m14 = matrix1.m14 + matrix2.m14;
 
-    matrix.M21 = matrix1.M21 + matrix2.M21;
-    matrix.M22 = matrix1.M22 + matrix2.M22;
-    matrix.M23 = matrix1.M23 + matrix2.M23;
-    matrix.M24 = matrix1.M24 + matrix2.M24;
+    matrix.m21 = matrix1.m21 + matrix2.m21;
+    matrix.m22 = matrix1.m22 + matrix2.m22;
+    matrix.m23 = matrix1.m23 + matrix2.m23;
+    matrix.m24 = matrix1.m24 + matrix2.m24;
 
-    matrix.M31 = matrix1.M31 + matrix2.M31;
-    matrix.M32 = matrix1.M32 + matrix2.M32;
-    matrix.M33 = matrix1.M33 + matrix2.M33;
-    matrix.M34 = matrix1.M34 + matrix2.M34;
+    matrix.m31 = matrix1.m31 + matrix2.m31;
+    matrix.m32 = matrix1.m32 + matrix2.m32;
+    matrix.m33 = matrix1.m33 + matrix2.m33;
+    matrix.m34 = matrix1.m34 + matrix2.m34;
 
-    matrix.M41 = matrix1.M41 + matrix2.M41;
-    matrix.M42 = matrix1.M42 + matrix2.M42;
-    matrix.M43 = matrix1.M43 + matrix2.M43;
-    matrix.M44 = matrix1.M44 + matrix2.M44;
+    matrix.m41 = matrix1.m41 + matrix2.m41;
+    matrix.m42 = matrix1.m42 + matrix2.m42;
+    matrix.m43 = matrix1.m43 + matrix2.m43;
+    matrix.m44 = matrix1.m44 + matrix2.m44;
     return matrix;
   }
 
@@ -324,22 +324,22 @@ export class Matrix {
     vector3 = Vector3.Cross(cameraUpVector, vector);
     vector3.Normalize();
     vector2 = Vector3.Cross(vector, vector3);
-    result.M11 = vector3.x;
-    result.M12 = vector3.y;
-    result.M13 = vector3.z;
-    result.M14 = 0;
-    result.M21 = vector2.x;
-    result.M22 = vector2.y;
-    result.M23 = vector2.z;
-    result.M24 = 0;
-    result.M31 = vector.x;
-    result.M32 = vector.y;
-    result.M33 = vector.z;
-    result.M34 = 0;
-    result.M41 = objectPosition.x;
-    result.M42 = objectPosition.y;
-    result.M43 = objectPosition.z;
-    result.M44 = 1;
+    result.m11 = vector3.x;
+    result.m12 = vector3.y;
+    result.m13 = vector3.z;
+    result.m14 = 0;
+    result.m21 = vector2.x;
+    result.m22 = vector2.y;
+    result.m23 = vector2.z;
+    result.m24 = 0;
+    result.m31 = vector.x;
+    result.m32 = vector.y;
+    result.m33 = vector.z;
+    result.m34 = 0;
+    result.m41 = objectPosition.x;
+    result.m42 = objectPosition.y;
+    result.m43 = objectPosition.z;
+    result.m44 = 1;
     return result;
   }
 
@@ -446,22 +446,22 @@ export class Matrix {
     const num8 = x * y;
     const num7 = x * z;
     const num6 = y * z;
-    result.M11 = num11 + num * (1 - num11);
-    result.M12 = num8 - num * num8 + num2 * z;
-    result.M13 = num7 - num * num7 - num2 * y;
-    result.M14 = 0;
-    result.M21 = num8 - num * num8 - num2 * z;
-    result.M22 = num10 + num * (1 - num10);
-    result.M23 = num6 - num * num6 + num2 * x;
-    result.M24 = 0;
-    result.M31 = num7 - num * num7 + num2 * y;
-    result.M32 = num6 - num * num6 - num2 * x;
-    result.M33 = num9 + num * (1 - num9);
-    result.M34 = 0;
-    result.M41 = 0;
-    result.M42 = 0;
-    result.M43 = 0;
-    result.M44 = 1;
+    result.m11 = num11 + num * (1 - num11);
+    result.m12 = num8 - num * num8 + num2 * z;
+    result.m13 = num7 - num * num7 - num2 * y;
+    result.m14 = 0;
+    result.m21 = num8 - num * num8 - num2 * z;
+    result.m22 = num10 + num * (1 - num10);
+    result.m23 = num6 - num * num6 + num2 * x;
+    result.m24 = 0;
+    result.m31 = num7 - num * num7 + num2 * y;
+    result.m32 = num6 - num * num6 - num2 * x;
+    result.m33 = num9 + num * (1 - num9);
+    result.m34 = 0;
+    result.m41 = 0;
+    result.m42 = 0;
+    result.m43 = 0;
+    result.m44 = 1;
     return result;
   }
   /**
@@ -481,22 +481,22 @@ export class Matrix {
     const num3 = quaternion.y * quaternion.w;
     const num2 = quaternion.y * quaternion.z;
     const num = quaternion.x * quaternion.w;
-    result.M11 = 1 - 2 * (num8 + num7);
-    result.M12 = 2 * (num6 + num5);
-    result.M13 = 2 * (num4 - num3);
-    result.M14 = 0;
-    result.M21 = 2 * (num6 - num5);
-    result.M22 = 1 - 2 * (num7 + num9);
-    result.M23 = 2 * (num2 + num);
-    result.M24 = 0;
-    result.M31 = 2 * (num4 + num3);
-    result.M32 = 2 * (num2 - num);
-    result.M33 = 1 - 2 * (num8 + num9);
-    result.M34 = 0;
-    result.M41 = 0;
-    result.M42 = 0;
-    result.M43 = 0;
-    result.M44 = 1;
+    result.m11 = 1 - 2 * (num8 + num7);
+    result.m12 = 2 * (num6 + num5);
+    result.m13 = 2 * (num4 - num3);
+    result.m14 = 0;
+    result.m21 = 2 * (num6 - num5);
+    result.m22 = 1 - 2 * (num7 + num9);
+    result.m23 = 2 * (num2 + num);
+    result.m24 = 0;
+    result.m31 = 2 * (num4 + num3);
+    result.m32 = 2 * (num2 - num);
+    result.m33 = 1 - 2 * (num8 + num9);
+    result.m34 = 0;
+    result.m41 = 0;
+    result.m42 = 0;
+    result.m43 = 0;
+    result.m44 = 1;
     return result;
   }
   /**
@@ -531,22 +531,22 @@ export class Matrix {
     );
     const vector2 = Vector3.Normalize(Vector3.Cross(cameraUpVector, vector));
     const vector3 = Vector3.Cross(vector, vector2);
-    result.M11 = vector2.x;
-    result.M12 = vector3.x;
-    result.M13 = vector.x;
-    result.M14 = 0;
-    result.M21 = vector2.y;
-    result.M22 = vector3.y;
-    result.M23 = vector.y;
-    result.M24 = 0;
-    result.M31 = vector2.z;
-    result.M32 = vector3.z;
-    result.M33 = vector.z;
-    result.M34 = 0;
-    result.M41 = -Vector3.Dot(vector2, cameraPosition);
-    result.M42 = -Vector3.Dot(vector3, cameraPosition);
-    result.M43 = -Vector3.Dot(vector, cameraPosition);
-    result.M44 = 1;
+    result.m11 = vector2.x;
+    result.m12 = vector3.x;
+    result.m13 = vector.x;
+    result.m14 = 0;
+    result.m21 = vector2.y;
+    result.m22 = vector3.y;
+    result.m23 = vector.y;
+    result.m24 = 0;
+    result.m31 = vector2.z;
+    result.m32 = vector3.z;
+    result.m33 = vector.z;
+    result.m34 = 0;
+    result.m41 = -Vector3.Dot(vector2, cameraPosition);
+    result.m42 = -Vector3.Dot(vector3, cameraPosition);
+    result.m43 = -Vector3.Dot(vector, cameraPosition);
+    result.m44 = 1;
     return result;
   }
 
@@ -566,15 +566,15 @@ export class Matrix {
     zFarPlane: number
   ) {
     const result = new Matrix();
-    result.M11 = 2 / width;
-    result.M12 = result.M13 = result.M14 = 0;
-    result.M22 = 2 / height;
-    result.M21 = result.M23 = result.M24 = 0;
-    result.M33 = 1 / (zNearPlane - zFarPlane);
-    result.M31 = result.M32 = result.M34 = 0;
-    result.M41 = result.M42 = 0;
-    result.M43 = zNearPlane / (zNearPlane - zFarPlane);
-    result.M44 = 1;
+    result.m11 = 2 / width;
+    result.m12 = result.m13 = result.m14 = 0;
+    result.m22 = 2 / height;
+    result.m21 = result.m23 = result.m24 = 0;
+    result.m33 = 1 / (zNearPlane - zFarPlane);
+    result.m31 = result.m32 = result.m34 = 0;
+    result.m41 = result.m42 = 0;
+    result.m43 = zNearPlane / (zNearPlane - zFarPlane);
+    result.m44 = 1;
     return result;
   }
 
@@ -598,22 +598,22 @@ export class Matrix {
     zFarPlane: number
   ) {
     const result = new Matrix();
-    result.M11 = 2.0 / (right - left);
-    result.M12 = 0.0;
-    result.M13 = 0.0;
-    result.M14 = 0.0;
-    result.M21 = 0.0;
-    result.M22 = 2.0 / (top - bottom);
-    result.M23 = 0.0;
-    result.M24 = 0.0;
-    result.M31 = 0.0;
-    result.M32 = 0.0;
-    result.M33 = 1.0 / (zNearPlane - zFarPlane);
-    result.M34 = 0.0;
-    result.M41 = (left + right) / (left - right);
-    result.M42 = (top + bottom) / (bottom - top);
-    result.M43 = zNearPlane / (zNearPlane - zFarPlane);
-    result.M44 = 1.0;
+    result.m11 = 2.0 / (right - left);
+    result.m12 = 0.0;
+    result.m13 = 0.0;
+    result.m14 = 0.0;
+    result.m21 = 0.0;
+    result.m22 = 2.0 / (top - bottom);
+    result.m23 = 0.0;
+    result.m24 = 0.0;
+    result.m31 = 0.0;
+    result.m32 = 0.0;
+    result.m33 = 1.0 / (zNearPlane - zFarPlane);
+    result.m34 = 0.0;
+    result.m41 = (left + right) / (left - right);
+    result.m42 = (top + bottom) / (bottom - top);
+    result.m43 = zNearPlane / (zNearPlane - zFarPlane);
+    result.m44 = 1.0;
     return result;
   }
 
@@ -646,15 +646,15 @@ export class Matrix {
       throw new TypeError('nearPlaneDistance >= farPlaneDistance');
     }
 
-    result.M11 = (2 * nearPlaneDistance) / width;
-    result.M12 = result.M13 = result.M14 = 0;
-    result.M22 = (2 * nearPlaneDistance) / height;
-    result.M21 = result.M23 = result.M24 = 0;
-    result.M33 = farPlaneDistance / (nearPlaneDistance - farPlaneDistance);
-    result.M31 = result.M32 = 0;
-    result.M34 = -1;
-    result.M41 = result.M42 = result.M44 = 0;
-    result.M43 =
+    result.m11 = (2 * nearPlaneDistance) / width;
+    result.m12 = result.m13 = result.m14 = 0;
+    result.m22 = (2 * nearPlaneDistance) / height;
+    result.m21 = result.m23 = result.m24 = 0;
+    result.m33 = farPlaneDistance / (nearPlaneDistance - farPlaneDistance);
+    result.m31 = result.m32 = 0;
+    result.m34 = -1;
+    result.m41 = result.m42 = result.m44 = 0;
+    result.m43 =
       (nearPlaneDistance * farPlaneDistance) /
       (nearPlaneDistance - farPlaneDistance);
     return result;
@@ -695,15 +695,15 @@ export class Matrix {
 
     const num = 1 / Math.tan(fieldOfView * 0.5);
     const num9 = num / aspectRatio;
-    result.M11 = num9;
-    result.M12 = result.M13 = result.M14 = 0;
-    result.M22 = num;
-    result.M21 = result.M23 = result.M24 = 0;
-    result.M31 = result.M32 = 0;
-    result.M33 = farPlaneDistance / (nearPlaneDistance - farPlaneDistance);
-    result.M34 = -1;
-    result.M41 = result.M42 = result.M44 = 0;
-    result.M43 =
+    result.m11 = num9;
+    result.m12 = result.m13 = result.m14 = 0;
+    result.m22 = num;
+    result.m21 = result.m23 = result.m24 = 0;
+    result.m31 = result.m32 = 0;
+    result.m33 = farPlaneDistance / (nearPlaneDistance - farPlaneDistance);
+    result.m34 = -1;
+    result.m41 = result.m42 = result.m44 = 0;
+    result.m43 =
       (nearPlaneDistance * farPlaneDistance) /
       (nearPlaneDistance - farPlaneDistance);
     return result;
@@ -742,18 +742,18 @@ export class Matrix {
       throw new TypeError('nearPlaneDistance >= farPlaneDistance');
     }
 
-    result.M11 = (2 * nearPlaneDistance) / (right - left);
-    result.M12 = result.M13 = result.M14 = 0;
-    result.M22 = (2 * nearPlaneDistance) / (top - bottom);
-    result.M21 = result.M23 = result.M24 = 0;
-    result.M31 = (left + right) / (right - left);
-    result.M32 = (top + bottom) / (top - bottom);
-    result.M33 = farPlaneDistance / (nearPlaneDistance - farPlaneDistance);
-    result.M34 = -1;
-    result.M43 =
+    result.m11 = (2 * nearPlaneDistance) / (right - left);
+    result.m12 = result.m13 = result.m14 = 0;
+    result.m22 = (2 * nearPlaneDistance) / (top - bottom);
+    result.m21 = result.m23 = result.m24 = 0;
+    result.m31 = (left + right) / (right - left);
+    result.m32 = (top + bottom) / (top - bottom);
+    result.m33 = farPlaneDistance / (nearPlaneDistance - farPlaneDistance);
+    result.m34 = -1;
+    result.m43 =
       (nearPlaneDistance * farPlaneDistance) /
       (nearPlaneDistance - farPlaneDistance);
-    result.M41 = result.M42 = result.M44 = 0;
+    result.m41 = result.m42 = result.m44 = 0;
     return result;
   }
 
@@ -773,22 +773,22 @@ export class Matrix {
     const num3 = -2 * x;
     const num2 = -2 * y;
     const num = -2 * z;
-    result.M11 = num3 * x + 1;
-    result.M12 = num2 * x;
-    result.M13 = num * x;
-    result.M14 = 0;
-    result.M21 = num3 * y;
-    result.M22 = num2 * y + 1;
-    result.M23 = num * y;
-    result.M24 = 0;
-    result.M31 = num3 * z;
-    result.M32 = num2 * z;
-    result.M33 = num * z + 1;
-    result.M34 = 0;
-    result.M41 = num3 * plane.D;
-    result.M42 = num2 * plane.D;
-    result.M43 = num * plane.D;
-    result.M44 = 1;
+    result.m11 = num3 * x + 1;
+    result.m12 = num2 * x;
+    result.m13 = num * x;
+    result.m14 = 0;
+    result.m21 = num3 * y;
+    result.m22 = num2 * y + 1;
+    result.m23 = num * y;
+    result.m24 = 0;
+    result.m31 = num3 * z;
+    result.m32 = num2 * z;
+    result.m33 = num * z + 1;
+    result.m34 = 0;
+    result.m41 = num3 * plane.D;
+    result.m42 = num2 * plane.D;
+    result.m43 = num * plane.D;
+    result.m44 = 1;
     return result;
   }
 
@@ -932,22 +932,22 @@ export class Matrix {
    */
   static CreateScale(xScale: number, yScale: number, zScale: number) {
     const result = new Matrix();
-    result.M11 = xScale;
-    result.M12 = 0;
-    result.M13 = 0;
-    result.M14 = 0;
-    result.M21 = 0;
-    result.M22 = yScale;
-    result.M23 = 0;
-    result.M24 = 0;
-    result.M31 = 0;
-    result.M32 = 0;
-    result.M33 = zScale;
-    result.M34 = 0;
-    result.M41 = 0;
-    result.M42 = 0;
-    result.M43 = 0;
-    result.M44 = 1;
+    result.m11 = xScale;
+    result.m12 = 0;
+    result.m13 = 0;
+    result.m14 = 0;
+    result.m21 = 0;
+    result.m22 = yScale;
+    result.m23 = 0;
+    result.m24 = 0;
+    result.m31 = 0;
+    result.m32 = 0;
+    result.m33 = zScale;
+    result.m34 = 0;
+    result.m41 = 0;
+    result.m42 = 0;
+    result.m43 = 0;
+    result.m44 = 1;
     return result;
   }
 
@@ -970,22 +970,22 @@ export class Matrix {
     const z = -plane.Normal.z;
     const d = -plane.D;
 
-    result.M11 = x * lightDirection.x + dot;
-    result.M12 = x * lightDirection.y;
-    result.M13 = x * lightDirection.z;
-    result.M14 = 0;
-    result.M21 = y * lightDirection.x;
-    result.M22 = y * lightDirection.y + dot;
-    result.M23 = y * lightDirection.z;
-    result.M24 = 0;
-    result.M31 = z * lightDirection.x;
-    result.M32 = z * lightDirection.y;
-    result.M33 = z * lightDirection.z + dot;
-    result.M34 = 0;
-    result.M41 = d * lightDirection.x;
-    result.M42 = d * lightDirection.y;
-    result.M43 = d * lightDirection.z;
-    result.M44 = dot;
+    result.m11 = x * lightDirection.x + dot;
+    result.m12 = x * lightDirection.y;
+    result.m13 = x * lightDirection.z;
+    result.m14 = 0;
+    result.m21 = y * lightDirection.x;
+    result.m22 = y * lightDirection.y + dot;
+    result.m23 = y * lightDirection.z;
+    result.m24 = 0;
+    result.m31 = z * lightDirection.x;
+    result.m32 = z * lightDirection.y;
+    result.m33 = z * lightDirection.z + dot;
+    result.m34 = 0;
+    result.m41 = d * lightDirection.x;
+    result.m42 = d * lightDirection.y;
+    result.m43 = d * lightDirection.z;
+    result.m44 = dot;
     return result;
   }
 
@@ -1048,22 +1048,22 @@ export class Matrix {
     zPosition: number
   ) {
     const result = new Matrix();
-    result.M11 = 1;
-    result.M12 = 0;
-    result.M13 = 0;
-    result.M14 = 0;
-    result.M21 = 0;
-    result.M22 = 1;
-    result.M23 = 0;
-    result.M24 = 0;
-    result.M31 = 0;
-    result.M32 = 0;
-    result.M33 = 1;
-    result.M34 = 0;
-    result.M41 = xPosition;
-    result.M42 = yPosition;
-    result.M43 = zPosition;
-    result.M44 = 1;
+    result.m11 = 1;
+    result.m12 = 0;
+    result.m13 = 0;
+    result.m14 = 0;
+    result.m21 = 0;
+    result.m22 = 1;
+    result.m23 = 0;
+    result.m24 = 0;
+    result.m31 = 0;
+    result.m32 = 0;
+    result.m33 = 1;
+    result.m34 = 0;
+    result.m41 = xPosition;
+    result.m42 = yPosition;
+    result.m43 = zPosition;
+    result.m44 = 1;
     return result;
   }
 
@@ -1136,7 +1136,7 @@ export class Matrix {
     result.Up = y;
     result.Forward = z;
     result.Translation = position;
-    result.M44 = 1;
+    result.m44 = 1;
     return result;
   }
 
@@ -1148,31 +1148,31 @@ export class Matrix {
    * @returns {Boolean} 是否可以被分解
    */
   Decompose(scale: Vector3, rotation: Quaternion, translation: Vector3) {
-    translation.x = this.M41;
-    translation.y = this.M42;
-    translation.z = this.M43;
+    translation.x = this.m41;
+    translation.y = this.m42;
+    translation.z = this.m43;
 
     const xs =
-      Math.sign(this.M11 * this.M12 * this.M13 * this.M14) < 0 ? -1 : 1;
+      Math.sign(this.m11 * this.m12 * this.m13 * this.m14) < 0 ? -1 : 1;
     const ys =
-      Math.sign(this.M21 * this.M22 * this.M23 * this.M24) < 0 ? -1 : 1;
+      Math.sign(this.m21 * this.m22 * this.m23 * this.m24) < 0 ? -1 : 1;
     const zs =
-      Math.sign(this.M31 * this.M32 * this.M33 * this.M34) < 0 ? -1 : 1;
+      Math.sign(this.m31 * this.m32 * this.m33 * this.m34) < 0 ? -1 : 1;
 
     scale.x =
       xs *
       Math.sqrt(
-        this.M11 * this.M11 + this.M12 * this.M12 + this.M13 * this.M13
+        this.m11 * this.m11 + this.m12 * this.m12 + this.m13 * this.m13
       );
     scale.y =
       ys *
       Math.sqrt(
-        this.M21 * this.M21 + this.M22 * this.M22 + this.M23 * this.M23
+        this.m21 * this.m21 + this.m22 * this.m22 + this.m23 * this.m23
       );
     scale.z =
       zs *
       Math.sqrt(
-        this.M31 * this.M31 + this.M32 * this.M32 + this.M33 * this.M33
+        this.m31 * this.m31 + this.m32 * this.m32 + this.m33 * this.m33
       );
 
     if (scale.x == 0.0 || scale.y == 0.0 || scale.z == 0.0) {
@@ -1185,17 +1185,17 @@ export class Matrix {
     }
 
     const m1 = new Matrix(
-      this.M11 / scale.x,
-      this.M12 / scale.x,
-      this.M13 / scale.x,
+      this.m11 / scale.x,
+      this.m12 / scale.x,
+      this.m13 / scale.x,
       0,
-      this.M21 / scale.y,
-      this.M22 / scale.y,
-      this.M23 / scale.y,
+      this.m21 / scale.y,
+      this.m22 / scale.y,
+      this.m23 / scale.y,
       0,
-      this.M31 / scale.z,
-      this.M32 / scale.z,
-      this.M33 / scale.z,
+      this.m31 / scale.z,
+      this.m32 / scale.z,
+      this.m33 / scale.z,
       0,
       0,
       0,
@@ -1216,22 +1216,22 @@ export class Matrix {
    * @returns {Number}
    */
   Determinant() {
-    const num22 = this.M11;
-    const num21 = this.M12;
-    const num20 = this.M13;
-    const num19 = this.M14;
-    const num12 = this.M21;
-    const num11 = this.M22;
-    const num10 = this.M23;
-    const num9 = this.M24;
-    const num8 = this.M31;
-    const num7 = this.M32;
-    const num6 = this.M33;
-    const num5 = this.M34;
-    const num4 = this.M41;
-    const num3 = this.M42;
-    const num2 = this.M43;
-    const num = this.M44;
+    const num22 = this.m11;
+    const num21 = this.m12;
+    const num20 = this.m13;
+    const num19 = this.m14;
+    const num12 = this.m21;
+    const num11 = this.m22;
+    const num10 = this.m23;
+    const num9 = this.m24;
+    const num8 = this.m31;
+    const num7 = this.m32;
+    const num6 = this.m33;
+    const num5 = this.m34;
+    const num4 = this.m41;
+    const num3 = this.m42;
+    const num2 = this.m43;
+    const num = this.m44;
     const num18 = num6 * num - num5 * num2;
     const num17 = num7 * num - num5 * num3;
     const num16 = num7 * num2 - num6 * num3;
@@ -1256,22 +1256,22 @@ export class Matrix {
   static Divide(matrix1: Matrix, divider: number) {
     const result = new Matrix();
     const num = 1 / divider;
-    result.M11 = matrix1.M11 * num;
-    result.M12 = matrix1.M12 * num;
-    result.M13 = matrix1.M13 * num;
-    result.M14 = matrix1.M14 * num;
-    result.M21 = matrix1.M21 * num;
-    result.M22 = matrix1.M22 * num;
-    result.M23 = matrix1.M23 * num;
-    result.M24 = matrix1.M24 * num;
-    result.M31 = matrix1.M31 * num;
-    result.M32 = matrix1.M32 * num;
-    result.M33 = matrix1.M33 * num;
-    result.M34 = matrix1.M34 * num;
-    result.M41 = matrix1.M41 * num;
-    result.M42 = matrix1.M42 * num;
-    result.M43 = matrix1.M43 * num;
-    result.M44 = matrix1.M44 * num;
+    result.m11 = matrix1.m11 * num;
+    result.m12 = matrix1.m12 * num;
+    result.m13 = matrix1.m13 * num;
+    result.m14 = matrix1.m14 * num;
+    result.m21 = matrix1.m21 * num;
+    result.m22 = matrix1.m22 * num;
+    result.m23 = matrix1.m23 * num;
+    result.m24 = matrix1.m24 * num;
+    result.m31 = matrix1.m31 * num;
+    result.m32 = matrix1.m32 * num;
+    result.m33 = matrix1.m33 * num;
+    result.m34 = matrix1.m34 * num;
+    result.m41 = matrix1.m41 * num;
+    result.m42 = matrix1.m42 * num;
+    result.m43 = matrix1.m43 * num;
+    result.m44 = matrix1.m44 * num;
     return result;
   }
 
@@ -1282,43 +1282,43 @@ export class Matrix {
    */
   Equals(other: Matrix) {
     return (
-      Math.abs(this.M11 - other.M11) < 1e-6 &&
-      Math.abs(this.M22 - other.M22) < 1e-6 &&
-      Math.abs(this.M33 - other.M33) < 1e-6 &&
-      Math.abs(this.M44 - other.M44) < 1e-6 &&
-      Math.abs(this.M12 - other.M12) < 1e-6 &&
-      Math.abs(this.M13 - other.M13) < 1e-6 &&
-      Math.abs(this.M14 - other.M14) < 1e-6 &&
-      Math.abs(this.M21 - other.M21) < 1e-6 &&
-      Math.abs(this.M23 - other.M23) < 1e-6 &&
-      Math.abs(this.M24 - other.M24) < 1e-6 &&
-      Math.abs(this.M31 - other.M31) < 1e-6 &&
-      Math.abs(this.M32 - other.M32) < 1e-6 &&
-      Math.abs(this.M34 - other.M34) < 1e-6 &&
-      Math.abs(this.M41 - other.M41) < 1e-6 &&
-      Math.abs(this.M42 - other.M42) < 1e-6 &&
-      Math.abs(this.M43 - other.M43) < 1e-6
+      Math.abs(this.m11 - other.m11) < 1e-6 &&
+      Math.abs(this.m22 - other.m22) < 1e-6 &&
+      Math.abs(this.m33 - other.m33) < 1e-6 &&
+      Math.abs(this.m44 - other.m44) < 1e-6 &&
+      Math.abs(this.m12 - other.m12) < 1e-6 &&
+      Math.abs(this.m13 - other.m13) < 1e-6 &&
+      Math.abs(this.m14 - other.m14) < 1e-6 &&
+      Math.abs(this.m21 - other.m21) < 1e-6 &&
+      Math.abs(this.m23 - other.m23) < 1e-6 &&
+      Math.abs(this.m24 - other.m24) < 1e-6 &&
+      Math.abs(this.m31 - other.m31) < 1e-6 &&
+      Math.abs(this.m32 - other.m32) < 1e-6 &&
+      Math.abs(this.m34 - other.m34) < 1e-6 &&
+      Math.abs(this.m41 - other.m41) < 1e-6 &&
+      Math.abs(this.m42 - other.m42) < 1e-6 &&
+      Math.abs(this.m43 - other.m43) < 1e-6
     );
   }
 
   GetHashCode() {
     return (
-      this.M11 +
-      this.M12 +
-      this.M13 +
-      this.M14 +
-      this.M21 +
-      this.M22 +
-      this.M23 +
-      this.M24 +
-      this.M31 +
-      this.M32 +
-      this.M33 +
-      this.M34 +
-      this.M41 +
-      this.M42 +
-      this.M43 +
-      this.M44
+      this.m11 +
+      this.m12 +
+      this.m13 +
+      this.m14 +
+      this.m21 +
+      this.m22 +
+      this.m23 +
+      this.m24 +
+      this.m31 +
+      this.m32 +
+      this.m33 +
+      this.m34 +
+      this.m41 +
+      this.m42 +
+      this.m43 +
+      this.m44
     );
   }
 
@@ -1337,22 +1337,22 @@ export class Matrix {
    * @returns result input
    */
   invertToRef(other: Matrix) {
-    const num1 = this.M11;
-    const num2 = this.M12;
-    const num3 = this.M13;
-    const num4 = this.M14;
-    const num5 = this.M21;
-    const num6 = this.M22;
-    const num7 = this.M23;
-    const num8 = this.M24;
-    const num9 = this.M31;
-    const num10 = this.M32;
-    const num11 = this.M33;
-    const num12 = this.M34;
-    const num13 = this.M41;
-    const num14 = this.M42;
-    const num15 = this.M43;
-    const num16 = this.M44;
+    const num1 = this.m11;
+    const num2 = this.m12;
+    const num3 = this.m13;
+    const num4 = this.m14;
+    const num5 = this.m21;
+    const num6 = this.m22;
+    const num7 = this.m23;
+    const num8 = this.m24;
+    const num9 = this.m31;
+    const num10 = this.m32;
+    const num11 = this.m33;
+    const num12 = this.m34;
+    const num13 = this.m41;
+    const num14 = this.m42;
+    const num15 = this.m43;
+    const num16 = this.m44;
     const num17 = num11 * num16 - num12 * num15;
     const num18 = num10 * num16 - num12 * num14;
     const num19 = num10 * num15 - num11 * num14;
@@ -1366,34 +1366,34 @@ export class Matrix {
     const num27 =
       1.0 / (num1 * num23 + num2 * num24 + num3 * num25 + num4 * num26);
 
-    other.M11 = num23 * num27;
-    other.M21 = num24 * num27;
-    other.M31 = num25 * num27;
-    other.M41 = num26 * num27;
-    other.M12 = -(num2 * num17 - num3 * num18 + num4 * num19) * num27;
-    other.M22 = (num1 * num17 - num3 * num20 + num4 * num21) * num27;
-    other.M32 = -(num1 * num18 - num2 * num20 + num4 * num22) * num27;
-    other.M42 = (num1 * num19 - num2 * num21 + num3 * num22) * num27;
+    other.m11 = num23 * num27;
+    other.m21 = num24 * num27;
+    other.m31 = num25 * num27;
+    other.m41 = num26 * num27;
+    other.m12 = -(num2 * num17 - num3 * num18 + num4 * num19) * num27;
+    other.m22 = (num1 * num17 - num3 * num20 + num4 * num21) * num27;
+    other.m32 = -(num1 * num18 - num2 * num20 + num4 * num22) * num27;
+    other.m42 = (num1 * num19 - num2 * num21 + num3 * num22) * num27;
     const num28 = num7 * num16 - num8 * num15;
     const num29 = num6 * num16 - num8 * num14;
     const num30 = num6 * num15 - num7 * num14;
     const num31 = num5 * num16 - num8 * num13;
     const num32 = num5 * num15 - num7 * num13;
     const num33 = num5 * num14 - num6 * num13;
-    other.M13 = (num2 * num28 - num3 * num29 + num4 * num30) * num27;
-    other.M23 = -(num1 * num28 - num3 * num31 + num4 * num32) * num27;
-    other.M33 = (num1 * num29 - num2 * num31 + num4 * num33) * num27;
-    other.M43 = -(num1 * num30 - num2 * num32 + num3 * num33) * num27;
+    other.m13 = (num2 * num28 - num3 * num29 + num4 * num30) * num27;
+    other.m23 = -(num1 * num28 - num3 * num31 + num4 * num32) * num27;
+    other.m33 = (num1 * num29 - num2 * num31 + num4 * num33) * num27;
+    other.m43 = -(num1 * num30 - num2 * num32 + num3 * num33) * num27;
     const num34 = num7 * num12 - num8 * num11;
     const num35 = num6 * num12 - num8 * num10;
     const num36 = num6 * num11 - num7 * num10;
     const num37 = num5 * num12 - num8 * num9;
     const num38 = num5 * num11 - num7 * num9;
     const num39 = num5 * num10 - num6 * num9;
-    other.M14 = -(num2 * num34 - num3 * num35 + num4 * num36) * num27;
-    other.M24 = (num1 * num34 - num3 * num37 + num4 * num38) * num27;
-    other.M34 = -(num1 * num35 - num2 * num37 + num4 * num39) * num27;
-    other.M44 = (num1 * num36 - num2 * num38 + num3 * num39) * num27;
+    other.m14 = -(num2 * num34 - num3 * num35 + num4 * num36) * num27;
+    other.m24 = (num1 * num34 - num3 * num37 + num4 * num38) * num27;
+    other.m34 = -(num1 * num35 - num2 * num37 + num4 * num39) * num27;
+    other.m44 = (num1 * num36 - num2 * num38 + num3 * num39) * num27;
     return other;
   }
 
@@ -1405,22 +1405,22 @@ export class Matrix {
    */
   static Invert(matrix: Matrix) {
     const result = new Matrix();
-    const num1 = matrix.M11;
-    const num2 = matrix.M12;
-    const num3 = matrix.M13;
-    const num4 = matrix.M14;
-    const num5 = matrix.M21;
-    const num6 = matrix.M22;
-    const num7 = matrix.M23;
-    const num8 = matrix.M24;
-    const num9 = matrix.M31;
-    const num10 = matrix.M32;
-    const num11 = matrix.M33;
-    const num12 = matrix.M34;
-    const num13 = matrix.M41;
-    const num14 = matrix.M42;
-    const num15 = matrix.M43;
-    const num16 = matrix.M44;
+    const num1 = matrix.m11;
+    const num2 = matrix.m12;
+    const num3 = matrix.m13;
+    const num4 = matrix.m14;
+    const num5 = matrix.m21;
+    const num6 = matrix.m22;
+    const num7 = matrix.m23;
+    const num8 = matrix.m24;
+    const num9 = matrix.m31;
+    const num10 = matrix.m32;
+    const num11 = matrix.m33;
+    const num12 = matrix.m34;
+    const num13 = matrix.m41;
+    const num14 = matrix.m42;
+    const num15 = matrix.m43;
+    const num16 = matrix.m44;
     const num17 = num11 * num16 - num12 * num15;
     const num18 = num10 * num16 - num12 * num14;
     const num19 = num10 * num15 - num11 * num14;
@@ -1434,34 +1434,34 @@ export class Matrix {
     const num27 =
       1.0 / (num1 * num23 + num2 * num24 + num3 * num25 + num4 * num26);
 
-    result.M11 = num23 * num27;
-    result.M21 = num24 * num27;
-    result.M31 = num25 * num27;
-    result.M41 = num26 * num27;
-    result.M12 = -(num2 * num17 - num3 * num18 + num4 * num19) * num27;
-    result.M22 = (num1 * num17 - num3 * num20 + num4 * num21) * num27;
-    result.M32 = -(num1 * num18 - num2 * num20 + num4 * num22) * num27;
-    result.M42 = (num1 * num19 - num2 * num21 + num3 * num22) * num27;
+    result.m11 = num23 * num27;
+    result.m21 = num24 * num27;
+    result.m31 = num25 * num27;
+    result.m41 = num26 * num27;
+    result.m12 = -(num2 * num17 - num3 * num18 + num4 * num19) * num27;
+    result.m22 = (num1 * num17 - num3 * num20 + num4 * num21) * num27;
+    result.m32 = -(num1 * num18 - num2 * num20 + num4 * num22) * num27;
+    result.m42 = (num1 * num19 - num2 * num21 + num3 * num22) * num27;
     const num28 = num7 * num16 - num8 * num15;
     const num29 = num6 * num16 - num8 * num14;
     const num30 = num6 * num15 - num7 * num14;
     const num31 = num5 * num16 - num8 * num13;
     const num32 = num5 * num15 - num7 * num13;
     const num33 = num5 * num14 - num6 * num13;
-    result.M13 = (num2 * num28 - num3 * num29 + num4 * num30) * num27;
-    result.M23 = -(num1 * num28 - num3 * num31 + num4 * num32) * num27;
-    result.M33 = (num1 * num29 - num2 * num31 + num4 * num33) * num27;
-    result.M43 = -(num1 * num30 - num2 * num32 + num3 * num33) * num27;
+    result.m13 = (num2 * num28 - num3 * num29 + num4 * num30) * num27;
+    result.m23 = -(num1 * num28 - num3 * num31 + num4 * num32) * num27;
+    result.m33 = (num1 * num29 - num2 * num31 + num4 * num33) * num27;
+    result.m43 = -(num1 * num30 - num2 * num32 + num3 * num33) * num27;
     const num34 = num7 * num12 - num8 * num11;
     const num35 = num6 * num12 - num8 * num10;
     const num36 = num6 * num11 - num7 * num10;
     const num37 = num5 * num12 - num8 * num9;
     const num38 = num5 * num11 - num7 * num9;
     const num39 = num5 * num10 - num6 * num9;
-    result.M14 = -(num2 * num34 - num3 * num35 + num4 * num36) * num27;
-    result.M24 = (num1 * num34 - num3 * num37 + num4 * num38) * num27;
-    result.M34 = -(num1 * num35 - num2 * num37 + num4 * num39) * num27;
-    result.M44 = (num1 * num36 - num2 * num38 + num3 * num39) * num27;
+    result.m14 = -(num2 * num34 - num3 * num35 + num4 * num36) * num27;
+    result.m24 = (num1 * num34 - num3 * num37 + num4 * num38) * num27;
+    result.m34 = -(num1 * num35 - num2 * num37 + num4 * num39) * num27;
+    result.m44 = (num1 * num36 - num2 * num38 + num3 * num39) * num27;
     return result;
   }
 
@@ -1475,22 +1475,22 @@ export class Matrix {
    */
   static Lerp(matrix1: Matrix, matrix2: Matrix, amount: number) {
     const result = new Matrix();
-    result.M11 = matrix1.M11 + (matrix2.M11 - matrix1.M11) * amount;
-    result.M12 = matrix1.M12 + (matrix2.M12 - matrix1.M12) * amount;
-    result.M13 = matrix1.M13 + (matrix2.M13 - matrix1.M13) * amount;
-    result.M14 = matrix1.M14 + (matrix2.M14 - matrix1.M14) * amount;
-    result.M21 = matrix1.M21 + (matrix2.M21 - matrix1.M21) * amount;
-    result.M22 = matrix1.M22 + (matrix2.M22 - matrix1.M22) * amount;
-    result.M23 = matrix1.M23 + (matrix2.M23 - matrix1.M23) * amount;
-    result.M24 = matrix1.M24 + (matrix2.M24 - matrix1.M24) * amount;
-    result.M31 = matrix1.M31 + (matrix2.M31 - matrix1.M31) * amount;
-    result.M32 = matrix1.M32 + (matrix2.M32 - matrix1.M32) * amount;
-    result.M33 = matrix1.M33 + (matrix2.M33 - matrix1.M33) * amount;
-    result.M34 = matrix1.M34 + (matrix2.M34 - matrix1.M34) * amount;
-    result.M41 = matrix1.M41 + (matrix2.M41 - matrix1.M41) * amount;
-    result.M42 = matrix1.M42 + (matrix2.M42 - matrix1.M42) * amount;
-    result.M43 = matrix1.M43 + (matrix2.M43 - matrix1.M43) * amount;
-    result.M44 = matrix1.M44 + (matrix2.M44 - matrix1.M44) * amount;
+    result.m11 = matrix1.m11 + (matrix2.m11 - matrix1.m11) * amount;
+    result.m12 = matrix1.m12 + (matrix2.m12 - matrix1.m12) * amount;
+    result.m13 = matrix1.m13 + (matrix2.m13 - matrix1.m13) * amount;
+    result.m14 = matrix1.m14 + (matrix2.m14 - matrix1.m14) * amount;
+    result.m21 = matrix1.m21 + (matrix2.m21 - matrix1.m21) * amount;
+    result.m22 = matrix1.m22 + (matrix2.m22 - matrix1.m22) * amount;
+    result.m23 = matrix1.m23 + (matrix2.m23 - matrix1.m23) * amount;
+    result.m24 = matrix1.m24 + (matrix2.m24 - matrix1.m24) * amount;
+    result.m31 = matrix1.m31 + (matrix2.m31 - matrix1.m31) * amount;
+    result.m32 = matrix1.m32 + (matrix2.m32 - matrix1.m32) * amount;
+    result.m33 = matrix1.m33 + (matrix2.m33 - matrix1.m33) * amount;
+    result.m34 = matrix1.m34 + (matrix2.m34 - matrix1.m34) * amount;
+    result.m41 = matrix1.m41 + (matrix2.m41 - matrix1.m41) * amount;
+    result.m42 = matrix1.m42 + (matrix2.m42 - matrix1.m42) * amount;
+    result.m43 = matrix1.m43 + (matrix2.m43 - matrix1.m43) * amount;
+    result.m44 = matrix1.m44 + (matrix2.m44 - matrix1.m44) * amount;
     return result;
   }
 
@@ -1504,101 +1504,101 @@ export class Matrix {
   static Multiply(matrix1: Matrix, matrix2: Matrix) {
     const result = new Matrix();
     const m11 =
-      matrix1.M11 * matrix2.M11 +
-      matrix1.M12 * matrix2.M21 +
-      matrix1.M13 * matrix2.M31 +
-      matrix1.M14 * matrix2.M41;
+      matrix1.m11 * matrix2.m11 +
+      matrix1.m12 * matrix2.m21 +
+      matrix1.m13 * matrix2.m31 +
+      matrix1.m14 * matrix2.m41;
     const m12 =
-      matrix1.M11 * matrix2.M12 +
-      matrix1.M12 * matrix2.M22 +
-      matrix1.M13 * matrix2.M32 +
-      matrix1.M14 * matrix2.M42;
+      matrix1.m11 * matrix2.m12 +
+      matrix1.m12 * matrix2.m22 +
+      matrix1.m13 * matrix2.m32 +
+      matrix1.m14 * matrix2.m42;
     const m13 =
-      matrix1.M11 * matrix2.M13 +
-      matrix1.M12 * matrix2.M23 +
-      matrix1.M13 * matrix2.M33 +
-      matrix1.M14 * matrix2.M43;
+      matrix1.m11 * matrix2.m13 +
+      matrix1.m12 * matrix2.m23 +
+      matrix1.m13 * matrix2.m33 +
+      matrix1.m14 * matrix2.m43;
     const m14 =
-      matrix1.M11 * matrix2.M14 +
-      matrix1.M12 * matrix2.M24 +
-      matrix1.M13 * matrix2.M34 +
-      matrix1.M14 * matrix2.M44;
+      matrix1.m11 * matrix2.m14 +
+      matrix1.m12 * matrix2.m24 +
+      matrix1.m13 * matrix2.m34 +
+      matrix1.m14 * matrix2.m44;
     const m21 =
-      matrix1.M21 * matrix2.M11 +
-      matrix1.M22 * matrix2.M21 +
-      matrix1.M23 * matrix2.M31 +
-      matrix1.M24 * matrix2.M41;
+      matrix1.m21 * matrix2.m11 +
+      matrix1.m22 * matrix2.m21 +
+      matrix1.m23 * matrix2.m31 +
+      matrix1.m24 * matrix2.m41;
     const m22 =
-      matrix1.M21 * matrix2.M12 +
-      matrix1.M22 * matrix2.M22 +
-      matrix1.M23 * matrix2.M32 +
-      matrix1.M24 * matrix2.M42;
+      matrix1.m21 * matrix2.m12 +
+      matrix1.m22 * matrix2.m22 +
+      matrix1.m23 * matrix2.m32 +
+      matrix1.m24 * matrix2.m42;
     const m23 =
-      matrix1.M21 * matrix2.M13 +
-      matrix1.M22 * matrix2.M23 +
-      matrix1.M23 * matrix2.M33 +
-      matrix1.M24 * matrix2.M43;
+      matrix1.m21 * matrix2.m13 +
+      matrix1.m22 * matrix2.m23 +
+      matrix1.m23 * matrix2.m33 +
+      matrix1.m24 * matrix2.m43;
     const m24 =
-      matrix1.M21 * matrix2.M14 +
-      matrix1.M22 * matrix2.M24 +
-      matrix1.M23 * matrix2.M34 +
-      matrix1.M24 * matrix2.M44;
+      matrix1.m21 * matrix2.m14 +
+      matrix1.m22 * matrix2.m24 +
+      matrix1.m23 * matrix2.m34 +
+      matrix1.m24 * matrix2.m44;
     const m31 =
-      matrix1.M31 * matrix2.M11 +
-      matrix1.M32 * matrix2.M21 +
-      matrix1.M33 * matrix2.M31 +
-      matrix1.M34 * matrix2.M41;
+      matrix1.m31 * matrix2.m11 +
+      matrix1.m32 * matrix2.m21 +
+      matrix1.m33 * matrix2.m31 +
+      matrix1.m34 * matrix2.m41;
     const m32 =
-      matrix1.M31 * matrix2.M12 +
-      matrix1.M32 * matrix2.M22 +
-      matrix1.M33 * matrix2.M32 +
-      matrix1.M34 * matrix2.M42;
+      matrix1.m31 * matrix2.m12 +
+      matrix1.m32 * matrix2.m22 +
+      matrix1.m33 * matrix2.m32 +
+      matrix1.m34 * matrix2.m42;
     const m33 =
-      matrix1.M31 * matrix2.M13 +
-      matrix1.M32 * matrix2.M23 +
-      matrix1.M33 * matrix2.M33 +
-      matrix1.M34 * matrix2.M43;
+      matrix1.m31 * matrix2.m13 +
+      matrix1.m32 * matrix2.m23 +
+      matrix1.m33 * matrix2.m33 +
+      matrix1.m34 * matrix2.m43;
     const m34 =
-      matrix1.M31 * matrix2.M14 +
-      matrix1.M32 * matrix2.M24 +
-      matrix1.M33 * matrix2.M34 +
-      matrix1.M34 * matrix2.M44;
+      matrix1.m31 * matrix2.m14 +
+      matrix1.m32 * matrix2.m24 +
+      matrix1.m33 * matrix2.m34 +
+      matrix1.m34 * matrix2.m44;
     const m41 =
-      matrix1.M41 * matrix2.M11 +
-      matrix1.M42 * matrix2.M21 +
-      matrix1.M43 * matrix2.M31 +
-      matrix1.M44 * matrix2.M41;
+      matrix1.m41 * matrix2.m11 +
+      matrix1.m42 * matrix2.m21 +
+      matrix1.m43 * matrix2.m31 +
+      matrix1.m44 * matrix2.m41;
     const m42 =
-      matrix1.M41 * matrix2.M12 +
-      matrix1.M42 * matrix2.M22 +
-      matrix1.M43 * matrix2.M32 +
-      matrix1.M44 * matrix2.M42;
+      matrix1.m41 * matrix2.m12 +
+      matrix1.m42 * matrix2.m22 +
+      matrix1.m43 * matrix2.m32 +
+      matrix1.m44 * matrix2.m42;
     const m43 =
-      matrix1.M41 * matrix2.M13 +
-      matrix1.M42 * matrix2.M23 +
-      matrix1.M43 * matrix2.M33 +
-      matrix1.M44 * matrix2.M43;
+      matrix1.m41 * matrix2.m13 +
+      matrix1.m42 * matrix2.m23 +
+      matrix1.m43 * matrix2.m33 +
+      matrix1.m44 * matrix2.m43;
     const m44 =
-      matrix1.M41 * matrix2.M14 +
-      matrix1.M42 * matrix2.M24 +
-      matrix1.M43 * matrix2.M34 +
-      matrix1.M44 * matrix2.M44;
-    result.M11 = m11;
-    result.M12 = m12;
-    result.M13 = m13;
-    result.M14 = m14;
-    result.M21 = m21;
-    result.M22 = m22;
-    result.M23 = m23;
-    result.M24 = m24;
-    result.M31 = m31;
-    result.M32 = m32;
-    result.M33 = m33;
-    result.M34 = m34;
-    result.M41 = m41;
-    result.M42 = m42;
-    result.M43 = m43;
-    result.M44 = m44;
+      matrix1.m41 * matrix2.m14 +
+      matrix1.m42 * matrix2.m24 +
+      matrix1.m43 * matrix2.m34 +
+      matrix1.m44 * matrix2.m44;
+    result.m11 = m11;
+    result.m12 = m12;
+    result.m13 = m13;
+    result.m14 = m14;
+    result.m21 = m21;
+    result.m22 = m22;
+    result.m23 = m23;
+    result.m24 = m24;
+    result.m31 = m31;
+    result.m32 = m32;
+    result.m33 = m33;
+    result.m34 = m34;
+    result.m41 = m41;
+    result.m42 = m42;
+    result.m43 = m43;
+    result.m44 = m44;
     return result;
   }
 
@@ -1619,102 +1619,102 @@ export class Matrix {
    */
   public multiplyToRef(other: Matrix, result: Matrix) {
     const m11 =
-      this.M11 * other.M11 +
-      this.M12 * other.M21 +
-      this.M13 * other.M31 +
-      this.M14 * other.M41;
+      this.m11 * other.m11 +
+      this.m12 * other.m21 +
+      this.m13 * other.m31 +
+      this.m14 * other.m41;
     const m12 =
-      this.M11 * other.M12 +
-      this.M12 * other.M22 +
-      this.M13 * other.M32 +
-      this.M14 * other.M42;
+      this.m11 * other.m12 +
+      this.m12 * other.m22 +
+      this.m13 * other.m32 +
+      this.m14 * other.m42;
     const m13 =
-      this.M11 * other.M13 +
-      this.M12 * other.M23 +
-      this.M13 * other.M33 +
-      this.M14 * other.M43;
+      this.m11 * other.m13 +
+      this.m12 * other.m23 +
+      this.m13 * other.m33 +
+      this.m14 * other.m43;
     const m14 =
-      this.M11 * other.M14 +
-      this.M12 * other.M24 +
-      this.M13 * other.M34 +
-      this.M14 * other.M44;
+      this.m11 * other.m14 +
+      this.m12 * other.m24 +
+      this.m13 * other.m34 +
+      this.m14 * other.m44;
     const m21 =
-      this.M21 * other.M11 +
-      this.M22 * other.M21 +
-      this.M23 * other.M31 +
-      this.M24 * other.M41;
+      this.m21 * other.m11 +
+      this.m22 * other.m21 +
+      this.m23 * other.m31 +
+      this.m24 * other.m41;
     const m22 =
-      this.M21 * other.M12 +
-      this.M22 * other.M22 +
-      this.M23 * other.M32 +
-      this.M24 * other.M42;
+      this.m21 * other.m12 +
+      this.m22 * other.m22 +
+      this.m23 * other.m32 +
+      this.m24 * other.m42;
     const m23 =
-      this.M21 * other.M13 +
-      this.M22 * other.M23 +
-      this.M23 * other.M33 +
-      this.M24 * other.M43;
+      this.m21 * other.m13 +
+      this.m22 * other.m23 +
+      this.m23 * other.m33 +
+      this.m24 * other.m43;
     const m24 =
-      this.M21 * other.M14 +
-      this.M22 * other.M24 +
-      this.M23 * other.M34 +
-      this.M24 * other.M44;
+      this.m21 * other.m14 +
+      this.m22 * other.m24 +
+      this.m23 * other.m34 +
+      this.m24 * other.m44;
     const m31 =
-      this.M31 * other.M11 +
-      this.M32 * other.M21 +
-      this.M33 * other.M31 +
-      this.M34 * other.M41;
+      this.m31 * other.m11 +
+      this.m32 * other.m21 +
+      this.m33 * other.m31 +
+      this.m34 * other.m41;
     const m32 =
-      this.M31 * other.M12 +
-      this.M32 * other.M22 +
-      this.M33 * other.M32 +
-      this.M34 * other.M42;
+      this.m31 * other.m12 +
+      this.m32 * other.m22 +
+      this.m33 * other.m32 +
+      this.m34 * other.m42;
     const m33 =
-      this.M31 * other.M13 +
-      this.M32 * other.M23 +
-      this.M33 * other.M33 +
-      this.M34 * other.M43;
+      this.m31 * other.m13 +
+      this.m32 * other.m23 +
+      this.m33 * other.m33 +
+      this.m34 * other.m43;
     const m34 =
-      this.M31 * other.M14 +
-      this.M32 * other.M24 +
-      this.M33 * other.M34 +
-      this.M34 * other.M44;
+      this.m31 * other.m14 +
+      this.m32 * other.m24 +
+      this.m33 * other.m34 +
+      this.m34 * other.m44;
     const m41 =
-      this.M41 * other.M11 +
-      this.M42 * other.M21 +
-      this.M43 * other.M31 +
-      this.M44 * other.M41;
+      this.m41 * other.m11 +
+      this.m42 * other.m21 +
+      this.m43 * other.m31 +
+      this.m44 * other.m41;
     const m42 =
-      this.M41 * other.M12 +
-      this.M42 * other.M22 +
-      this.M43 * other.M32 +
-      this.M44 * other.M42;
+      this.m41 * other.m12 +
+      this.m42 * other.m22 +
+      this.m43 * other.m32 +
+      this.m44 * other.m42;
     const m43 =
-      this.M41 * other.M13 +
-      this.M42 * other.M23 +
-      this.M43 * other.M33 +
-      this.M44 * other.M43;
+      this.m41 * other.m13 +
+      this.m42 * other.m23 +
+      this.m43 * other.m33 +
+      this.m44 * other.m43;
     const m44 =
-      this.M41 * other.M14 +
-      this.M42 * other.M24 +
-      this.M43 * other.M34 +
-      this.M44 * other.M44;
+      this.m41 * other.m14 +
+      this.m42 * other.m24 +
+      this.m43 * other.m34 +
+      this.m44 * other.m44;
 
-    result.M11 = m11;
-    result.M12 = m12;
-    result.M13 = m13;
-    result.M14 = m14;
-    result.M21 = m21;
-    result.M22 = m22;
-    result.M23 = m23;
-    result.M24 = m24;
-    result.M31 = m31;
-    result.M32 = m32;
-    result.M33 = m33;
-    result.M34 = m34;
-    result.M41 = m41;
-    result.M42 = m42;
-    result.M43 = m43;
-    result.M44 = m44;
+    result.m11 = m11;
+    result.m12 = m12;
+    result.m13 = m13;
+    result.m14 = m14;
+    result.m21 = m21;
+    result.m22 = m22;
+    result.m23 = m23;
+    result.m24 = m24;
+    result.m31 = m31;
+    result.m32 = m32;
+    result.m33 = m33;
+    result.m34 = m34;
+    result.m41 = m41;
+    result.m42 = m42;
+    result.m43 = m43;
+    result.m44 = m44;
 
     return other;
   }
@@ -1727,22 +1727,22 @@ export class Matrix {
    */
   static Negate(matrix: Matrix) {
     const result = new Matrix();
-    result.M11 = -matrix.M11;
-    result.M12 = -matrix.M12;
-    result.M13 = -matrix.M13;
-    result.M14 = -matrix.M14;
-    result.M21 = -matrix.M21;
-    result.M22 = -matrix.M22;
-    result.M23 = -matrix.M23;
-    result.M24 = -matrix.M24;
-    result.M31 = -matrix.M31;
-    result.M32 = -matrix.M32;
-    result.M33 = -matrix.M33;
-    result.M34 = -matrix.M34;
-    result.M41 = -matrix.M41;
-    result.M42 = -matrix.M42;
-    result.M43 = -matrix.M43;
-    result.M44 = -matrix.M44;
+    result.m11 = -matrix.m11;
+    result.m12 = -matrix.m12;
+    result.m13 = -matrix.m13;
+    result.m14 = -matrix.m14;
+    result.m21 = -matrix.m21;
+    result.m22 = -matrix.m22;
+    result.m23 = -matrix.m23;
+    result.m24 = -matrix.m24;
+    result.m31 = -matrix.m31;
+    result.m32 = -matrix.m32;
+    result.m33 = -matrix.m33;
+    result.m34 = -matrix.m34;
+    result.m41 = -matrix.m41;
+    result.m42 = -matrix.m42;
+    result.m43 = -matrix.m43;
+    result.m44 = -matrix.m44;
     return result;
   }
 
@@ -1755,62 +1755,62 @@ export class Matrix {
    */
   static Subtract(matrix1: Matrix, matrix2: Matrix) {
     const result = new Matrix();
-    result.M11 = matrix1.M11 - matrix2.M11;
-    result.M12 = matrix1.M12 - matrix2.M12;
-    result.M13 = matrix1.M13 - matrix2.M13;
-    result.M14 = matrix1.M14 - matrix2.M14;
-    result.M21 = matrix1.M21 - matrix2.M21;
-    result.M22 = matrix1.M22 - matrix2.M22;
-    result.M23 = matrix1.M23 - matrix2.M23;
-    result.M24 = matrix1.M24 - matrix2.M24;
-    result.M31 = matrix1.M31 - matrix2.M31;
-    result.M32 = matrix1.M32 - matrix2.M32;
-    result.M33 = matrix1.M33 - matrix2.M33;
-    result.M34 = matrix1.M34 - matrix2.M34;
-    result.M41 = matrix1.M41 - matrix2.M41;
-    result.M42 = matrix1.M42 - matrix2.M42;
-    result.M43 = matrix1.M43 - matrix2.M43;
-    result.M44 = matrix1.M44 - matrix2.M44;
+    result.m11 = matrix1.m11 - matrix2.m11;
+    result.m12 = matrix1.m12 - matrix2.m12;
+    result.m13 = matrix1.m13 - matrix2.m13;
+    result.m14 = matrix1.m14 - matrix2.m14;
+    result.m21 = matrix1.m21 - matrix2.m21;
+    result.m22 = matrix1.m22 - matrix2.m22;
+    result.m23 = matrix1.m23 - matrix2.m23;
+    result.m24 = matrix1.m24 - matrix2.m24;
+    result.m31 = matrix1.m31 - matrix2.m31;
+    result.m32 = matrix1.m32 - matrix2.m32;
+    result.m33 = matrix1.m33 - matrix2.m33;
+    result.m34 = matrix1.m34 - matrix2.m34;
+    result.m41 = matrix1.m41 - matrix2.m41;
+    result.m42 = matrix1.m42 - matrix2.m42;
+    result.m43 = matrix1.m43 - matrix2.m43;
+    result.m44 = matrix1.m44 - matrix2.m44;
     return result;
   }
 
   ToString() {
     return (
       '{M11:' +
-      this.M11 +
+      this.m11 +
       ' M12:' +
-      this.M12 +
+      this.m12 +
       ' M13:' +
-      this.M13 +
+      this.m13 +
       ' M14:' +
-      this.M14 +
+      this.m14 +
       '} ' +
       '{M21:' +
-      this.M21 +
+      this.m21 +
       ' M22:' +
-      this.M22 +
+      this.m22 +
       ' M23:' +
-      this.M23 +
+      this.m23 +
       ' M24:' +
-      this.M24 +
+      this.m24 +
       '} ' +
       '{M31:' +
-      this.M31 +
+      this.m31 +
       ' M32:' +
-      this.M32 +
+      this.m32 +
       ' M33:' +
-      this.M33 +
+      this.m33 +
       ' M34:' +
-      this.M34 +
+      this.m34 +
       '} ' +
       '{M41:' +
-      this.M41 +
+      this.m41 +
       ' M42:' +
-      this.M42 +
+      this.m42 +
       ' M43:' +
-      this.M43 +
+      this.m43 +
       ' M44:' +
-      this.M44 +
+      this.m44 +
       '}'
     );
   }
@@ -1851,22 +1851,22 @@ export class Matrix {
 
     const result = new Matrix();
 
-    result.M11 = value.M11 * q11 + value.M12 * q21 + value.M13 * q31;
-    result.M12 = value.M11 * q12 + value.M12 * q22 + value.M13 * q32;
-    result.M13 = value.M11 * q13 + value.M12 * q23 + value.M13 * q33;
-    result.M14 = value.M14;
-    result.M21 = value.M21 * q11 + value.M22 * q21 + value.M23 * q31;
-    result.M22 = value.M21 * q12 + value.M22 * q22 + value.M23 * q32;
-    result.M23 = value.M21 * q13 + value.M22 * q23 + value.M23 * q33;
-    result.M24 = value.M24;
-    result.M31 = value.M31 * q11 + value.M32 * q21 + value.M33 * q31;
-    result.M32 = value.M31 * q12 + value.M32 * q22 + value.M33 * q32;
-    result.M33 = value.M31 * q13 + value.M32 * q23 + value.M33 * q33;
-    result.M34 = value.M34;
-    result.M41 = value.M41 * q11 + value.M42 * q21 + value.M43 * q31;
-    result.M42 = value.M41 * q12 + value.M42 * q22 + value.M43 * q32;
-    result.M43 = value.M41 * q13 + value.M42 * q23 + value.M43 * q33;
-    result.M44 = value.M44;
+    result.m11 = value.m11 * q11 + value.m12 * q21 + value.m13 * q31;
+    result.m12 = value.m11 * q12 + value.m12 * q22 + value.m13 * q32;
+    result.m13 = value.m11 * q13 + value.m12 * q23 + value.m13 * q33;
+    result.m14 = value.m14;
+    result.m21 = value.m21 * q11 + value.m22 * q21 + value.m23 * q31;
+    result.m22 = value.m21 * q12 + value.m22 * q22 + value.m23 * q32;
+    result.m23 = value.m21 * q13 + value.m22 * q23 + value.m23 * q33;
+    result.m24 = value.m24;
+    result.m31 = value.m31 * q11 + value.m32 * q21 + value.m33 * q31;
+    result.m32 = value.m31 * q12 + value.m32 * q22 + value.m33 * q32;
+    result.m33 = value.m31 * q13 + value.m32 * q23 + value.m33 * q33;
+    result.m34 = value.m34;
+    result.m41 = value.m41 * q11 + value.m42 * q21 + value.m43 * q31;
+    result.m42 = value.m41 * q12 + value.m42 * q22 + value.m43 * q32;
+    result.m43 = value.m41 * q13 + value.m42 * q23 + value.m43 * q33;
+    result.m44 = value.m44;
     return result;
   }
 
@@ -1879,25 +1879,25 @@ export class Matrix {
   static Transpose(matrix: Matrix) {
     const result = new Matrix();
 
-    result.M11 = matrix.M11;
-    result.M12 = matrix.M21;
-    result.M13 = matrix.M31;
-    result.M14 = matrix.M41;
+    result.m11 = matrix.m11;
+    result.m12 = matrix.m21;
+    result.m13 = matrix.m31;
+    result.m14 = matrix.m41;
 
-    result.M21 = matrix.M12;
-    result.M22 = matrix.M22;
-    result.M23 = matrix.M32;
-    result.M24 = matrix.M42;
+    result.m21 = matrix.m12;
+    result.m22 = matrix.m22;
+    result.m23 = matrix.m32;
+    result.m24 = matrix.m42;
 
-    result.M31 = matrix.M13;
-    result.M32 = matrix.M23;
-    result.M33 = matrix.M33;
-    result.M34 = matrix.M43;
+    result.m31 = matrix.m13;
+    result.m32 = matrix.m23;
+    result.m33 = matrix.m33;
+    result.m34 = matrix.m43;
 
-    result.M41 = matrix.M14;
-    result.M42 = matrix.M24;
-    result.M43 = matrix.M34;
-    result.M44 = matrix.M44;
+    result.m41 = matrix.m14;
+    result.m42 = matrix.m24;
+    result.m43 = matrix.m34;
+    result.m44 = matrix.m44;
 
     return result;
   }

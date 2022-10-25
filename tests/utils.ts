@@ -83,25 +83,25 @@ export function getRandomMatrixFromArray(array: number[]) {
 
 export function getArrayFromMatrix(matrix: Matrix) {
   return [
-    matrix.M11,
-    matrix.M12,
-    matrix.M13,
-    matrix.M14,
+    matrix.m11,
+    matrix.m12,
+    matrix.m13,
+    matrix.m14,
 
-    matrix.M21,
-    matrix.M22,
-    matrix.M23,
-    matrix.M24,
+    matrix.m21,
+    matrix.m22,
+    matrix.m23,
+    matrix.m24,
 
-    matrix.M31,
-    matrix.M32,
-    matrix.M33,
-    matrix.M34,
+    matrix.m31,
+    matrix.m32,
+    matrix.m33,
+    matrix.m34,
 
-    matrix.M41,
-    matrix.M42,
-    matrix.M43,
-    matrix.M44,
+    matrix.m41,
+    matrix.m42,
+    matrix.m43,
+    matrix.m44,
   ];
 }
 export function getRandomMatrix() {

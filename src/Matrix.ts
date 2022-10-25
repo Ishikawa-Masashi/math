@@ -1,6 +1,8 @@
 ﻿import { Vector3 } from './Vector3';
 import { Quaternion } from './Quaternion';
 import { Plane } from './Plane';
+import { Viewport } from './viewport';
+import { MathTmp } from './MathTmp';
 
 export class Matrix {
   /**
@@ -1723,6 +1725,58 @@ export class Matrix {
     result.M43 = matrix.M34;
     result.M44 = matrix.M44;
 
+    return result;
+  }
+
+  /**
+   * Project a Vector3 onto screen space to reference
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#102
+   * @param vector defines the Vector3 to project
+   * @param world defines the world matrix to use
+   * @param transform defines the transform (view x projection) matrix to use
+   * @param viewport defines the screen viewport to use
+   * @param result the vector in which the screen space will be stored
+   * @returns result input
+   */
+  public static ProjectToRef(
+    vector: Vector3,
+    world: Matrix,
+    transform: Matrix,
+    viewport: Viewport,
+    result: Vector3
+  ) {
+    const cw = viewport.width;
+    const ch = viewport.height;
+    const cx = viewport.x;
+    const cy = viewport.y;
+
+    const viewportMatrix = MathTmp.Matrix[1];
+
+    Matrix.FromValuesToRef(
+      cw / 2.0,
+      0,
+      0,
+      0,
+      0,
+      -ch / 2.0,
+      0,
+      0,
+      0,
+      0,
+      0.5,
+      0,
+      cx + cw / 2.0,
+      ch / 2.0 + cy,
+      0.5,
+      1,
+      viewportMatrix
+    );
+
+    const matrix = MathTmp.Matrix[0];
+    world.multiplyToRef(transform, matrix);
+    matrix.multiplyToRef(viewportMatrix, matrix);
+
+    Vector3.TransformCoordinatesToRef(vector, matrix, result);
     return result;
   }
 }

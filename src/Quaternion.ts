@@ -20,6 +20,15 @@ export class Quaternion {
    * @static
    * @returns {Quaternion}
    */
+  static get Zero() {
+    return new Quaternion(0, 0, 0, 0);
+  }
+
+  /**
+   * 返回呈现无旋转的 Quaternion。
+   * @static
+   * @returns {Quaternion}
+   */
   static get Identity() {
     return new Quaternion(0, 0, 0, 1);
   }

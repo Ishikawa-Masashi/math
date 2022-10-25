@@ -488,6 +488,79 @@ export class Vector3 {
   }
 
   /**
+   * Sets the given vector "result" coordinates with the result of the transformation by the given matrix of the given vector
+   * This method computes transformed coordinates only, not transformed direction vectors (ie. it takes translation in account)
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#113
+   * @param vector defines the Vector3 to transform
+   * @param transformation defines the transformation matrix
+   * @param result defines the Vector3 where to store the result
+   * @returns result input
+   */
+  public static TransformCoordinatesToRef(
+    vector: Vector3,
+    transformation: Matrix,
+    result: Vector3
+  ) {
+    Vector3.TransformCoordinatesFromFloatsToRef(
+      vector.X,
+      vector.Y,
+      vector.Z,
+      transformation,
+      result
+    );
+    return result;
+  }
+
+  /**
+   * Sets the given vector "result" coordinates with the result of the transformation by the given matrix of the given floats (x, y, z)
+   * This method computes transformed coordinates only, not transformed direction vectors
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#115
+   * @param x define the x coordinate of the source vector
+   * @param y define the y coordinate of the source vector
+   * @param z define the z coordinate of the source vector
+   * @param transformation defines the transformation matrix
+   * @param result defines the Vector3 where to store the result
+   * @returns result input
+   */
+  public static TransformCoordinatesFromFloatsToRef(
+    x: number,
+    y: number,
+    z: number,
+    transformation: Matrix,
+    result: Vector3
+  ) {
+    // const m = transformation.m;
+    const {
+      M11,
+      M12,
+      M13,
+      M14,
+      M21,
+      M22,
+      M23,
+      M24,
+      M31,
+      M32,
+      M33,
+      M34,
+      M41,
+      M42,
+      M43,
+      M44,
+    } = transformation;
+    // const rx = x * m[0] + y * m[4] + z * m[8] + m[12];
+    const rx = x * M11 + y * M21 + z * M31 + M41;
+    const ry = x * M12 + y * M22 + z * M32 + M42;
+    const rz = x * M13 + y * M23 + z * M33 + M43;
+    const rw = 1 / (x * M14 + y * M24 + z * M34 + M44);
+
+    result.X = rx * rw;
+    result.Y = ry * rw;
+    result.Z = rz * rw;
+    return result;
+  }
+
+  /**
    * 通过矩阵变换 3D 矢量法线。
    * @static
    * @param {Vector3} normal 源矢量。

@@ -797,7 +797,7 @@ export class Matrix {
    * @param angle defines the angle (in radians) to use
    * @returns the new matrix
    */
-  static CreateRotationX(angle: number) {
+  static RotationX(angle: number) {
     const result = new Matrix();
     Matrix.RotationXToRef(angle, result);
     return result;
@@ -824,6 +824,93 @@ export class Matrix {
       0.0,
       -s,
       c,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      result
+    );
+
+    return result;
+  }
+
+  /**
+   * Creates a new rotation matrix for "angle" radians around the Y axis
+   * @param angle defines the angle (in radians) to use
+   * @returns the new matrix
+   */
+  public static RotationY(angle: number): Matrix {
+    const result = new Matrix();
+    Matrix.RotationYToRef(angle, result);
+    return result;
+  }
+
+  /**
+   * Creates a new rotation matrix for "angle" radians around the Y axis and stores it in a given matrix
+   * @param angle defines the angle (in radians) to use
+   * @param result defines the target matrix
+   * @returns result input
+   */
+  public static RotationYToRef(angle: number, result: Matrix) {
+    const s = Math.sin(angle);
+    const c = Math.cos(angle);
+    Matrix.FromValuesToRef(
+      c,
+      0.0,
+      -s,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      s,
+      0.0,
+      c,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      result
+    );
+
+    return result;
+  }
+
+  /**
+   * Creates a new rotation matrix for "angle" radians around the Z axis
+   * @param angle defines the angle (in radians) to use
+   * @returns the new matrix
+   */
+  public static RotationZ(angle: number): Matrix {
+    const result = new Matrix();
+    Matrix.RotationZToRef(angle, result);
+    return result;
+  }
+
+  /**
+   * Creates a new rotation matrix for "angle" radians around the Z axis and stores it in a given matrix
+   * @param angle defines the angle (in radians) to use
+   * @param result defines the target matrix
+   * @returns result input
+   */
+  public static RotationZToRef(angle: number, result: Matrix) {
+    const s = Math.sin(angle);
+    const c = Math.cos(angle);
+
+    Matrix.FromValuesToRef(
+      c,
+      s,
+      0.0,
+      0.0,
+      -s,
+      c,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
       0.0,
       0.0,
       0.0,
@@ -1015,6 +1102,55 @@ export class Matrix {
     result.M42 = yPosition;
     result.M43 = zPosition;
     result.M44 = 1;
+    return result;
+  }
+
+  /**
+   * Creates a translation matrix
+   * @param x defines the translation on X axis
+   * @param y defines the translation on Y axis
+   * @param z defines the translationon Z axis
+   * @returns the new matrix
+   */
+  public static Translation(x: number, y: number, z: number): Matrix {
+    const result = new Matrix();
+    Matrix.TranslationToRef(x, y, z, result);
+    return result;
+  }
+
+  /**
+   * Creates a translation matrix and stores it in a given matrix
+   * @param x defines the translation on X axis
+   * @param y defines the translation on Y axis
+   * @param z defines the translationon Z axis
+   * @param result defines the target matrix
+   * @returns result input
+   */
+  public static TranslationToRef<T extends Matrix>(
+    x: number,
+    y: number,
+    z: number,
+    result: T
+  ): T {
+    Matrix.FromValuesToRef(
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      x,
+      y,
+      z,
+      1.0,
+      result
+    );
     return result;
   }
 

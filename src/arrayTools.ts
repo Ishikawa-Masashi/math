@@ -50,18 +50,18 @@ export class ArrayTools {
   }
 }
 
-type Append<Elm, T extends unknown[]> = ((
-  arg: Elm,
-  ...rest: T
-) => void) extends (...args: infer T2) => void
-  ? T2
-  : never;
+// type Append<Elm, T extends unknown[]> = ((
+//   arg: Elm,
+//   ...rest: T
+// ) => void) extends (...args: infer T2) => void
+//   ? T2
+//   : never;
 
-type Vector<N extends number, T> = VectorRec<N, T, [], []>;
+// type Vector<N extends number, T> = VectorRec<N, T, [], []>;
 
-type VectorRec<Num, Elm, T extends unknown[], C extends unknown[]> = {
-  0: T;
-  1: VectorRec<Num, Elm, Append<Elm, T>, Append<unknown, C>>;
-}[C extends { length: Num } ? 0 : 1];
+// type VectorRec<Num, Elm, T extends unknown[], C extends unknown[]> = {
+//   0: T;
+//   1: VectorRec<Num, Elm, Append<Elm, T>, Append<unknown, C>>;
+// }[C extends { length: Num } ? 0 : 1];
 
-export type Vector3 = Vector<3, number>;
+// export type Vector3 = Vector<3, number>;

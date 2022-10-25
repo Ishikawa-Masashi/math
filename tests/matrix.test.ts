@@ -82,7 +82,7 @@ describe('Matrix', () => {
   it('invert', () => {
     const angle = getRandomFloat();
 
-    const a = Matrix.CreateRotationX(angle);
+    const a = Matrix.RotationX(angle);
     const b = BABYLON.Matrix.FromArray(getArrayFromMatrix(a));
 
     a.invert();
@@ -93,7 +93,7 @@ describe('Matrix', () => {
 
   it('Invert', () => {
     const angle = getRandomFloat();
-    const a = Matrix.CreateRotationX(angle);
+    const a = Matrix.RotationX(angle);
     const b = Matrix.Invert(a);
 
     const c = BABYLON.Matrix.FromArray(getArrayFromMatrix(a));
@@ -119,11 +119,33 @@ describe('Matrix', () => {
     expect(det).toBe(-22);
   });
 
-  it('CreateRotationX', () => {
+  it('RotationX', () => {
     const angle = getRandomFloat();
-    const matrix1 = Matrix.CreateRotationX(angle);
+    const matrix1 = Matrix.RotationX(angle);
 
     const matrix2 = BABYLON.Matrix.RotationX(angle);
+
+    expect(
+      matrix2.equals(BABYLON.Matrix.FromArray(getArrayFromMatrix(matrix1)))
+    ).toBeTruthy();
+  });
+
+  it('RotationY', () => {
+    const angle = getRandomFloat();
+    const matrix1 = Matrix.RotationY(angle);
+
+    const matrix2 = BABYLON.Matrix.RotationY(angle);
+
+    expect(
+      matrix2.equals(BABYLON.Matrix.FromArray(getArrayFromMatrix(matrix1)))
+    ).toBeTruthy();
+  });
+
+  it('RotationZ', () => {
+    const angle = getRandomFloat();
+    const matrix1 = Matrix.RotationZ(angle);
+
+    const matrix2 = BABYLON.Matrix.RotationZ(angle);
 
     expect(
       matrix2.equals(BABYLON.Matrix.FromArray(getArrayFromMatrix(matrix1)))

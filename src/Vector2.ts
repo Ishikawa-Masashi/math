@@ -1,6 +1,4 @@
 ﻿import { MathHelper } from './MathHelper';
-import { Vector3 } from './Vector3';
-import { Quaternion } from './Quaternion';
 import { Matrix } from './Matrix';
 // import TypeList from '../Core/TypeList.js';
 

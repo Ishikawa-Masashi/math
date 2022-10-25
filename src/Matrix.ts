@@ -923,44 +923,6 @@ export class Matrix {
   }
 
   /**
-   * 返回一个可绕 y 轴旋转一组顶点的矩阵。
-   * @static
-   * @param {Number} radians 绕 y 轴旋转的程度，以弧度计。请注意，您可以使用 ToRadians 将角度转换为弧度。
-   * @returns {Matrix}
-   */
-  static CreateRotationY(radians: number) {
-    const result = Matrix.Identity;
-
-    const val1 = Math.cos(radians);
-    const val2 = Math.sin(radians);
-
-    result.M11 = val1;
-    result.M13 = -val2;
-    result.M31 = val2;
-    result.M33 = val1;
-    return result;
-  }
-
-  /**
-   * 返回一个可绕 z 轴旋转一组顶点的矩阵。
-   * @static
-   * @param {Number} radians 绕 z 轴旋转的程度，以弧度计。请注意，您可以使用 ToRadians 将角度转换为弧度。
-   * @returns {Matrix}
-   */
-  static CreateRotationZ(radians: number) {
-    const result = Matrix.Identity;
-
-    const val1 = Math.cos(radians);
-    const val2 = Math.sin(radians);
-
-    result.M11 = val1;
-    result.M12 = val2;
-    result.M21 = -val2;
-    result.M22 = val1;
-    return result;
-  }
-
-  /**
    * 创建一个缩放 Matrix。
    * @static
    * @param {Number} xScale x 轴上的缩放值。

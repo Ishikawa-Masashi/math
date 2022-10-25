@@ -112,6 +112,16 @@ describe('Matrix', () => {
     equalsWithEpsilon(b, c);
   });
 
+  it('Invert', () => {
+    const a = new Matrix(3, 1, 1, 2, 5, 1, 3, 4, 2, 0, 1, 0, 1, 3, 2, 1);
+    const b = BABYLON.Matrix.FromArray(getArrayFromMatrix(a));
+
+    a.invert();
+    b.invert();
+
+    equalsWithEpsilon(a, b);
+  });
+
   it('Determinant', () => {
     // https://www.wolframalpha.com/input?i=%E9%80%86%E8%A1%8C%E5%88%97&assumption=%7B%22F%22%2C+%22MatrixInverse%22%2C+%22invmatrix%22%7D+-%3E%22%7B%7B3%2C1%2C1%2C2%7D%2C+%7B5%2C1%2C3%2C4%7D%2C+%7B2%2C+0%2C1%2C0%7D%2C+%7B1%2C3%2C2%2C1%7D%7D%22&assumption=%7B%22C%22%2C+%22%E9%80%86%E8%A1%8C%E5%88%97%22%7D+-%3E+%7B%22Calculator%22%7D&lang=ja
     const a = new Matrix(3, 1, 1, 2, 5, 1, 3, 4, 2, 0, 1, 0, 1, 3, 2, 1);
@@ -144,28 +154,6 @@ describe('Matrix', () => {
   it('RotationZ', () => {
     const angle = getRandomFloat();
     const matrix1 = Matrix.RotationZ(angle);
-
-    const matrix2 = BABYLON.Matrix.RotationZ(angle);
-
-    expect(
-      matrix2.equals(BABYLON.Matrix.FromArray(getArrayFromMatrix(matrix1)))
-    ).toBeTruthy();
-  });
-
-  it('CreateRotationY', () => {
-    const angle = getRandomFloat();
-    const matrix1 = Matrix.CreateRotationY(angle);
-
-    const matrix2 = BABYLON.Matrix.RotationY(angle);
-
-    expect(
-      matrix2.equals(BABYLON.Matrix.FromArray(getArrayFromMatrix(matrix1)))
-    ).toBeTruthy();
-  });
-
-  it('CreateRotationZ', () => {
-    const angle = getRandomFloat();
-    const matrix1 = Matrix.CreateRotationZ(angle);
 
     const matrix2 = BABYLON.Matrix.RotationZ(angle);
 

@@ -256,6 +256,66 @@ export class Matrix {
   }
 
   /**
+   * Creates new matrix from a list of values (16)
+   * @param initialM11 defines 1st value of 1st row
+   * @param initialM12 defines 2nd value of 1st row
+   * @param initialM13 defines 3rd value of 1st row
+   * @param initialM14 defines 4th value of 1st row
+   * @param initialM21 defines 1st value of 2nd row
+   * @param initialM22 defines 2nd value of 2nd row
+   * @param initialM23 defines 3rd value of 2nd row
+   * @param initialM24 defines 4th value of 2nd row
+   * @param initialM31 defines 1st value of 3rd row
+   * @param initialM32 defines 2nd value of 3rd row
+   * @param initialM33 defines 3rd value of 3rd row
+   * @param initialM34 defines 4th value of 3rd row
+   * @param initialM41 defines 1st value of 4th row
+   * @param initialM42 defines 2nd value of 4th row
+   * @param initialM43 defines 3rd value of 4th row
+   * @param initialM44 defines 4th value of 4th row
+   * @returns the new matrix
+   */
+  public static FromValues(
+    initialM11: number,
+    initialM12: number,
+    initialM13: number,
+    initialM14: number,
+    initialM21: number,
+    initialM22: number,
+    initialM23: number,
+    initialM24: number,
+    initialM31: number,
+    initialM32: number,
+    initialM33: number,
+    initialM34: number,
+    initialM41: number,
+    initialM42: number,
+    initialM43: number,
+    initialM44: number
+  ): Matrix {
+    const result = new Matrix();
+
+    result.m11 = initialM11;
+    result.m12 = initialM12;
+    result.m13 = initialM13;
+    result.m14 = initialM14;
+    result.m21 = initialM21;
+    result.m22 = initialM22;
+    result.m23 = initialM23;
+    result.m24 = initialM24;
+    result.m31 = initialM31;
+    result.m32 = initialM32;
+    result.m33 = initialM33;
+    result.m34 = initialM34;
+    result.m41 = initialM41;
+    result.m42 = initialM42;
+    result.m43 = initialM43;
+    result.m44 = initialM44;
+
+    return result;
+  }
+
+  /**
    * 将一个矩阵添加到另一个矩阵。
    * @static
    * @param {Matrix} matrix1 源矩阵。
@@ -1964,3 +2024,22 @@ export class MathTmp {
   public static Matrix = ArrayTools.BuildTuple(2, () => Matrix.Identity);
   public static Quaternion = ArrayTools.BuildTuple(3, () => Quaternion.Zero);
 }
+
+const mtxConvertNDCToHalfZRange = Matrix.FromValues(
+  1,
+  0,
+  0,
+  0,
+  0,
+  1,
+  0,
+  0,
+  0,
+  0,
+  0.5,
+  0,
+  0,
+  0,
+  0.5,
+  1
+);

@@ -2,7 +2,8 @@
 import { Quaternion } from './Quaternion';
 import { Plane } from './Plane';
 import { Viewport } from './viewport';
-import { MathTmp } from './MathTmp';
+import { ArrayTools } from './arrayTools';
+// import { MathTmp } from './mathTmp';
 
 export class Matrix {
   /**
@@ -1779,4 +1780,14 @@ export class Matrix {
     Vector3.TransformCoordinatesToRef(vector, matrix, result);
     return result;
   }
+}
+
+/**
+ * @internal
+ * Same as Tmp but not exported to keep it only for math functions to avoid conflicts
+ */
+export class MathTmp {
+  public static Vector3 = ArrayTools.BuildTuple(11, () => Vector3.Zero);
+  public static Matrix = ArrayTools.BuildTuple(2, () => Matrix.Identity);
+  public static Quaternion = ArrayTools.BuildTuple(3, () => Quaternion.Zero);
 }

@@ -40,9 +40,6 @@ export default defineConfig({
       fileName: 'index',
     },
 
-    // https://vitejs.bootcss.com/config/#build-minify
-    minify: true,
-
     /**
      * index.es.js:250 Uncaught Error: Minified React error #321; visit https://reactjs.org/docs/error-decoder.html?invariant=321 for the full message or use the non-minified dev environment for full errors and additional helpful warnings.
      *

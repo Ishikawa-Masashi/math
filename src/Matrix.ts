@@ -854,6 +854,113 @@ export class Matrix {
   }
 
   /**
+   * Creates a right-handed perspective projection matrix
+   * @param fov defines the horizontal field of view
+   * @param aspect defines the aspect ratio
+   * @param znear defines the near clip plane
+   * @param zfar defines the far clip plane. If 0, assume we are in "infinite zfar" mode
+   * @param halfZRange true to generate NDC coordinates between 0 and 1 instead of -1 and 1 (default: false)
+   * @param projectionPlaneTilt optional tilt angle of the projection plane around the X axis (horizontal)
+   * @param reverseDepthBufferMode true to indicate that we are in a reverse depth buffer mode (meaning znear and zfar have been inverted when calling the function)
+   * @returns a new matrix as a right-handed perspective projection matrix
+   */
+  public static PerspectiveFovRH(
+    fov: number,
+    aspect: number,
+    znear: number,
+    zfar: number,
+    halfZRange?: boolean,
+    projectionPlaneTilt = 0,
+    reverseDepthBufferMode = false
+  ): Matrix {
+    const matrix = new Matrix();
+    Matrix.PerspectiveFovRHToRef(
+      fov,
+      aspect,
+      znear,
+      zfar,
+      matrix,
+      true,
+      halfZRange,
+      projectionPlaneTilt,
+      reverseDepthBufferMode
+    );
+    return matrix;
+  }
+
+  /**
+   * Stores a right-handed perspective projection into a given matrix
+   * @param fov defines the horizontal field of view
+   * @param aspect defines the aspect ratio
+   * @param znear defines the near clip plane
+   * @param zfar defines the far clip plane. If 0, assume we are in "infinite zfar" mode
+   * @param result defines the target matrix
+   * @param isVerticalFovFixed defines it the fov is vertically fixed (default) or horizontally
+   * @param halfZRange true to generate NDC coordinates between 0 and 1 instead of -1 and 1 (default: false)
+   * @param projectionPlaneTilt optional tilt angle of the projection plane around the X axis (horizontal)
+   * @param reverseDepthBufferMode true to indicate that we are in a reverse depth buffer mode (meaning znear and zfar have been inverted when calling the function)
+   * @returns result input
+   */
+  public static PerspectiveFovRHToRef(
+    fov: number,
+    aspect: number,
+    znear: number,
+    zfar: number,
+    result: Matrix,
+    isVerticalFovFixed = true,
+    halfZRange?: boolean,
+    projectionPlaneTilt = 0,
+    reverseDepthBufferMode = false
+  ) {
+    //alternatively this could be expressed as:
+    //    m = PerspectiveFovLHToRef
+    //    m[10] *= -1.0;
+    //    m[11] *= -1.0;
+
+    const n = znear;
+    const f = zfar;
+
+    const t = 1.0 / Math.tan(fov * 0.5);
+    const a = isVerticalFovFixed ? t / aspect : t;
+    const b = isVerticalFovFixed ? t : t * aspect;
+    const c =
+      reverseDepthBufferMode && n === 0 ? 1 : f !== 0 ? -(f + n) / (f - n) : -1;
+    const d =
+      reverseDepthBufferMode && n === 0
+        ? 2 * f
+        : f !== 0
+        ? (-2 * f * n) / (f - n)
+        : -2 * n;
+    const rot = Math.tan(projectionPlaneTilt);
+
+    Matrix.FromValuesToRef(
+      a,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      b,
+      0.0,
+      rot,
+      0.0,
+      0.0,
+      c,
+      -1.0,
+      0.0,
+      0.0,
+      d,
+      0.0,
+      result
+    );
+
+    if (halfZRange) {
+      result.multiplyToRef(mtxConvertNDCToHalfZRange, result);
+    }
+
+    return result;
+  }
+
+  /**
    * 构建一个基于视野的透视投影矩阵并返回值。
    * @static
    * @param {Number} fieldOfView y 方向的视野，以弧度计。

@@ -83,8 +83,8 @@ describe('Matrix', () => {
 
   it('RotationX', () => {
     const angle = getRandomFloat();
-    const matrix1 = Matrix.RotationX(angle);
 
+    const matrix1 = Matrix.RotationX(angle);
     const matrix2 = BABYLON.Matrix.RotationX(angle);
 
     matrix1.equalsWithEpsilon(new Matrix(...matrix2.m));
@@ -92,8 +92,8 @@ describe('Matrix', () => {
 
   it('RotationY', () => {
     const angle = getRandomFloat();
-    const matrix1 = Matrix.RotationY(angle);
 
+    const matrix1 = Matrix.RotationY(angle);
     const matrix2 = BABYLON.Matrix.RotationY(angle);
 
     matrix1.equalsWithEpsilon(new Matrix(...matrix2.m));

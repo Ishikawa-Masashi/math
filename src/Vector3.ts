@@ -1,5 +1,9 @@
-﻿import { MathHelper } from './MathHelper';
+﻿import { ReadonlyVector3Like } from './like';
+import { MathHelper } from './MathHelper';
 import { Matrix } from './Matrix';
+
+import { Epsilon } from './constants';
+import { Scalar } from './scalar';
 
 export class Vector3 {
   /**
@@ -327,6 +331,39 @@ export class Vector3 {
       Math.abs(this.x - other.x) < 1e-6 &&
       Math.abs(this.y - other.y) < 1e-6 &&
       Math.abs(this.z - other.z) < 1e-6
+    );
+  }
+  /**
+   * Returns true if the current Vector3 and the given vector coordinates are strictly equal
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#19
+   * @param otherVector defines the second operand
+   * @returns true if both vectors are equals
+   */
+  public equals(otherVector: ReadonlyVector3Like): boolean {
+    return (
+      otherVector &&
+      this.x === otherVector.x &&
+      this.y === otherVector.y &&
+      this.z === otherVector.z
+    );
+  }
+
+  /**
+   * Returns true if the current Vector3 and the given vector coordinates are distant less than epsilon
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#21
+   * @param otherVector defines the second operand
+   * @param epsilon defines the minimal distance to define values as equals
+   * @returns true if both vectors are distant less than epsilon
+   */
+  public equalsWithEpsilon(
+    otherVector: ReadonlyVector3Like,
+    epsilon: number = Epsilon
+  ): boolean {
+    return (
+      otherVector &&
+      Scalar.WithinEpsilon(this.x, otherVector.x, epsilon) &&
+      Scalar.WithinEpsilon(this.y, otherVector.y, epsilon) &&
+      Scalar.WithinEpsilon(this.z, otherVector.z, epsilon)
     );
   }
 

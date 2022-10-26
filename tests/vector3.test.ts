@@ -37,7 +37,7 @@ describe('Vector3', () => {
     const d = new BABYLON.Vector3(b.x, b.y, b.z);
     const value2 = c.add(d);
 
-    equals(value1, value2);
+    value1.equals(value2);
   });
 
   it('cross', () => {
@@ -49,6 +49,6 @@ describe('Vector3', () => {
     const d = new BABYLON.Vector3(b.x, b.y, b.z);
     const value2 = c.cross(d);
 
-    equals(value1, value2);
+    value1.equals(value2);
   });
 });

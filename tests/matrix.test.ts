@@ -1,7 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import { Matrix } from '../src';
-import { getArrayFromMatrix, getRandomArray, getRandomFloat } from './utils';
+
 import * as BABYLON from 'babylonjs';
+
+import { Matrix } from '../src';
+import { getRandomArray, getRandomFloat } from './utils';
 
 describe('Matrix', () => {
   it('初期化テスト', () => {
@@ -58,41 +60,10 @@ describe('Matrix', () => {
   // });
 
   it('invert', () => {
-    const angle = getRandomFloat();
-
-    const a = Matrix.RotationX(angle);
-    const b = BABYLON.Matrix.FromArray(getArrayFromMatrix(a));
-
-    a.invert();
-    b.invert();
-
-    a.equalsWithEpsilon(new Matrix(...b.m));
-  });
-
-  it('Invert', () => {
-    const angle = getRandomFloat();
-    const a = Matrix.RotationX(angle);
-    const b = Matrix.Invert(a);
-
-    const c = BABYLON.Matrix.FromArray(getArrayFromMatrix(a));
-    c.invert();
-
-    b.equalsWithEpsilon(new Matrix(...c.m));
-  });
-
-  it('Invert', () => {
-    const a = new Matrix(3, 1, 1, 2, 5, 1, 3, 4, 2, 0, 1, 0, 1, 3, 2, 1);
-    const b = Matrix.Invert(a);
-
-    const c = BABYLON.Matrix.FromArray(getArrayFromMatrix(a));
-    c.invert();
-
-    b.equalsWithEpsilon(new Matrix(...c.m));
-  });
-
-  it('Invert', () => {
-    const a = new Matrix(3, 1, 1, 2, 5, 1, 3, 4, 2, 0, 1, 0, 1, 3, 2, 1);
-    const b = BABYLON.Matrix.FromArray(getArrayFromMatrix(a));
+    // https://www.wolframalpha.com/input?i=%E9%80%86%E8%A1%8C%E5%88%97&assumption=%7B%22F%22%2C+%22MatrixInverse%22%2C+%22invmatrix%22%7D+-%3E%22%7B%7B3%2C1%2C1%2C2%7D%2C+%7B5%2C1%2C3%2C4%7D%2C+%7B2%2C+0%2C1%2C0%7D%2C+%7B1%2C3%2C2%2C1%7D%7D%22&assumption=%7B%22C%22%2C+%22%E9%80%86%E8%A1%8C%E5%88%97%22%7D+-%3E+%7B%22Calculator%22%7D&lang=ja
+    const array = [3, 1, 1, 2, 5, 1, 3, 4, 2, 0, 1, 0, 1, 3, 2, 1];
+    const a = new Matrix(...array);
+    const b = BABYLON.Matrix.FromArray(array);
 
     a.invert();
     b.invert();

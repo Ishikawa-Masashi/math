@@ -3,23 +3,6 @@ import { Vector3 } from '../src';
 import * as BABYLON from 'babylonjs';
 import { getRandomVector3 } from './utils';
 
-// function equalsWithEpsilon(
-//   vector1: Vector3,
-//   vector2: BABYLON.Vector3,
-//   epsilon = 1e-6
-// ) {
-//   expect(vector1.x).toBe(vector2.x);
-//   expect(Math.abs(vector1.x - vector2.x) < epsilon).toBeTruthy();
-//   expect(Math.abs(vector1.y - vector2.y) < epsilon).toBeTruthy();
-//   expect(Math.abs(vector1.z - vector2.z) < epsilon).toBeTruthy();
-// }
-
-function equals(vector1: Vector3, vector2: BABYLON.Vector3) {
-  expect(vector1.x).toBe(vector2.x);
-  expect(vector1.y).toBe(vector2.y);
-  expect(vector1.z).toBe(vector2.z);
-}
-
 describe('Vector3', () => {
   it('初期化テスト', () => {
     const a = new Vector3();

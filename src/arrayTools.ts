@@ -45,8 +45,7 @@ export class ArrayTools {
     size: N,
     itemBuilder: () => T
   ): TupleTypes<T>[N] {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return ArrayTools.BuildArray(size, itemBuilder) as any;
+    return ArrayTools.BuildArray(size, itemBuilder) as TupleTypes<T>[N];
   }
 }
 

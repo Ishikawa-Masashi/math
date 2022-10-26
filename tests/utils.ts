@@ -14,11 +14,15 @@ export function getRandomFloat(min = Number.MIN_VALUE, max = Number.MAX_VALUE) {
   return Math.random() * (max - min) + min;
 }
 
-export function getRandomArray(
-  size: number,
-  min = Number.MIN_VALUE,
-  max = Number.MAX_VALUE
-) {
+// export function getRandomArray(
+//   size: number,
+//   min = Number.MIN_VALUE,
+//   max = Number.MAX_VALUE
+// ) {
+//   return ArrayTools.BuildArray(size, () => getRandomFloat(min, max));
+// }
+
+export function getRandomArray(size: number, min = 0, max = 1) {
   return ArrayTools.BuildArray(size, () => getRandomFloat(min, max));
 }
 
@@ -57,7 +61,7 @@ export function getRandomVector3(
   );
 }
 
-export function getRandomMatrixFromArray(array: number[]) {
+export function getMatrixFromArray(array: number[]) {
   return new Matrix(
     array[0],
     array[1],

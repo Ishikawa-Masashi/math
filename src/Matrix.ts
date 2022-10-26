@@ -3,6 +3,8 @@ import { Quaternion } from './Quaternion';
 import { Plane } from './Plane';
 import { Viewport } from './viewport';
 import { ArrayTools } from './arrayTools';
+import { ReadonlyMatrixLike } from './like';
+import { Epsilon } from './constants';
 // import { MathTmp } from './mathTmp';
 
 export class Matrix {
@@ -1598,6 +1600,56 @@ export class Matrix {
       Math.abs(this.m41 - other.m41) < 1e-6 &&
       Math.abs(this.m42 - other.m42) < 1e-6 &&
       Math.abs(this.m43 - other.m43) < 1e-6
+    );
+  }
+
+  /**
+   * Check equality between this matrix and a second one
+   * @param value defines the second matrix to compare
+   * @returns true is the current matrix and the given one values are strictly equal
+   */
+  public equals(other: ReadonlyMatrixLike): boolean {
+    return (
+      Math.abs(this.m11 - other.m11) < 1e-6 &&
+      Math.abs(this.m22 - other.m22) < 1e-6 &&
+      Math.abs(this.m33 - other.m33) < 1e-6 &&
+      Math.abs(this.m44 - other.m44) < 1e-6 &&
+      Math.abs(this.m12 - other.m12) < 1e-6 &&
+      Math.abs(this.m13 - other.m13) < 1e-6 &&
+      Math.abs(this.m14 - other.m14) < 1e-6 &&
+      Math.abs(this.m21 - other.m21) < 1e-6 &&
+      Math.abs(this.m23 - other.m23) < 1e-6 &&
+      Math.abs(this.m24 - other.m24) < 1e-6 &&
+      Math.abs(this.m31 - other.m31) < 1e-6 &&
+      Math.abs(this.m32 - other.m32) < 1e-6 &&
+      Math.abs(this.m34 - other.m34) < 1e-6 &&
+      Math.abs(this.m41 - other.m41) < 1e-6 &&
+      Math.abs(this.m42 - other.m42) < 1e-6 &&
+      Math.abs(this.m43 - other.m43) < 1e-6
+    );
+  }
+
+  public equalsWithEpsilon(
+    other: ReadonlyMatrixLike,
+    epsilon: number = Epsilon
+  ): boolean {
+    return (
+      Math.abs(this.m11 - other.m11) < epsilon &&
+      Math.abs(this.m22 - other.m22) < epsilon &&
+      Math.abs(this.m33 - other.m33) < epsilon &&
+      Math.abs(this.m44 - other.m44) < epsilon &&
+      Math.abs(this.m12 - other.m12) < epsilon &&
+      Math.abs(this.m13 - other.m13) < epsilon &&
+      Math.abs(this.m14 - other.m14) < epsilon &&
+      Math.abs(this.m21 - other.m21) < epsilon &&
+      Math.abs(this.m23 - other.m23) < epsilon &&
+      Math.abs(this.m24 - other.m24) < epsilon &&
+      Math.abs(this.m31 - other.m31) < epsilon &&
+      Math.abs(this.m32 - other.m32) < epsilon &&
+      Math.abs(this.m34 - other.m34) < epsilon &&
+      Math.abs(this.m41 - other.m41) < epsilon &&
+      Math.abs(this.m42 - other.m42) < epsilon &&
+      Math.abs(this.m43 - other.m43) < epsilon
     );
   }
 

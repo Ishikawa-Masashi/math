@@ -494,6 +494,31 @@ export class Vector3 {
   }
 
   /**
+   * Returns a new Vector3 set with the current Vector3 coordinates multiplied by the float "scale"
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#53
+   * @param scale defines the multiplier factor
+   * @returns a new Vector3
+   */
+  public scale(scale: number) {
+    return new Vector3(this.x * scale, this.y * scale, this.z * scale);
+  }
+
+  /**
+   * Multiplies the current Vector3 coordinates by the float "scale" and stores the result in the given vector "result" coordinates
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#57
+   * @param scale defines the multiplier factor
+   * @param result defines the Vector3 object where to store the result
+   * @returns the result
+   */
+  public scaleToRef(scale: number, result: Vector3) {
+    return result.copyFromFloats(
+      this.x * scale,
+      this.y * scale,
+      this.z * scale
+    );
+  }
+
+  /**
    * 返回指向反方向的矢量。
    * @static
    * @param {Vector3} value 源矢量。

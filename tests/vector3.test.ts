@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { Vector3, Matrix } from '../src';
 import * as BABYLON from 'babylonjs';
-import { getRandomArray, getRandomVector3 } from './utils';
+import { getRandomArray, getRandomFloat, getRandomVector3 } from './utils';
 
 describe('Vector3', () => {
   it('初期化テスト', () => {
@@ -19,6 +19,18 @@ describe('Vector3', () => {
     const c = new BABYLON.Vector3(a.x, a.y, a.z);
     const d = new BABYLON.Vector3(b.x, b.y, b.z);
     const value2 = c.add(d);
+
+    value1.equals(value2);
+  });
+
+  it('scale', () => {
+    const a = getRandomArray(3);
+    const b = getRandomFloat();
+    const vector1 = new Vector3(...a);
+    const value1 = vector1.scale(b);
+
+    const vector2 = BABYLON.Vector3.FromArray(a);
+    const value2 = vector2.scale(b);
 
     value1.equals(value2);
   });

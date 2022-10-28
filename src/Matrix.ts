@@ -197,6 +197,31 @@ export class Matrix {
   }
 
   /**
+   * Check if the current matrix is identity
+   * @returns true is the matrix is the identity matrix
+   */
+  public isIdentity(): boolean {
+    return (
+      this.m11 === 1.0 &&
+      this.m12 === 0.0 &&
+      this.m13 === 0.0 &&
+      this.m14 === 0.0 &&
+      this.m21 === 0.0 &&
+      this.m22 === 1.0 &&
+      this.m23 === 0.0 &&
+      this.m24 === 0.0 &&
+      this.m31 === 0.0 &&
+      this.m32 === 0.0 &&
+      this.m33 === 1.0 &&
+      this.m34 === 0.0 &&
+      this.m41 === 0.0 &&
+      this.m42 === 0.0 &&
+      this.m43 === 0.0 &&
+      this.m44 === 1.0
+    );
+  }
+
+  /**
    * Stores a list of values (16) inside a given matrix
    * @param initialM11 defines 1st value of 1st row
    * @param initialM12 defines 2nd value of 1st row
@@ -1963,6 +1988,45 @@ export class Matrix {
     this.multiplyToRef(other, this);
     return this;
   }
+
+  /**
+   * Copy the current matrix from the given one
+   * @param other defines the source matrix
+   * @returns the current updated matrix
+   */
+  public copyFrom(other: Matrix): this {
+    // other.copyToArray(this._m);
+    // const o = other as Matrix;
+    // this.updateFlag = o.updateFlag;
+    // this._updateIdentityStatus(
+    //   o._isIdentity,
+    //   o._isIdentityDirty,
+    //   o._isIdentity3x2,
+    //   o._isIdentity3x2Dirty
+    // );
+    this.m11 = other.m11;
+    this.m12 = other.m12;
+    this.m13 = other.m13;
+    this.m14 = other.m14;
+
+    this.m21 = other.m21;
+    this.m22 = other.m22;
+    this.m23 = other.m23;
+    this.m24 = other.m24;
+
+    this.m31 = other.m31;
+    this.m32 = other.m32;
+    this.m33 = other.m33;
+    this.m34 = other.m34;
+
+    this.m41 = other.m41;
+    this.m42 = other.m42;
+    this.m43 = other.m43;
+    this.m44 = other.m44;
+
+    return this;
+  }
+
   /**
    * Sets the given matrix "result" with the multiplication result of the current Matrix and the given one
    * @param this defines the second operand
@@ -1970,6 +2034,14 @@ export class Matrix {
    * @returns result input
    */
   public multiplyToRef(other: Matrix, result: Matrix) {
+    if (this.isIdentity()) {
+      result.copyFrom(other);
+      return result;
+    }
+    if (other.isIdentity()) {
+      result.copyFrom(this);
+      return result;
+    }
     const m11 =
       this.m11 * other.m11 +
       this.m12 * other.m21 +
@@ -2068,7 +2140,7 @@ export class Matrix {
     result.m43 = m43;
     result.m44 = m44;
 
-    return other;
+    return result;
   }
 
   /**

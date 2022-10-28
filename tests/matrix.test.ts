@@ -4,6 +4,7 @@ import * as BABYLON from 'babylonjs';
 
 import { Matrix } from '../src';
 import { getRandomArray, getRandomFloat } from './utils';
+import { Vector3 } from 'babylonjs';
 
 describe('Matrix', () => {
   it('初期化テスト', () => {
@@ -106,5 +107,23 @@ describe('Matrix', () => {
     const matrix2 = BABYLON.Matrix.RotationZ(angle);
 
     matrix1.equalsWithEpsilon(new Matrix(...matrix2.m));
+  });
+
+  it('multiply', () => {
+    const angle = getRandomFloat();
+
+    const matrix1 = Matrix.Identity;
+    const matrix2 = Matrix.RotationZ(angle);
+
+    const matrix3 = BABYLON.Matrix.Identity();
+    const matrix4 = BABYLON.Matrix.RotationZ(angle);
+
+    expect(matrix1.equalsWithEpsilon(new Matrix(...matrix3.m))).toBeTruthy();
+    expect(matrix2.equalsWithEpsilon(new Matrix(...matrix4.m))).toBeTruthy();
+
+    const matrix5 = matrix1.multiply(matrix2);
+    const matrix6 = matrix3.multiply(matrix4);
+
+    expect(matrix5.equalsWithEpsilon(new Matrix(...matrix6.m))).toBeTruthy();
   });
 });

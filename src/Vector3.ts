@@ -798,13 +798,87 @@ export class Vector3 {
    * @param {Matrix} matrix 变换矩阵。
    * @returns {Vector3}
    */
-  static TransformNormal(normal: Vector3, matrix: Matrix) {
-    const x =
-      normal.x * matrix.m11 + normal.y * matrix.m21 + normal.z * matrix.m31;
-    const y =
-      normal.x * matrix.m12 + normal.y * matrix.m22 + normal.z * matrix.m32;
-    const z =
-      normal.x * matrix.m13 + normal.y * matrix.m23 + normal.z * matrix.m33;
-    return new Vector3(x, y, z);
+  // static TransformNormal(normal: Vector3, matrix: Matrix) {
+  //   const x =
+  //     normal.x * matrix.m11 + normal.y * matrix.m21 + normal.z * matrix.m31;
+  //   const y =
+  //     normal.x * matrix.m12 + normal.y * matrix.m22 + normal.z * matrix.m32;
+  //   const z =
+  //     normal.x * matrix.m13 + normal.y * matrix.m23 + normal.z * matrix.m33;
+  //   return new Vector3(x, y, z);
+  // }
+
+  /**
+   * Returns a new Vector3 set with the result of the normal transformation by the given matrix of the given vector
+   * This methods computes transformed normalized direction vectors only (ie. it does not apply translation)
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#112
+   * @param vector defines the Vector3 to transform
+   * @param transformation defines the transformation matrix
+   * @returns the new Vector3
+   */
+  public static TransformNormal(
+    vector: Vector3,
+    transformation: Matrix
+  ): Vector3 {
+    const result = Vector3.Zero;
+    Vector3.TransformNormalToRef(vector, transformation, result);
+    return result;
+  }
+
+  /**
+   * Sets the given vector "result" with the result of the normal transformation by the given matrix of the given vector
+   * This methods computes transformed normalized direction vectors only (ie. it does not apply translation)
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#114
+   * @param vector defines the Vector3 to transform
+   * @param transformation defines the transformation matrix
+   * @param result defines the Vector3 where to store the result
+   * @returns result input
+   */
+  public static TransformNormalToRef(
+    vector: Vector3,
+    transformation: Matrix,
+    result: Vector3
+  ) {
+    this.TransformNormalFromFloatsToRef(
+      vector.x,
+      vector.y,
+      vector.z,
+      transformation,
+      result
+    );
+    return result;
+  }
+
+  /**
+   * Sets the given vector "result" with the result of the normal transformation by the given matrix of the given floats (x, y, z)
+   * This methods computes transformed normalized direction vectors only (ie. it does not apply translation)
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#116
+   * @param x define the x coordinate of the source vector
+   * @param y define the y coordinate of the source vector
+   * @param z define the z coordinate of the source vector
+   * @param transformation defines the transformation matrix
+   * @param result defines the Vector3 where to store the result
+   * @returns result input
+   */
+  public static TransformNormalFromFloatsToRef(
+    x: number,
+    y: number,
+    z: number,
+    transformation: Matrix,
+    result: Vector3
+  ) {
+    // const m = transformation.m;
+    // result.x = x * m[0] + y * m[4] + z * m[8];
+    // result.y = x * m[1] + y * m[5] + z * m[9];
+    // result.z = x * m[2] + y * m[6] + z * m[10];
+
+    result.x =
+      x * transformation.m11 + y * transformation.m21 + z * transformation.m31;
+    result.y =
+      x * transformation.m12 + y * transformation.m22 + z * transformation.m32;
+    result.z =
+      x * transformation.m13 + y * transformation.m23 + z * transformation.m33;
+
+    return result;
   }
 }

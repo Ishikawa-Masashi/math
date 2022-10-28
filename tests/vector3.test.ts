@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { Vector3 } from '../src';
+import { Vector3, Matrix } from '../src';
 import * as BABYLON from 'babylonjs';
-import { getRandomVector3 } from './utils';
+import { getRandomArray, getRandomVector3 } from './utils';
 
 describe('Vector3', () => {
   it('初期化テスト', () => {
@@ -33,5 +33,20 @@ describe('Vector3', () => {
     const value2 = c.cross(d);
 
     value1.equals(value2);
+  });
+
+  it('multiply', () => {
+    const array1 = getRandomArray(3);
+    const array2 = getRandomArray(16);
+
+    const a = new Vector3(...array1);
+    const b = new Matrix(...array2);
+    const value1 = Vector3.TransformNormal(a, b);
+
+    const c = BABYLON.Vector3.FromArray(array1);
+    const d = BABYLON.Matrix.FromArray(array2);
+    const value2 = BABYLON.Vector3.TransformNormal(c, d);
+
+    expect(value1.equalsWithEpsilon(value2)).toBeTruthy();
   });
 });

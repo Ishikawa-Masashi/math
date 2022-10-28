@@ -76,4 +76,34 @@ describe('Vector3', () => {
 
     expect(value1.equalsWithEpsilon(value2)).toBeTruthy();
   });
+
+  it('TransformCoordinates', () => {
+    const array1 = getRandomArray(3);
+    const array2 = getRandomArray(3);
+    const array3 = getRandomArray(3);
+    const array4 = getRandomArray(3);
+
+    const vector = new Vector3(...array1);
+    const p0 = new Vector3(...array2);
+    const p1 = new Vector3(...array3);
+    const p2 = new Vector3(...array4);
+    const ref = new Vector3();
+    const value1 = Vector3.ProjectOnTriangleToRef(vector, p0, p1, p2, ref);
+
+    const _vector = BABYLON.Vector3.FromArray(array1);
+    const _p0 = BABYLON.Vector3.FromArray(array2);
+    const _p1 = BABYLON.Vector3.FromArray(array3);
+    const _p2 = BABYLON.Vector3.FromArray(array4);
+    const _ref = new BABYLON.Vector3();
+    const value2 = BABYLON.Vector3.ProjectOnTriangleToRef(
+      _vector,
+      _p0,
+      _p1,
+      _p2,
+      _ref
+    );
+
+    expect(value1).toBe(value2);
+    expect(ref.equals(_ref)).toBeTruthy();
+  });
 });

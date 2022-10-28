@@ -16,7 +16,7 @@ export class Plane {
    * @param {Number} d Plane 从原点位置起沿法线方向的距离。
    * @returns {Plane}
    */
-  constructor(public Normal = Vector3.Zero, public D = 0) {}
+  constructor(public normal = Vector3.Zero, public d = 0) {}
 
   /**
    * 计算指定的 Vector4 和此 Plane 的点积。
@@ -25,10 +25,10 @@ export class Plane {
    */
   Dot(value: Vector4) {
     return (
-      this.Normal.x * value.x +
-      this.Normal.y * value.y +
-      this.Normal.z * value.z +
-      this.D * value.w
+      this.normal.x * value.x +
+      this.normal.y * value.y +
+      this.normal.z * value.z +
+      this.d * value.w
     );
   }
 
@@ -39,10 +39,10 @@ export class Plane {
    */
   DotCoordinate(value: Vector3) {
     return (
-      this.Normal.x * value.x +
-      this.Normal.y * value.y +
-      this.Normal.z * value.z +
-      this.D
+      this.normal.x * value.x +
+      this.normal.y * value.y +
+      this.normal.z * value.z +
+      this.d
     );
   }
 
@@ -53,9 +53,9 @@ export class Plane {
    */
   DotNormal(value: Vector3) {
     return (
-      this.Normal.x * value.x +
-      this.Normal.y * value.y +
-      this.Normal.z * value.z
+      this.normal.x * value.x +
+      this.normal.y * value.y +
+      this.normal.z * value.z
     );
   }
 
@@ -66,12 +66,12 @@ export class Plane {
    */
   Equals(other: Plane) {
     return (
-      this.Normal.Equals(other.Normal) && Math.abs(this.D - other.D) < 1e-6
+      this.normal.Equals(other.normal) && Math.abs(this.d - other.d) < 1e-6
     );
   }
 
   GetHashCode() {
-    return this.Normal.GetHashCode() ^ this.D;
+    return this.normal.GetHashCode() ^ this.d;
   }
 
   // Intersects(...args) {
@@ -108,19 +108,19 @@ export class Plane {
    */
   static Normalize(value: Plane) {
     const result = new Plane();
-    result.Normal = Vector3.Normalize(value.Normal);
+    result.normal = Vector3.Normalize(value.normal);
     const factor =
       Math.sqrt(
-        result.Normal.x * result.Normal.x +
-          result.Normal.y * result.Normal.y +
-          result.Normal.z * result.Normal.z
+        result.normal.x * result.normal.x +
+          result.normal.y * result.normal.y +
+          result.normal.z * result.normal.z
       ) /
       Math.sqrt(
-        value.Normal.x * value.Normal.x +
-          value.Normal.y * value.Normal.y +
-          value.Normal.z * value.Normal.z
+        value.normal.x * value.normal.x +
+          value.normal.y * value.normal.y +
+          value.normal.z * value.normal.z
       );
-    result.D = value.D * factor;
+    result.d = value.d * factor;
     return result;
   }
 
@@ -128,22 +128,22 @@ export class Plane {
    * 更改该 Plane 的 Normal 矢量系数以使其成为单位长度。
    */
   Normalize() {
-    const normal = Vector3.Normalize(this.Normal);
+    const normal = Vector3.Normalize(this.normal);
     const factor =
       Math.sqrt(
         normal.x * normal.x + normal.y * normal.y + normal.z * normal.z
       ) /
       Math.sqrt(
-        this.Normal.x * this.Normal.x +
-          this.Normal.y * this.Normal.y +
-          this.Normal.z * this.Normal.z
+        this.normal.x * this.normal.x +
+          this.normal.y * this.normal.y +
+          this.normal.z * this.normal.z
       );
-    this.Normal = normal;
-    this.D *= factor;
+    this.normal = normal;
+    this.d *= factor;
   }
 
   ToString() {
-    return `{Normal:${this.Normal.toString()} D:${this.D}}`;
+    return `{Normal:${this.normal.toString()} D:${this.d}}`;
   }
 
   /**
@@ -168,4 +168,45 @@ export class Plane {
 
   //   return new Plane(transformedVector);
   // }
+  /**
+   * Updates the current Plane from the plane defined by the three given points.
+   * @param point1 one of the points used to construct the plane
+   * @param point2 one of the points used to construct the plane
+   * @param point3 one of the points used to construct the plane
+   * @returns the updated Plane.
+   */
+  public copyFromPoints(
+    point1: Vector3,
+    point2: Vector3,
+    point3: Vector3
+  ): Plane {
+    const x1 = point2.x - point1.x;
+    const y1 = point2.y - point1.y;
+    const z1 = point2.z - point1.z;
+    const x2 = point3.x - point1.x;
+    const y2 = point3.y - point1.y;
+    const z2 = point3.z - point1.z;
+    const yz = y1 * z2 - z1 * y2;
+    const xz = z1 * x2 - x1 * z2;
+    const xy = x1 * y2 - y1 * x2;
+    const pyth = Math.sqrt(yz * yz + xz * xz + xy * xy);
+    let invPyth;
+
+    if (pyth !== 0) {
+      invPyth = 1.0 / pyth;
+    } else {
+      invPyth = 0.0;
+    }
+
+    this.normal.x = yz * invPyth;
+    this.normal.y = xz * invPyth;
+    this.normal.z = xy * invPyth;
+    this.d = -(
+      this.normal.x * point1.x +
+      this.normal.y * point1.y +
+      this.normal.z * point1.z
+    );
+
+    return this;
+  }
 }

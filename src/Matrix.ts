@@ -5,7 +5,6 @@ import { Viewport } from './viewport';
 import { ArrayTools } from './arrayTools';
 import { ReadonlyMatrixLike } from './like';
 import { Epsilon } from './constants';
-// import { MathTmp } from './mathTmp';
 
 export class Matrix {
   /**
@@ -1094,9 +1093,9 @@ export class Matrix {
     const result = new Matrix();
     const plane = Plane.Normalize(value);
     value.Normalize();
-    const x = plane.Normal.x;
-    const y = plane.Normal.y;
-    const z = plane.Normal.z;
+    const x = plane.normal.x;
+    const y = plane.normal.y;
+    const z = plane.normal.z;
     const num3 = -2 * x;
     const num2 = -2 * y;
     const num = -2 * z;
@@ -1112,9 +1111,9 @@ export class Matrix {
     result.m32 = num2 * z;
     result.m33 = num * z + 1;
     result.m34 = 0;
-    result.m41 = num3 * plane.D;
-    result.m42 = num2 * plane.D;
-    result.m43 = num * plane.D;
+    result.m41 = num3 * plane.d;
+    result.m42 = num2 * plane.d;
+    result.m43 = num * plane.d;
     result.m44 = 1;
     return result;
   }
@@ -1289,13 +1288,13 @@ export class Matrix {
     const result = new Matrix();
     plane = Plane.Normalize(plane);
     const dot =
-      plane.Normal.x * lightDirection.x +
-      plane.Normal.y * lightDirection.y +
-      plane.Normal.z * lightDirection.z;
-    const x = -plane.Normal.x;
-    const y = -plane.Normal.y;
-    const z = -plane.Normal.z;
-    const d = -plane.D;
+      plane.normal.x * lightDirection.x +
+      plane.normal.y * lightDirection.y +
+      plane.normal.z * lightDirection.z;
+    const x = -plane.normal.x;
+    const y = -plane.normal.y;
+    const z = -plane.normal.z;
+    const d = -plane.d;
 
     result.m11 = x * lightDirection.x + dot;
     result.m12 = x * lightDirection.y;
@@ -2413,7 +2412,7 @@ export class Matrix {
  * @internal
  * Same as Tmp but not exported to keep it only for math functions to avoid conflicts
  */
-class MathTmp {
+export class MathTmp {
   public static Vector3 = ArrayTools.BuildTuple(11, () => Vector3.Zero);
   public static Matrix = ArrayTools.BuildTuple(2, () => Matrix.Identity);
   public static Quaternion = ArrayTools.BuildTuple(3, () => Quaternion.Zero);

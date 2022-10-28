@@ -2295,14 +2295,43 @@ export class Matrix {
   }
 
   /**
-   * 转置矩阵的行和列。
-   * @static
-   * @param {Matrix} matrix 源矩阵。
-   * @returns {Matrix}
+   * Compute the transpose of a given matrix
+   * @param matrix defines the matrix to transpose
+   * @returns the new matrix
    */
   static Transpose(matrix: Matrix) {
     const result = new Matrix();
 
+    result.m11 = matrix.m11;
+    result.m12 = matrix.m21;
+    result.m13 = matrix.m31;
+    result.m14 = matrix.m41;
+
+    result.m21 = matrix.m12;
+    result.m22 = matrix.m22;
+    result.m23 = matrix.m32;
+    result.m24 = matrix.m42;
+
+    result.m31 = matrix.m13;
+    result.m32 = matrix.m23;
+    result.m33 = matrix.m33;
+    result.m34 = matrix.m43;
+
+    result.m41 = matrix.m14;
+    result.m42 = matrix.m24;
+    result.m43 = matrix.m34;
+    result.m44 = matrix.m44;
+
+    return result;
+  }
+
+  /**
+   * Compute the transpose of a matrix and store it in a target matrix
+   * @param matrix defines the matrix to transpose
+   * @param result defines the target matrix
+   * @returns result input
+   */
+  public static TransposeToRef(matrix: Matrix, result: Matrix) {
     result.m11 = matrix.m11;
     result.m12 = matrix.m21;
     result.m13 = matrix.m31;

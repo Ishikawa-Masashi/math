@@ -1984,9 +1984,10 @@ export class Matrix {
    * @param other defines the second operand
    * @returns a new matrix set with the multiplication result of the current Matrix and the given one
    */
-  public multiply(other: Matrix): this {
-    this.multiplyToRef(other, this);
-    return this;
+  public multiply(other: Matrix) {
+    const result = new Matrix();
+    this.multiplyToRef(other, result);
+    return result;
   }
 
   /**

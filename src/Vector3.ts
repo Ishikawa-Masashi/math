@@ -247,7 +247,7 @@ export class Vector3 {
    * @param right defines the right operand
    * @returns the cross product
    */
-  public static Cross(left: Vector3, right: Vector3) {
+  public static Cross(left: ReadonlyVector3Like, right: ReadonlyVector3Like) {
     const result = new Vector3();
     Vector3.CrossToRef(left, right, result);
     return result;
@@ -262,7 +262,11 @@ export class Vector3 {
    * @param result defines the Vector3 where to store the result
    * @returns result input
    */
-  public static CrossToRef(left: Vector3, right: Vector3, result: Vector3) {
+  public static CrossToRef(
+    left: ReadonlyVector3Like,
+    right: ReadonlyVector3Like,
+    result: Vector3
+  ) {
     const x = left.y * right.z - left.z * right.y;
     const y = left.z * right.x - left.x * right.z;
     const z = left.x * right.y - left.y * right.x;

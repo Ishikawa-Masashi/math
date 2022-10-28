@@ -4,7 +4,6 @@ import * as BABYLON from 'babylonjs';
 
 import { Matrix } from '../src';
 import { getRandomArray, getRandomFloat } from './utils';
-import { Vector3 } from 'babylonjs';
 
 describe('Matrix', () => {
   it('初期化テスト', () => {

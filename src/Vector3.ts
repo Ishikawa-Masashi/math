@@ -821,7 +821,7 @@ export class Vector3 {
    * @returns the new Vector3
    */
   public static TransformNormal(
-    vector: Vector3,
+    vector: ReadonlyVector3Like,
     transformation: Matrix
   ): Vector3 {
     const result = Vector3.Zero;
@@ -839,7 +839,7 @@ export class Vector3 {
    * @returns result input
    */
   public static TransformNormalToRef(
-    vector: Vector3,
+    vector: ReadonlyVector3Like,
     transformation: Matrix,
     result: Vector3
   ) {

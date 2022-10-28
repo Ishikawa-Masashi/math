@@ -44,22 +44,6 @@ describe('Matrix', () => {
     expect(value1.equalsWithEpsilon(new Matrix(...value2.m))).toBeTruthy();
   });
 
-  // it('Multiply', () => {
-  //   const array1 = getRandomArray(16);
-  //   const array2 = getRandomArray(16);
-  //   const a = getMatrixFromArray(array1);
-  //   const b = getMatrixFromArray(array2);
-  //   const value1 = Matrix.Multiply(a, b);
-
-  //   const c = BABYLON.Matrix.FromArray(array1);
-  //   const d = BABYLON.Matrix.FromArray(array2);
-  //   const value2 = c.multiply(d);
-
-  //   expect(
-  //     value2.equals(BABYLON.Matrix.FromArray(getArrayFromMatrix(value1)))
-  //   ).toBeTruthy();
-  // });
-
   it('invert', () => {
     // https://www.wolframalpha.com/input?i=%E9%80%86%E8%A1%8C%E5%88%97&assumption=%7B%22F%22%2C+%22MatrixInverse%22%2C+%22invmatrix%22%7D+-%3E%22%7B%7B3%2C1%2C1%2C2%7D%2C+%7B5%2C1%2C3%2C4%7D%2C+%7B2%2C+0%2C1%2C0%7D%2C+%7B1%2C3%2C2%2C1%7D%7D%22&assumption=%7B%22C%22%2C+%22%E9%80%86%E8%A1%8C%E5%88%97%22%7D+-%3E+%7B%22Calculator%22%7D&lang=ja
     const array = [3, 1, 1, 2, 5, 1, 3, 4, 2, 0, 1, 0, 1, 3, 2, 1];

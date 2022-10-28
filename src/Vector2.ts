@@ -1,16 +1,21 @@
-﻿import { MathHelper } from './MathHelper';
+﻿import { Epsilon } from './constants';
+import { ReadonlyVector2Like, Vector2Like } from './like';
+import { MathHelper } from './MathHelper';
 import { Matrix } from './Matrix';
-// import TypeList from '../Core/TypeList.js';
+import { Scalar } from './scalar';
 
 export class Vector2 {
   /**
-   * 初始化新的 Vector2 实例。
-   * @constructs
-   * @param {Number} x 矢量 x 色差的初始值。
-   * @param {Number} y 矢量 y 色差的初始值。
-   * @returns {Vector2}
+   * Creates a new Vector2 from the given x and y coordinates
+   * @param x defines the first coordinate
+   * @param y defines the second coordinate
    */
-  constructor(public x = 0, public y = 0) {}
+  constructor(
+    /** defines the first coordinate */
+    public x: number = 0,
+    /** defines the second coordinate */
+    public y: number = 0
+  ) {}
 
   /**
    * 返回两个组件均设置为一的 Vector2。
@@ -49,6 +54,113 @@ export class Vector2 {
   }
 
   /**
+   * Sets the Vector2 coordinates in the given array or Float32Array from the given index.
+   * Example Playground https://playground.babylonjs.com/#QYBWV4#15
+   * @param array defines the source array
+   * @param index defines the offset in source array
+   * @returns the current Vector2
+   */
+  public toArray(array: number[], index = 0): this {
+    array[index] = this.x;
+    array[index + 1] = this.y;
+    return this;
+  }
+
+  /**
+   * Update the current vector from an array
+   * Example Playground https://playground.babylonjs.com/#QYBWV4#39
+   * @param array defines the destination array
+   * @param index defines the offset in the destination array
+   * @returns the current Vector2
+   */
+  public fromArray(array: number[], index = 0): this {
+    Vector2.FromArrayToRef(array, index, this);
+    return this;
+  }
+
+  /**
+   * Copy the current vector to an array
+   * Example Playground https://playground.babylonjs.com/#QYBWV4#40
+   * @returns a new array with 2 elements: the Vector2 coordinates.
+   */
+  public asArray(): number[] {
+    const result = new Array<number>();
+    this.toArray(result, 0);
+    return result;
+  }
+
+  /**
+   * Sets the Vector2 coordinates with the given Vector2 coordinates
+   * Example Playground https://playground.babylonjs.com/#QYBWV4#24
+   * @param source defines the source Vector2
+   * @returns the current updated Vector2
+   */
+  public copyFrom(source: ReadonlyVector2Like): this {
+    this.x = source.x;
+    this.y = source.y;
+    return this;
+  }
+
+  /**
+   * Sets the Vector2 coordinates with the given floats
+   * Example Playground https://playground.babylonjs.com/#QYBWV4#25
+   * @param x defines the first coordinate
+   * @param y defines the second coordinate
+   * @returns the current updated Vector2
+   */
+  public copyFromFloats(x: number, y: number): this {
+    this.x = x;
+    this.y = y;
+    return this;
+  }
+
+  /**
+   * Sets the Vector2 coordinates with the given floats
+   * Example Playground https://playground.babylonjs.com/#QYBWV4#62
+   * @param x defines the first coordinate
+   * @param y defines the second coordinate
+   * @returns the current updated Vector2
+   */
+  public set(x: number, y: number): this {
+    return this.copyFromFloats(x, y);
+  }
+
+  /**
+   * Add another vector with the current one
+   * Example Playground https://playground.babylonjs.com/#QYBWV4#11
+   * @param otherVector defines the other vector
+   * @returns a new Vector2 set with the addition of the current Vector2 and the given one coordinates
+   */
+  public add(otherVector: ReadonlyVector2Like) {
+    return new Vector2(this.x + otherVector.x, this.y + otherVector.y);
+  }
+
+  /**
+   * Sets the "result" coordinates with the addition of the current Vector2 and the given one coordinates
+   * Example Playground https://playground.babylonjs.com/#QYBWV4#12
+   * @param otherVector defines the other vector
+   * @param result defines the target vector
+   * @returns result input
+   */
+  public addToRef(otherVector: ReadonlyVector2Like, result: Vector2Like) {
+    result.x = this.x + otherVector.x;
+    result.y = this.y + otherVector.y;
+    return result;
+  }
+
+  /**
+   * Set the Vector2 coordinates by adding the given Vector2 coordinates
+   * Example Playground https://playground.babylonjs.com/#QYBWV4#13
+   * @param otherVector defines the other vector
+   * @returns the current updated Vector2
+   */
+  public addInPlace(otherVector: ReadonlyVector2Like): this {
+    this.x += otherVector.x;
+    this.y += otherVector.y;
+    return this;
+  }
+
+  /**
    * 将两个矢量相加。
    * @static
    * @param {Vector2} value1 源矢量。
@@ -80,6 +192,24 @@ export class Vector2 {
       MathHelper.Barycentric(value1.x, value2.x, value3.x, amount1, amount2),
       MathHelper.Barycentric(value1.y, value2.y, value3.y, amount1, amount2)
     );
+  }
+
+  /**
+   * Sets "result" from the given index element of the given array
+   * Example Playground https://playground.babylonjs.com/#QYBWV4#80
+   * @param array defines the data source
+   * @param offset defines the offset in the data source
+   * @param result defines the target vector
+   * @returns result input
+   */
+  public static FromArrayToRef(
+    array: ArrayLike<number>,
+    offset: number,
+    result: Vector2Like
+  ) {
+    result.x = array[offset];
+    result.y = array[offset + 1];
+    return result;
   }
 
   /**
@@ -176,6 +306,33 @@ export class Vector2 {
   Equals(other: Vector2) {
     return (
       Math.abs(this.x - other.x) < 1e-6 && Math.abs(this.y - other.y) < 1e-6
+    );
+  }
+  /**
+   * Gets a boolean if two vectors are equals
+   * Example Playground https://playground.babylonjs.com/#QYBWV4#31
+   * @param otherVector defines the other vector
+   * @returns true if the given vector coordinates strictly equal the current Vector2 ones
+   */
+  public equals(otherVector: ReadonlyVector2Like): boolean {
+    return otherVector && this.x === otherVector.x && this.y === otherVector.y;
+  }
+
+  /**
+   * Gets a boolean if two vectors are equals (using an epsilon value)
+   * Example Playground https://playground.babylonjs.com/#QYBWV4#32
+   * @param otherVector defines the other vector
+   * @param epsilon defines the minimal distance to consider equality
+   * @returns true if the given vector coordinates are close to the current ones by a distance of epsilon.
+   */
+  public equalsWithEpsilon(
+    otherVector: ReadonlyVector2Like,
+    epsilon = Epsilon
+  ): boolean {
+    return (
+      otherVector &&
+      Scalar.WithinEpsilon(this.x, otherVector.x, epsilon) &&
+      Scalar.WithinEpsilon(this.y, otherVector.y, epsilon)
     );
   }
 
@@ -286,24 +443,54 @@ export class Vector2 {
     return new Vector2(-value.x, -value.y);
   }
 
+  // /**
+  //  * 根据指定的矢量创建单位矢量。结果是与原始矢量相同方向的长度矢量单位。
+  //  * @static
+  //  * @param {Vector2} value 源 Vector2。
+  //  * @return {Vector2}
+  //  */
+  // static Normalize(value: Vector2) {
+  //   const val = 1.0 / Math.sqrt(value.x * value.x + value.y * value.y);
+  //   return new Vector2(value.x * val, value.y * val);
+  // }
+
+  // /**
+  //  * 将当前矢量转为单位矢量。结果是与原始矢量相同方向的长度矢量单位。
+  //  */
+  // Normalize() {
+  //   const val = 1 / Math.sqrt(this.x * this.x + this.y * this.y);
+  //   this.x *= val;
+  //   this.y *= val;
+  // }
+
+  // Properties
+
   /**
-   * 根据指定的矢量创建单位矢量。结果是与原始矢量相同方向的长度矢量单位。
-   * @static
-   * @param {Vector2} value 源 Vector2。
-   * @return {Vector2}
+   * Gets the length of the vector
+   * @returns the vector length (float)
    */
-  static Normalize(value: Vector2) {
-    const val = 1.0 / Math.sqrt(value.x * value.x + value.y * value.y);
-    return new Vector2(value.x * val, value.y * val);
+  public length(): number {
+    return Math.sqrt(this.x * this.x + this.y * this.y);
   }
 
   /**
-   * 将当前矢量转为单位矢量。结果是与原始矢量相同方向的长度矢量单位。
+   * Gets the vector squared length
+   * @returns the vector squared length (float)
    */
-  Normalize() {
-    const val = 1 / Math.sqrt(this.x * this.x + this.y * this.y);
-    this.x *= val;
-    this.y *= val;
+  public lengthSquared(): number {
+    return this.x * this.x + this.y * this.y;
+  }
+
+  // Methods
+
+  /**
+   * Normalize the vector
+   * Example Playground https://playground.babylonjs.com/#QYBWV4#48
+   * @returns the current updated Vector2
+   */
+  public normalize(): this {
+    Vector2.NormalizeToRef(this, this);
+    return this;
   }
 
   /**
@@ -373,5 +560,36 @@ export class Vector2 {
       normal.x * matrix.m11 + normal.y * matrix.m21,
       normal.x * matrix.m12 + normal.y * matrix.m22
     );
+  }
+
+  /**
+   * Returns a new Vector2 equal to the normalized given vector
+   * Example Playground https://playground.babylonjs.com/#QYBWV4#46
+   * @param vector defines the vector to normalize
+   * @returns a new Vector2
+   */
+  public static Normalize(vector: Vector2) {
+    const newVector = new Vector2();
+    this.NormalizeToRef(vector, newVector);
+    return newVector;
+  }
+
+  /**
+   * Normalize a given vector into a second one
+   * Example Playground https://playground.babylonjs.com/#QYBWV4#50
+   * @param vector defines the vector to normalize
+   * @param result defines the vector where to store the result
+   * @returns result input
+   */
+  public static NormalizeToRef(vector: Vector2, result: Vector2Like) {
+    const len = vector.length();
+
+    if (len === 0) {
+      return result;
+    }
+
+    result.x = vector.x / len;
+    result.y = vector.y / len;
+    return result;
   }
 }

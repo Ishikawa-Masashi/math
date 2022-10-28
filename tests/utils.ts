@@ -21,7 +21,7 @@ export function getRandomFloat(min = Number.MIN_VALUE, max = Number.MAX_VALUE) {
 // ) {
 //   return ArrayTools.BuildArray(size, () => getRandomFloat(min, max));
 // }
-export function getRandomArray(size: number, min = 0, max = 1) {
+export function getRandomArray(size: number, min = -1, max = 1) {
   return ArrayTools.BuildArray(size, () => getRandomFloat(min, max));
 }
 

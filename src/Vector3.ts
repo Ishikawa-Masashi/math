@@ -519,6 +519,36 @@ export class Vector3 {
   }
 
   /**
+   * Scale the current Vector3 values by a factor and add the result to a given Vector3
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#55
+   * @param scale defines the scale factor
+   * @param result defines the Vector3 object where to store the result
+   * @returns result input
+   */
+  public scaleAndAddToRef(scale: number, result: Vector3) {
+    return result.addInPlaceFromFloats(
+      this.x * scale,
+      this.y * scale,
+      this.z * scale
+    );
+  }
+
+  /**
+   * Adds the given coordinates to the current Vector3
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#5
+   * @param x defines the x coordinate of the operand
+   * @param y defines the y coordinate of the operand
+   * @param z defines the z coordinate of the operand
+   * @returns the current updated Vector3
+   */
+  public addInPlaceFromFloats(x: number, y: number, z: number): this {
+    this.x += x;
+    this.y += y;
+    this.z += z;
+    return this;
+  }
+
+  /**
    * 返回指向反方向的矢量。
    * @static
    * @param {Vector3} value 源矢量。
@@ -549,6 +579,42 @@ export class Vector3 {
     this.x *= factor;
     this.y *= factor;
     this.z *= factor;
+  }
+
+  /**
+   * Normalize the current Vector3.
+   * Please note that this is an in place operation.
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#122
+   * @returns the current updated Vector3
+   */
+  public normalize(): this {
+    return this.normalizeFromLength(this.length());
+  }
+
+  /**
+   * Normalize the current Vector3 to a new vector
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#124
+   * @returns the new Vector3
+   */
+  public normalizeToNew() {
+    const normalized = new Vector3(0, 0, 0);
+    this.normalizeToRef(normalized);
+    return normalized;
+  }
+
+  /**
+   * Normalize the current Vector3 to the reference
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#125
+   * @param reference define the Vector3 to update
+   * @returns the updated Vector3
+   */
+  public normalizeToRef(reference: Vector3) {
+    const len = this.length();
+    if (len === 0 || len === 1.0) {
+      return reference.copyFromFloats(this.x, this.y, this.z);
+    }
+
+    return this.scaleToRef(1.0 / len, reference);
   }
 
   // Properties
@@ -585,15 +651,6 @@ export class Vector3 {
     return this.scaleInPlace(1.0 / len);
   }
 
-  /**
-   * Normalize the current Vector3.
-   * Please note that this is an in place operation.
-   * Example Playground https://playground.babylonjs.com/#R1F8YU#122
-   * @returns the current updated Vector3
-   */
-  public normalize(): this {
-    return this.normalizeFromLength(this.length());
-  }
   /**
    * 返回具有指定法线的表面的矢量反射。
    * @static

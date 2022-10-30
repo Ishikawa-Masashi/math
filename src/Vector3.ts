@@ -115,9 +115,17 @@ export class Vector3 {
     return new Vector3(0, 0, 1);
   }
 
+  private static _ZeroReadOnly = Vector3.Zero;
   private static _UnitX = Vector3.UnitX;
   private static _UnitY = Vector3.UnitY;
   private static _UnitZ = Vector3.UnitZ;
+
+  /**
+   * Gets a zero Vector3 that must not be updated
+   */
+  public static get ZeroReadOnly() {
+    return Vector3._ZeroReadOnly;
+  }
 
   /**
    * Gets an up Vector3 that must not be updated
@@ -136,7 +144,7 @@ export class Vector3 {
   /**
    * Gets a right Vector3 that must not be updated
    */
-  public static get UniuZReadOnly() {
+  public static get UnitZReadOnly() {
     return Vector3._UnitZ;
   }
 

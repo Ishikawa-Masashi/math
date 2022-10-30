@@ -1403,6 +1403,20 @@ export class Matrix {
   }
 
   /**
+   * Inserts the translation vector (using 3 floats) in the current matrix
+   * @param x defines the 1st component of the translation
+   * @param y defines the 2nd component of the translation
+   * @param z defines the 3rd component of the translation
+   * @returns the current updated matrix
+   */
+  public setTranslationFromFloats(x: number, y: number, z: number): this {
+    this.m41 = x;
+    this.m42 = y;
+    this.m43 = z;
+    return this;
+  }
+
+  /**
    * Creates a translation matrix
    * @param x defines the translation on X axis
    * @param y defines the translation on Y axis

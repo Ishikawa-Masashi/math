@@ -115,10 +115,10 @@ export class Vector3 {
     return new Vector3(0, 0, 1);
   }
 
-  private static _ZeroReadOnly = Vector3.Zero;
-  private static _UnitX = Vector3.UnitX;
-  private static _UnitY = Vector3.UnitY;
-  private static _UnitZ = Vector3.UnitZ;
+  private static _ZeroReadOnly: ReadonlyVector3Like = Vector3.Zero;
+  private static _UnitX: ReadonlyVector3Like = Vector3.UnitX;
+  private static _UnitY: ReadonlyVector3Like = Vector3.UnitY;
+  private static _UnitZ: ReadonlyVector3Like = Vector3.UnitZ;
 
   /**
    * Gets a zero Vector3 that must not be updated

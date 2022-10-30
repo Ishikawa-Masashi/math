@@ -1,4 +1,4 @@
-﻿import { ReadonlyVector3Like } from './like';
+﻿import { ReadonlyVector3Like, Vector3Like } from './like';
 import { MathHelper } from './MathHelper';
 import { Matrix } from './Matrix';
 
@@ -114,6 +114,32 @@ export class Vector3 {
   static get Backward() {
     return new Vector3(0, 0, 1);
   }
+
+  private static _UnitX = Vector3.UnitX;
+  private static _UnitY = Vector3.UnitY;
+  private static _UnitZ = Vector3.UnitZ;
+
+  /**
+   * Gets an up Vector3 that must not be updated
+   */
+  public static get UnitXReadOnly() {
+    return Vector3._UnitX;
+  }
+
+  /**
+   * Gets a down Vector3 that must not be updated
+   */
+  public static get UnitYReadOnly() {
+    return Vector3._UnitY;
+  }
+
+  /**
+   * Gets a right Vector3 that must not be updated
+   */
+  public static get UniuZReadOnly() {
+    return Vector3._UnitZ;
+  }
+
   /**
    * Creates a new Vector3 copied from the current Vector3
    * Example Playground https://playground.babylonjs.com/#R1F8YU#11
@@ -174,6 +200,50 @@ export class Vector3 {
       otherVector.x,
       otherVector.y,
       otherVector.z
+    );
+  }
+
+  /**
+   * Adds the given coordinates to the current Vector3
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#5
+   * @param x defines the x coordinate of the operand
+   * @param y defines the y coordinate of the operand
+   * @param z defines the z coordinate of the operand
+   * @returns the current updated Vector3
+   */
+  public addInPlaceFromFloats(x: number, y: number, z: number): this {
+    this.x += x;
+    this.y += y;
+    this.z += z;
+    return this;
+  }
+
+  /**
+   * Gets a new Vector3, result of the addition the current Vector3 and the given vector
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#3
+   * @param otherVector defines the second operand
+   * @returns the resulting Vector3
+   */
+  public add(otherVector: Vector3) {
+    return new Vector3(
+      this.x + otherVector.x,
+      this.y + otherVector.y,
+      this.z + otherVector.z
+    );
+  }
+
+  /**
+   * Adds the current Vector3 to the given one and stores the result in the vector "result"
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#6
+   * @param otherVector defines the second operand
+   * @param result defines the Vector3 object where to store the result
+   * @returns the result
+   */
+  public addToRef(otherVector: Vector3, result: Vector3) {
+    return result.copyFromFloats(
+      this.x + otherVector.x,
+      this.y + otherVector.y,
+      this.z + otherVector.z
     );
   }
 
@@ -549,21 +619,6 @@ export class Vector3 {
   }
 
   /**
-   * Adds the given coordinates to the current Vector3
-   * Example Playground https://playground.babylonjs.com/#R1F8YU#5
-   * @param x defines the x coordinate of the operand
-   * @param y defines the y coordinate of the operand
-   * @param z defines the z coordinate of the operand
-   * @returns the current updated Vector3
-   */
-  public addInPlaceFromFloats(x: number, y: number, z: number): this {
-    this.x += x;
-    this.y += y;
-    this.z += z;
-    return this;
-  }
-
-  /**
    * 返回指向反方向的矢量。
    * @static
    * @param {Vector3} value 源矢量。
@@ -844,9 +899,9 @@ export class Vector3 {
    * @returns result input
    */
   public static TransformCoordinatesToRef(
-    vector: Vector3,
+    vector: ReadonlyVector3Like,
     transformation: Matrix,
-    result: Vector3
+    result: Vector3Like
   ) {
     Vector3.TransformCoordinatesFromFloatsToRef(
       vector.x,
@@ -874,7 +929,7 @@ export class Vector3 {
     y: number,
     z: number,
     transformation: Matrix,
-    result: Vector3
+    result: Vector3Like
   ) {
     const {
       m11: M11,

@@ -3,7 +3,7 @@ import { Quaternion } from './Quaternion';
 import { Plane } from './Plane';
 import { Viewport } from './viewport';
 import { ArrayTools } from './arrayTools';
-import { ReadonlyMatrixLike } from './like';
+import { ReadonlyMatrixLike, ReadonlyVector3Like } from './like';
 import { Epsilon } from './constants';
 
 export class Matrix {
@@ -193,6 +193,15 @@ export class Matrix {
 
   static get Identity() {
     return new Matrix(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+  }
+
+  private static _IdentityReadOnly = Matrix.Identity;
+
+  /**
+   * Gets an identity matrix that must not be updated
+   */
+  public static get IdentityReadOnly() {
+    return Matrix._IdentityReadOnly;
   }
 
   /**
@@ -2366,7 +2375,7 @@ export class Matrix {
    * @returns result input
    */
   public static ProjectToRef(
-    vector: Vector3,
+    vector: ReadonlyVector3Like,
     world: Matrix,
     transform: Matrix,
     viewport: Viewport,

@@ -426,9 +426,7 @@ export class Vector3 {
    * @returns the dot product
    */
   public dot(otherVector: ReadonlyVector3Like): number {
-    return (
-      this.x * otherVector.x + this.y * otherVector.y + this.z * otherVector.z
-    );
+    return Vector3.Dot(this, otherVector);
   }
 
   /**
@@ -647,6 +645,15 @@ export class Vector3 {
    */
   static Negate(value: Vector3) {
     return new Vector3(-value.x, -value.y, -value.z);
+  }
+
+  /**
+   * Gets a new Vector3 set with the current Vector3 negated coordinates
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#35
+   * @returns a new Vector3
+   */
+  public negate() {
+    return new Vector3(-this.x, -this.y, -this.z);
   }
 
   /**

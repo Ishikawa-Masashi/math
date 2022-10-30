@@ -35,6 +35,36 @@ describe('Vector3', () => {
     value1.equals(value2);
   });
 
+  it('Dot', () => {
+    const a = getRandomArray(3);
+    const b = getRandomArray(3);
+    const vector1 = new Vector3(...a);
+    const vector2 = new Vector3(...b);
+    const value1 = Vector3.Dot(vector1, vector2);
+
+    const vector3 = BABYLON.Vector3.FromArray(a);
+    const vector4 = BABYLON.Vector3.FromArray(b);
+
+    const value2 = BABYLON.Vector3.Dot(vector3, vector4);
+    expect(value1).toBe(value2);
+  });
+
+  it('dot', () => {
+    const a = getRandomArray(3);
+    const b = getRandomArray(3);
+
+    const vector1 = new Vector3(...a);
+    const vector2 = new Vector3(...b);
+
+    const value1 = vector1.dot(vector2);
+
+    const vector3 = BABYLON.Vector3.FromArray(a);
+    const vector4 = BABYLON.Vector3.FromArray(b);
+
+    const value2 = BABYLON.Vector3.Dot(vector3, vector4);
+    expect(value1).toBe(value2);
+  });
+
   it('cross', () => {
     const a = getRandomVector3();
     const b = getRandomVector3();

@@ -406,15 +406,28 @@ export class Vector3 {
   }
 
   /**
-   * 计算两个矢量的点积。如果两个矢量均为单位矢量，则点积返回 -1 到 1 之间的浮点值，该值可以用来确定两个矢量之间的角度的一些性质。例如，它可以显示这些矢量是正交、平行，还是互为锐角或钝角。
-   * @static
-   * @param {Vector3} value1 源矢量。
-   * @param {Vector3} value2 源矢量。
-   * @returns {Number}
+   * Returns the dot product (float) between the vectors "left" and "right"
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#82
+   * @param left defines the left operand
+   * @param right defines the right operand
+   * @returns the dot product
    */
-  static Dot(vector1: Vector3, vector2: Vector3) {
+  public static Dot(
+    left: ReadonlyVector3Like,
+    right: ReadonlyVector3Like
+  ): number {
+    return left.x * right.x + left.y * right.y + left.z * right.z;
+  }
+
+  /**
+   * Returns the dot product (float) between the vectors "left" and "right"
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#82
+   * @param otherVector defines the right operand
+   * @returns the dot product
+   */
+  public dot(otherVector: ReadonlyVector3Like): number {
     return (
-      vector1.x * vector2.x + vector1.y * vector2.y + vector1.z * vector2.z
+      this.x * otherVector.x + this.y * otherVector.y + this.z * otherVector.z
     );
   }
 

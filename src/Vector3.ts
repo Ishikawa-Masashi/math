@@ -932,27 +932,27 @@ export class Vector3 {
     result: Vector3Like
   ) {
     const {
-      m11: M11,
-      m12: M12,
-      m13: M13,
-      m14: M14,
-      m21: M21,
-      m22: M22,
-      m23: M23,
-      m24: M24,
-      m31: M31,
-      m32: M32,
-      m33: M33,
-      m34: M34,
-      m41: M41,
-      m42: M42,
-      m43: M43,
-      m44: M44,
+      m11,
+      m12,
+      m13,
+      m14,
+      m21,
+      m22,
+      m23,
+      m24,
+      m31,
+      m32,
+      m33,
+      m34,
+      m41,
+      m42,
+      m43,
+      m44,
     } = transformation;
-    const rx = x * M11 + y * M21 + z * M31 + M41;
-    const ry = x * M12 + y * M22 + z * M32 + M42;
-    const rz = x * M13 + y * M23 + z * M33 + M43;
-    const rw = 1 / (x * M14 + y * M24 + z * M34 + M44);
+    const rx = x * m11 + y * m21 + z * m31 + m41;
+    const ry = x * m12 + y * m22 + z * m32 + m42;
+    const rz = x * m13 + y * m23 + z * m33 + m43;
+    const rw = 1 / (x * m14 + y * m24 + z * m34 + m44);
 
     result.x = rx * rw;
     result.y = ry * rw;

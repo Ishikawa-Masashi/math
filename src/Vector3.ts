@@ -163,7 +163,7 @@ export class Vector3 {
    * @param source defines the source Vector3
    * @returns the current updated Vector3
    */
-  public copyFrom(source: Vector3): this {
+  public copyFrom(source: ReadonlyVector3Like): this {
     return this.copyFromFloats(source.x, source.y, source.z);
   }
 

@@ -434,6 +434,65 @@ export class Vector2 {
   }
 
   /**
+   * Multiplies in place the current Vector2 coordinates by the given ones
+   * Example Playground https://playground.babylonjs.com/#QYBWV4#43
+   * @param otherVector defines the other vector
+   * @returns the current updated Vector2
+   */
+  public multiplyInPlace(otherVector: Vector2Like): this {
+    this.x *= otherVector.x;
+    this.y *= otherVector.y;
+    return this;
+  }
+
+  /**
+   * Returns a new Vector2 set with the multiplication of the current Vector2 and the given one coordinates
+   * Example Playground https://playground.babylonjs.com/#QYBWV4#42
+   * @param otherVector defines the other vector
+   * @returns a new Vector2
+   */
+  public multiply(otherVector: Vector2Like) {
+    return new Vector2(this.x * otherVector.x, this.y * otherVector.y);
+  }
+
+  /**
+   * Multiply the Vector2 coordinates by
+   * Example Playground https://playground.babylonjs.com/#QYBWV4#59
+   * @param scale defines the scaling factor
+   * @returns the current updated Vector2
+   */
+  public scaleInPlace(scale: number): this {
+    this.x *= scale;
+    this.y *= scale;
+    return this;
+  }
+
+  /**
+   * Returns a new Vector2 scaled by "scale" from the current Vector2
+   * Example Playground https://playground.babylonjs.com/#QYBWV4#52
+   * @param scale defines the scaling factor
+   * @returns a new Vector2
+   */
+  public scale(scale: number) {
+    const result = new Vector2(0, 0);
+    this.scaleToRef(scale, result);
+    return result;
+  }
+
+  /**
+   * Scale the current Vector2 values by a factor to a given Vector2
+   * Example Playground https://playground.babylonjs.com/#QYBWV4#57
+   * @param scale defines the scale factor
+   * @param result defines the Vector2 object where to store the result
+   * @returns result input
+   */
+  public scaleToRef(scale: number, result: Vector2): Vector2 {
+    result.x = this.x * scale;
+    result.y = this.y * scale;
+    return result;
+  }
+
+  /**
    * 返回指向反方向的矢量。
    * @static
    * @param {Vector2} value 源矢量。

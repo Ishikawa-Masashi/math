@@ -16,22 +16,22 @@ describe('Geometry2DFunctions', () => {
     const PIXELS_Z = PIXELS_X;
     const SCALE_Y = PIXELS_Y / PIXELS_X;
 
-    const topLeftCorner = {
+    const topLeft = {
       x: PITCH_OFFSET_PIXELS_X + TOP_BOTTOM_DIFF_PIXELS,
       y: PITCH_OFFSET_PIXELS_Y,
     };
 
-    const bottomLeftCorner = {
+    const bottomLeft = {
       x: PITCH_OFFSET_PIXELS_X,
       y: PITCH_OFFSET_PIXELS_Y + CENTER_LINE_PIXELS,
     };
 
-    const topRightCorner = {
+    const topRight = {
       x: PITCH_OFFSET_PIXELS_X + TOP_BOTTOM_DIFF_PIXELS + TOP_LINE_PIXELS,
       y: PITCH_OFFSET_PIXELS_Y,
     };
 
-    const bottomRightCorner = {
+    const bottomRight = {
       x: PITCH_OFFSET_PIXELS_X + BOTTOM_LINE_PIXELS,
       y: PITCH_OFFSET_PIXELS_Y + CENTER_LINE_PIXELS,
     };
@@ -39,36 +39,36 @@ describe('Geometry2DFunctions', () => {
     const perspective = Geometry2DFunctions.perspectiveTransformation({
       width: PITCH_WIDTH,
       height: PITCH_HEIGHT,
-      topLeftCorner,
-      bottomLeftCorner,
-      topRightCorner,
+      topLeft,
+      bottomLeft,
+      topRight,
     });
 
-    let pos = perspective.screenToWorldPoint(topLeftCorner);
+    let pos = perspective.screenToWorldPoint(topLeft);
     expect(pos).toEqual({ x: 0, y: 0 });
 
-    pos = perspective.screenToWorldPoint(bottomLeftCorner);
+    pos = perspective.screenToWorldPoint(bottomLeft);
     expect(pos).toEqual({ x: 0, y: PITCH_HEIGHT });
 
-    pos = perspective.screenToWorldPoint(topRightCorner);
+    pos = perspective.screenToWorldPoint(topRight);
     expect(pos).toEqual({ x: PITCH_WIDTH, y: 0 });
 
-    pos = perspective.screenToWorldPoint(bottomRightCorner);
+    pos = perspective.screenToWorldPoint(bottomRight);
     expect(pos).toEqual({ x: PITCH_WIDTH, y: PITCH_HEIGHT });
 
     let worldPos = perspective.worldToScreenPoint({ x: 0, y: 0 });
-    expect(worldPos).toEqual(topLeftCorner);
+    expect(worldPos).toEqual(topLeft);
 
     worldPos = perspective.worldToScreenPoint({ x: PITCH_WIDTH, y: 0 });
-    expect(worldPos).toEqual(topRightCorner);
+    expect(worldPos).toEqual(topRight);
 
     worldPos = perspective.worldToScreenPoint({ x: 0, y: PITCH_HEIGHT });
-    expect(worldPos).toEqual(bottomLeftCorner);
+    expect(worldPos).toEqual(bottomLeft);
 
     worldPos = perspective.worldToScreenPoint({
       x: PITCH_WIDTH,
       y: PITCH_HEIGHT,
     });
-    expect(worldPos).toEqual(bottomRightCorner);
+    expect(worldPos).toEqual(bottomRight);
   });
 });

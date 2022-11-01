@@ -492,17 +492,16 @@ export class Geometry2DFunctions {
   static perspectiveTransformation(config: {
     width: number;
     height: number;
-    topLeftCorner: ReadonlyVector2Like;
-    topRightCorner: ReadonlyVector2Like;
-    bottomLeftCorner: ReadonlyVector2Like;
+    topLeft: ReadonlyVector2Like;
+    topRight: ReadonlyVector2Like;
+    bottomLeft: ReadonlyVector2Like;
   }) {
-    const { width, height, topLeftCorner, topRightCorner, bottomLeftCorner } =
-      config;
+    const { width, height, topLeft, topRight, bottomLeft } = config;
 
-    const b = topRightCorner.x - topLeftCorner.x;
-    const a = b + 2 * (topLeftCorner.x - bottomLeftCorner.x);
+    const b = topRight.x - topLeft.x;
+    const a = b + 2 * (topLeft.x - bottomLeft.x);
 
-    const h = bottomLeftCorner.y - topLeftCorner.y;
+    const h = bottomLeft.y - topLeft.y;
     const p = (a * h) / (a - b);
 
     return {
@@ -514,20 +513,18 @@ export class Geometry2DFunctions {
         const d = (y_dash * a) / p / 2;
 
         return {
-          x: bottomLeftCorner.x + d + x_dash,
-          y: bottomLeftCorner.y - y_dash,
+          x: bottomLeft.x + d + x_dash,
+          y: bottomLeft.y - y_dash,
         };
       },
 
       screenToWorldPoint(position: ReadonlyVector2Like) {
-        const offsetY = bottomLeftCorner.y - position.y;
-
-        const y = h + position.y - bottomLeftCorner.y;
+        const y = h + position.y - bottomLeft.y;
         const y_dash = -(y * b * h) / (y * (a - b) - a * h);
 
         const d = (a * (h - y_dash)) / (2 * p);
 
-        const x = position.x - bottomLeftCorner.x;
+        const x = position.x - bottomLeft.x;
         const x_dash = (p * (x - d)) / (p - (h - y_dash));
 
         return {

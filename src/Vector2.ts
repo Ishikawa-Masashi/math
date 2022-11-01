@@ -294,8 +294,19 @@ export class Vector2 {
    * @param {Vector2} value2 源矢量。
    * @returns {Number}
    */
-  static Dot(value1: Vector2, value2: Vector2) {
+  static Dot(value1: ReadonlyVector2Like, value2: ReadonlyVector2Like) {
     return value1.x * value2.x + value1.y * value2.y;
+  }
+
+  /**
+   * Gets the dot product of the vector "left" and the vector "right"
+   * Example Playground https://playground.babylonjs.com/#QYBWV4#90
+   * @param otherVector defines second vector
+   * @returns the dot product (float)
+   */
+  public dot(otherVector: ReadonlyVector2Like): number {
+    return Vector2.Dot(this, otherVector);
+    // return this.x * otherVector.x + this.y * otherVector.y;
   }
 
   /**

@@ -505,6 +505,8 @@ export class Geometry2DFunctions {
     const p = (a * h) / (a - b);
 
     return {
+      a,
+      b,
       worldToScreenPoint(position: ReadonlyVector2Like) {
         const x = (position.x * a) / width;
         const y = (height - position.y) * (h / height);

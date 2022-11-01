@@ -288,14 +288,17 @@ export class Vector2 {
   }
 
   /**
-   * 计算两个矢量的点积。如果两个矢量均为单位矢量，则点积返回 -1 到 1 之间的浮点值，该值可以用来确定两个矢量之间的角度的一些性质。例如，它可以显示这些矢量是正交、平行，还是互为锐角或钝角。
-   * @static
-   * @param {Vector2} value1 源矢量。
-   * @param {Vector2} value2 源矢量。
-   * @returns {Number}
+   * Gets the dot product of the vector "left" and the vector "right"
+   * Example Playground https://playground.babylonjs.com/#QYBWV4#90
+   * @param left defines first vector
+   * @param right defines second vector
+   * @returns the dot product (float)
    */
-  static Dot(value1: ReadonlyVector2Like, value2: ReadonlyVector2Like) {
-    return value1.x * value2.x + value1.y * value2.y;
+  public static Dot(
+    left: ReadonlyVector2Like,
+    right: ReadonlyVector2Like
+  ): number {
+    return left.x * right.x + left.y * right.y;
   }
 
   /**

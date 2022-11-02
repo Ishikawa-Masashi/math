@@ -8,12 +8,10 @@ import { ArrayTools } from './arrayTools';
 
 export class Vector3 {
   /**
-   * 新建 Vector3 实例。
-   * @constructs
-   * @param {number} x 矢量 x 色差的初始值。
-   * @param {number} y 矢量 y 色差的初始值。
-   * @param {number} z 矢量 z 色差的初始值。
-   * @returns {Vector3}
+   * Creates a new Vector3 object from the given x, y, z (floats) coordinates.
+   * @param x defines the first coordinates (on X axis)
+   * @param y defines the second coordinates (on Y axis)
+   * @param z defines the third coordinates (on Z axis)
    */
   constructor(public x = 0, public y = 0, public z = 0) {}
 

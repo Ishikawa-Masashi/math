@@ -470,6 +470,19 @@ export class Vector2 {
   }
 
   /**
+   * Sets "result" coordinates with the multiplication of the current Vector2 and the given one coordinates
+   * Example Playground https://playground.babylonjs.com/#QYBWV4#44
+   * @param otherVector defines the other vector
+   * @param result defines the target vector
+   * @returns result input
+   */
+  public multiplyToRef(otherVector: Vector2Like, result: Vector2Like) {
+    result.x = this.x * otherVector.x;
+    result.y = this.y * otherVector.y;
+    return result;
+  }
+
+  /**
    * Multiply the Vector2 coordinates by
    * Example Playground https://playground.babylonjs.com/#QYBWV4#59
    * @param scale defines the scaling factor

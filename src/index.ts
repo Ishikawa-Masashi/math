@@ -10,5 +10,6 @@ export * from './Vector3';
 export * from './Vector4';
 export * from './Quaternion';
 export * from './Matrix';
+export * from './polar';
 
 export * from './geometry2DFunctions';

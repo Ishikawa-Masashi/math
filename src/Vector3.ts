@@ -181,6 +181,18 @@ export class Vector3 {
   }
 
   /**
+   * Copies the given floats to the current Vector3 coordinates
+   * Example Playground https://playground.babylonjs.com/#R1F8YU#58
+   * @param x defines the x coordinate of the operand
+   * @param y defines the y coordinate of the operand
+   * @param z defines the z coordinate of the operand
+   * @returns the current updated Vector3
+   */
+  public set(x: number, y: number, z: number): this {
+    return this.copyFromFloats(x, y, z);
+  }
+
+  /**
    * 将两个矢量相加。
    * @static
    * @param {Vector3} value1 源矢量。

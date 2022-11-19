@@ -1722,6 +1722,31 @@ export class Matrix {
   }
 
   /**
+   * Returns the matrix as a Float32Array or Array<number>
+   * @returns the matrix underlying array
+   */
+  public toArray(): number[] {
+    return [
+      this.m11,
+      this.m12,
+      this.m13,
+      this.m14,
+      this.m21,
+      this.m22,
+      this.m23,
+      this.m24,
+      this.m31,
+      this.m32,
+      this.m33,
+      this.m34,
+      this.m41,
+      this.m42,
+      this.m43,
+      this.m44,
+    ];
+  }
+
+  /**
    * Inverts the current matrix in place
    * @returns the current inverted matrix
    */

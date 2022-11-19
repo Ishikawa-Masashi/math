@@ -301,16 +301,16 @@ export class EulerAngle {
   static toEulerAngle(m: Matrix, order: EulerOrder) {
     // if (order === EulerOrder.XYZ) {
     if (order === EulerOrder.ZYX) {
-      const sy = m.m13; //.at(0, 2);
+      const sy = -m.m13; //.at(0, 2);
       const unlocked = Math.abs(sy) < 0.99999;
       return new EulerAngle(
         //   unlocked
         //     ? Math.atan2(-m.at(1, 2), m.at(2, 2))
         //     : Math.atan2(m.at(2, 1), m.at(1, 1)),
-        unlocked ? Math.atan2(-m.m23, m.m33) : Math.atan2(m.m32, m.m22),
+        unlocked ? Math.atan2(m.m23, m.m33) : Math.atan2(-m.m32, m.m22),
         Math.asin(sy),
         //   unlocked ? Math.atan2(-m.at(0, 1), m.at(0, 0)) : 0,
-        unlocked ? Math.atan2(-m.m12, m.m11) : 0,
+        unlocked ? Math.atan2(m.m12, m.m11) : 0,
         order
       );
       // } else if (order === EulerOrder.XZY) {

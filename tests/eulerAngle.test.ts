@@ -66,7 +66,10 @@ describe('EulerAngle', () => {
       const e2 = EulerAngle.toEulerAngle(m2, eulerAngle.order);
       //   expect(m1).toEqual(m2);
       //   expect(e1).toEqual(e2);
-      expect(m1.equalsWithEpsilon(m2)).toBeTruthy();
+      //   expect(m1.equalsWithEpsilon(m2)).toBeTruthy();
+      if (!m1.equalsWithEpsilon(m2)) {
+        expect(m1).toEqual(m2);
+      }
       expect(e1.equalsWithEpsilon(e2)).toBeTruthy();
     }
   });

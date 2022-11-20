@@ -8,24 +8,23 @@ import { Epsilon } from './constants';
 
 export class Matrix {
   /**
-   * 初始化新的 Matrix 实例。
    * @constructs
-   * @param {number} m11 M11 的初始化值。
-   * @param {number} m12 M12 的初始化值。
-   * @param {number} m13 M13 的初始化值。
-   * @param {number} m14 M14 的初始化值。
-   * @param {number} m21 M21 的初始化值。
-   * @param {number} m22 M22 的初始化值。
-   * @param {number} m23 M23 的初始化值。
-   * @param {number} m24 M24 的初始化值。
-   * @param {number} m31 M31 的初始化值。
-   * @param {number} m32 M32 的初始化值。
-   * @param {number} m33 M33 的初始化值。
-   * @param {number} m34 M34 的初始化值。
-   * @param {number} m41 M41 的初始化值。
-   * @param {number} m42 M42 的初始化值。
-   * @param {number} m43 M43 的初始化值。
-   * @param {number} m44 M44 的初始化值。
+   * @param m11 defines 1st value of 1st row
+   * @param m12 defines 2nd value of 1st row
+   * @param m13 defines 3rd value of 1st row
+   * @param m14 defines 4th value of 1st row
+   * @param m21 defines 1st value of 2nd row
+   * @param m22 defines 2nd value of 2nd row
+   * @param m23 defines 3rd value of 2nd row
+   * @param m24 defines 4th value of 2nd row
+   * @param m31 defines 1st value of 3rd row
+   * @param m32 defines 2nd value of 3rd row
+   * @param m33 defines 3rd value of 3rd row
+   * @param m34 defines 4th value of 3rd row
+   * @param m41 defines 1st value of 4th row
+   * @param m42 defines 2nd value of 4th row
+   * @param m43 defines 3rd value of 4th row
+   * @param m44 defines 4th value of 4th row
    * @returns {Matrix}
    */
   constructor(

@@ -56,20 +56,14 @@ describe('EulerAngle', () => {
       const z = MathHelper.ToRadians(getRandomFloat(-180, 180));
 
       const eulerAngle = new EulerAngle(x, y, z, i);
+
       const m1 = EulerAngle.toRotationMatrix(eulerAngle);
       const e1 = EulerAngle.toEulerAngle(m1, eulerAngle.order);
 
-      //   expect(e).toEqual(eulerAngle);
-
       const m2 = EulerAngle.toRotationMatrix(e1);
-
       const e2 = EulerAngle.toEulerAngle(m2, eulerAngle.order);
-      //   expect(m1).toEqual(m2);
-      //   expect(e1).toEqual(e2);
-      //   expect(m1.equalsWithEpsilon(m2)).toBeTruthy();
-      if (!m1.equalsWithEpsilon(m2)) {
-        expect(m1).toEqual(m2);
-      }
+
+      expect(m1.equalsWithEpsilon(m2)).toBeTruthy();
       expect(e1.equalsWithEpsilon(e2)).toBeTruthy();
     }
   });

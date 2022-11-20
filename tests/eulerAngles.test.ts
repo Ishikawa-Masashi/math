@@ -4,56 +4,56 @@ import { EulerAngles, EulerOrder, MathHelper, Matrix } from '../src';
 import { getRandomFloat } from './utils';
 
 describe('EulerAngles', () => {
-  it('EulerOrder:XYZ', () => {
-    const x = MathHelper.ToRadians(getRandomFloat(-180, 180));
-    const y = MathHelper.ToRadians(getRandomFloat(-180, 180));
-    const z = MathHelper.ToRadians(getRandomFloat(-180, 180));
+  //   it('EulerOrder:XYZ', () => {
+  //     const x = MathHelper.ToRadians(getRandomFloat(-180, 180));
+  //     const y = MathHelper.ToRadians(getRandomFloat(-180, 180));
+  //     const z = MathHelper.ToRadians(getRandomFloat(-180, 180));
 
-    const eulerAngle = new EulerAngles(x, y, z, EulerOrder.XYZ);
+  //     const eulerAngle = new EulerAngles(x, y, z, EulerOrder.XYZ);
 
-    const m1 = EulerAngles.toRotationMatrix(eulerAngle);
+  //     const m1 = EulerAngles.toRotationMatrix(eulerAngle);
 
-    const m2 = Matrix.Multiply(
-      Matrix.Multiply(Matrix.RotationX(x), Matrix.RotationY(y)),
-      Matrix.RotationZ(z)
-    );
+  //     const m2 = Matrix.Multiply(
+  //       Matrix.Multiply(Matrix.RotationX(x), Matrix.RotationY(y)),
+  //       Matrix.RotationZ(z)
+  //     );
 
-    expect(m1.equalsWithEpsilon(m2)).toBeTruthy();
-  });
+  //     expect(m1.equalsWithEpsilon(m2)).toBeTruthy();
+  //   });
 
-  it('EulerOrder:XZY', () => {
-    const x = MathHelper.ToRadians(getRandomFloat(-180, 180));
-    const y = MathHelper.ToRadians(getRandomFloat(-180, 180));
-    const z = MathHelper.ToRadians(getRandomFloat(-180, 180));
+  //   it('EulerOrder:XZY', () => {
+  //     const x = MathHelper.ToRadians(getRandomFloat(-180, 180));
+  //     const y = MathHelper.ToRadians(getRandomFloat(-180, 180));
+  //     const z = MathHelper.ToRadians(getRandomFloat(-180, 180));
 
-    const eulerAngle = new EulerAngles(x, y, z, EulerOrder.XZY);
+  //     const eulerAngle = new EulerAngles(x, y, z, EulerOrder.XZY);
 
-    const m1 = EulerAngles.toRotationMatrix(eulerAngle);
+  //     const m1 = EulerAngles.toRotationMatrix(eulerAngle);
 
-    const m2 = Matrix.Multiply(
-      Matrix.Multiply(Matrix.RotationX(x), Matrix.RotationZ(z)),
-      Matrix.RotationY(y)
-    );
+  //     const m2 = Matrix.Multiply(
+  //       Matrix.Multiply(Matrix.RotationX(x), Matrix.RotationZ(z)),
+  //       Matrix.RotationY(y)
+  //     );
 
-    expect(m1.equalsWithEpsilon(m2)).toBeTruthy();
-  });
+  //     expect(m1.equalsWithEpsilon(m2)).toBeTruthy();
+  //   });
 
-  it('EulerOrder:YXZ', () => {
-    const x = MathHelper.ToRadians(getRandomFloat(-180, 180));
-    const y = MathHelper.ToRadians(getRandomFloat(-180, 180));
-    const z = MathHelper.ToRadians(getRandomFloat(-180, 180));
+  //   it('EulerOrder:YXZ', () => {
+  //     const x = MathHelper.ToRadians(getRandomFloat(-180, 180));
+  //     const y = MathHelper.ToRadians(getRandomFloat(-180, 180));
+  //     const z = MathHelper.ToRadians(getRandomFloat(-180, 180));
 
-    const eulerAngle = new EulerAngles(x, y, z, EulerOrder.YXZ);
+  //     const eulerAngle = new EulerAngles(x, y, z, EulerOrder.YXZ);
 
-    const m1 = EulerAngles.toRotationMatrix(eulerAngle);
+  //     const m1 = EulerAngles.toRotationMatrix(eulerAngle);
 
-    const m2 = Matrix.Multiply(
-      Matrix.Multiply(Matrix.RotationY(y), Matrix.RotationX(x)),
-      Matrix.RotationZ(z)
-    );
+  //     const m2 = Matrix.Multiply(
+  //       Matrix.Multiply(Matrix.RotationY(y), Matrix.RotationX(x)),
+  //       Matrix.RotationZ(z)
+  //     );
 
-    expect(m1.equalsWithEpsilon(m2)).toBeTruthy();
-  });
+  //     expect(m1.equalsWithEpsilon(m2)).toBeTruthy();
+  //   });
 
   it('EulerOrder', () => {
     for (let i = 0; i < EulerOrder.ZYX; ++i) {

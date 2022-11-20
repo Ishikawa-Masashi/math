@@ -10,7 +10,7 @@ export enum EulerOrder {
   ZYX,
 }
 
-export class EulerAngle {
+export class EulerAngles {
   constructor(
     public x: number,
     public y: number,
@@ -19,7 +19,7 @@ export class EulerAngle {
   ) {}
 
   public equalsWithEpsilon(
-    other: EulerAngle,
+    other: EulerAngles,
     epsilon: number = Epsilon
   ): boolean {
     return (
@@ -30,7 +30,7 @@ export class EulerAngle {
     );
   }
 
-  static toRotationMatrix(e: EulerAngle) {
+  static toRotationMatrix(e: EulerAngles) {
     const cx = Math.cos(e.x);
     const sx = Math.sin(e.x);
     const cy = Math.cos(e.y);
@@ -166,7 +166,7 @@ export class EulerAngle {
     if (order === EulerOrder.XYZ) {
       const sy = -m.m13; //.at(0, 2);
       const unlocked = Math.abs(sy) < 0.99999;
-      return new EulerAngle(
+      return new EulerAngles(
         //   unlocked
         //     ? Math.atan2(-m.at(1, 2), m.at(2, 2))
         //     : Math.atan2(m.at(2, 1), m.at(1, 1)),
@@ -180,7 +180,7 @@ export class EulerAngle {
       // const sz = -m.at(0, 1);
       const sz = m.m12;
       const unlocked = Math.abs(sz) < 0.99999;
-      return new EulerAngle(
+      return new EulerAngles(
         //   unlocked
         //     ? Math.atan2(m.at(2, 1), m.at(1, 1))
         //     : Math.atan2(-m.at(1, 2), m.at(2, 2)),
@@ -194,13 +194,9 @@ export class EulerAngle {
       // const sx = -m.at(1, 2);
       const sx = m.m23;
       const unlocked = Math.abs(sx) < 0.99999;
-      return new EulerAngle(
+      return new EulerAngles(
         Math.asin(sx),
-        //   unlocked
-        //     ? Math.atan2(m.at(0, 2), m.at(2, 2))
-        //     : Math.atan2(-m.at(2, 0), m.at(0, 0)),
         unlocked ? Math.atan2(-m.m13, m.m33) : Math.atan2(m.m31, m.m11),
-        //   unlocked ? Math.atan2(m.at(1, 0), m.at(1, 1)) : 0,
         unlocked ? Math.atan2(-m.m21, m.m22) : 0,
         order
       );
@@ -208,7 +204,7 @@ export class EulerAngle {
       // const sz = m.at(1, 0);
       const sz = -m.m21;
       const unlocked = Math.abs(sz) < 0.99999;
-      return new EulerAngle(
+      return new EulerAngles(
         //   unlocked ? Math.atan2(-m.at(1, 2), m.at(1, 1)) : 0,
         unlocked ? Math.atan2(m.m23, m.m22) : 0,
         //   unlocked
@@ -223,7 +219,7 @@ export class EulerAngle {
       // const sx = m.at(2, 1);
       const sx = -m.m32;
       const unlocked = Math.abs(sx) < 0.99999;
-      return new EulerAngle(
+      return new EulerAngles(
         Math.asin(sx),
         //   unlocked ? Math.atan2(-m.at(2, 0), m.at(2, 2)) : 0,
         unlocked ? Math.atan2(m.m31, m.m33) : 0,
@@ -238,7 +234,7 @@ export class EulerAngle {
       // const sy = -m.at(2, 0);
       const sy = m.m31;
       const unlocked = Math.abs(sy) < 0.99999;
-      return new EulerAngle(
+      return new EulerAngles(
         //   unlocked ? Math.atan2(m.at(2, 1), m.at(2, 2)) : 0,
         unlocked ? Math.atan2(-m.m32, m.m33) : 0,
         Math.asin(sy),

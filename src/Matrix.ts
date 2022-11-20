@@ -645,6 +645,82 @@ export class Matrix {
   }
 
   /**
+   * Creates a new matrix that transforms vertices from world space to camera space. It takes three vectors as arguments that together describe the position and orientation of the camera.
+   * This function generates a matrix suitable for a left handed coordinate system
+   * @param eye defines the final position of the entity
+   * @param target defines where the entity should look at
+   * @param up defines the up vector for the entity
+   * @returns the new matrix
+   */
+  public static LookAtLH(eye: Vector3, target: Vector3, up: Vector3): Matrix {
+    const result = new Matrix();
+    Matrix.LookAtLHToRef(eye, target, up, result);
+    return result;
+  }
+
+  /**
+   * Sets the given "result" Matrix to a matrix that transforms vertices from world space to camera space. It takes three vectors as arguments that together describe the position and orientation of the camera.
+   * This function generates a matrix suitable for a left handed coordinate system
+   * @param eye defines the final position of the entity
+   * @param target defines where the entity should look at
+   * @param up defines the up vector for the entity
+   * @param result defines the target matrix
+   * @returns result input
+   */
+  public static LookAtLHToRef(
+    eye: Vector3,
+    target: Vector3,
+    up: Vector3,
+    result: Matrix
+  ): void {
+    const xAxis = MathTmp.Vector3[0];
+    const yAxis = MathTmp.Vector3[1];
+    const zAxis = MathTmp.Vector3[2];
+
+    // Z axis
+    target.subtractToRef(eye, zAxis);
+    zAxis.normalize();
+
+    // X axis
+    Vector3.CrossToRef(up, zAxis, xAxis);
+
+    const xSquareLength = xAxis.lengthSquared();
+    if (xSquareLength === 0) {
+      xAxis.x = 1.0;
+    } else {
+      xAxis.normalizeFromLength(Math.sqrt(xSquareLength));
+    }
+
+    // Y axis
+    Vector3.CrossToRef(zAxis, xAxis, yAxis);
+    yAxis.normalize();
+
+    // Eye angles
+    const ex = -Vector3.Dot(xAxis, eye);
+    const ey = -Vector3.Dot(yAxis, eye);
+    const ez = -Vector3.Dot(zAxis, eye);
+
+    Matrix.FromValuesToRef(
+      xAxis.x,
+      yAxis.x,
+      zAxis.x,
+      0.0,
+      xAxis.y,
+      yAxis.y,
+      zAxis.y,
+      0.0,
+      xAxis.z,
+      yAxis.z,
+      zAxis.z,
+      0.0,
+      ex,
+      ey,
+      ez,
+      1.0,
+      result
+    );
+  }
+  /**
    * Gets a new rotation matrix used to rotate an entity so as it looks at the target vector3, from the eye vector3 position, the up vector3 being oriented like "up"
    * This function works in right handed mode
    * @param eye defines the final position of the entity

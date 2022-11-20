@@ -4,51 +4,6 @@ import { EulerAngles, EulerOrder, MathHelper, Matrix } from '../src';
 import { getRandomFloat } from './utils';
 
 describe('EulerAngles', () => {
-  it('RotationX', () => {
-    for (let i = 0; i < EulerOrder.ZYX; ++i) {
-      const x = MathHelper.ToRadians(getRandomFloat(-180, 180));
-      const y = 0;
-      const z = 0;
-      const m1 = Matrix.RotationX(x);
-
-      const eulerAngle = new EulerAngles(x, y, z, i);
-
-      const m2 = EulerAngles.toRotationMatrix(eulerAngle);
-
-      expect(m1.equalsWithEpsilon(m2)).toBeTruthy();
-    }
-  });
-
-  it('RotationY', () => {
-    for (let i = 0; i < EulerOrder.ZYX; ++i) {
-      const x = 0;
-      const y = MathHelper.ToRadians(getRandomFloat(-180, 180));
-      const z = 0;
-      const m1 = Matrix.RotationY(y);
-
-      const eulerAngle = new EulerAngles(x, y, z, i);
-
-      const m2 = EulerAngles.toRotationMatrix(eulerAngle);
-
-      expect(m1.equalsWithEpsilon(m2)).toBeTruthy();
-    }
-  });
-
-  it('RltationZ', () => {
-    for (let i = 0; i < EulerOrder.ZYX; ++i) {
-      const x = 0;
-      const y = 0;
-      const z = MathHelper.ToRadians(getRandomFloat(-180, 180));
-      const m1 = Matrix.RotationZ(z);
-
-      const eulerAngle = new EulerAngles(x, y, z, i);
-
-      const m2 = EulerAngles.toRotationMatrix(eulerAngle);
-
-      expect(m1.equalsWithEpsilon(m2)).toBeTruthy();
-    }
-  });
-
   it('EulerOrder:XYZ', () => {
     const x = MathHelper.ToRadians(getRandomFloat(-180, 180));
     const y = MathHelper.ToRadians(getRandomFloat(-180, 180));
@@ -78,6 +33,23 @@ describe('EulerAngles', () => {
     const m2 = Matrix.Multiply(
       Matrix.Multiply(Matrix.RotationX(x), Matrix.RotationZ(z)),
       Matrix.RotationY(y)
+    );
+
+    expect(m1.equalsWithEpsilon(m2)).toBeTruthy();
+  });
+
+  it('EulerOrder:YXZ', () => {
+    const x = MathHelper.ToRadians(getRandomFloat(-180, 180));
+    const y = MathHelper.ToRadians(getRandomFloat(-180, 180));
+    const z = MathHelper.ToRadians(getRandomFloat(-180, 180));
+
+    const eulerAngle = new EulerAngles(x, y, z, EulerOrder.YXZ);
+
+    const m1 = EulerAngles.toRotationMatrix(eulerAngle);
+
+    const m2 = Matrix.Multiply(
+      Matrix.Multiply(Matrix.RotationY(y), Matrix.RotationX(x)),
+      Matrix.RotationZ(z)
     );
 
     expect(m1.equalsWithEpsilon(m2)).toBeTruthy();

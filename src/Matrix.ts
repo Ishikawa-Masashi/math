@@ -1325,26 +1325,13 @@ export class Matrix {
   public static RotationXToRef(angle: number, result: Matrix) {
     const s = Math.sin(angle);
     const c = Math.cos(angle);
+
+    // prettier-ignore
     Matrix.FromValuesToRef(
-      1.0,
-      0.0,
-      0.0,
-      0.0,
-
-      0.0,
-      c,
-      s,
-      0.0,
-
-      0.0,
-      -s,
-      c,
-      0.0,
-
-      0.0,
-      0.0,
-      0.0,
-      1.0,
+      1.0, 0.0, 0.0, 0.0,
+      0.0,   c,   s, 0.0,
+      0.0,  -s,   c, 0.0,
+      0.0, 0.0, 0.0, 1.0,
       result
     );
 
@@ -1371,23 +1358,13 @@ export class Matrix {
   public static RotationYToRef(angle: number, result: Matrix) {
     const s = Math.sin(angle);
     const c = Math.cos(angle);
+
+    // prettier-ignore
     Matrix.FromValuesToRef(
-      c,
-      0.0,
-      -s,
-      0.0,
-      0.0,
-      1.0,
-      0.0,
-      0.0,
-      s,
-      0.0,
-      c,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      1.0,
+        c, 0.0,  -s, 0.0,
+      0.0, 1.0, 0.0, 0.0,
+        s, 0.0,   c, 0.0,
+      0.0, 0.0, 0.0, 1.0,
       result
     );
 
@@ -1415,23 +1392,12 @@ export class Matrix {
     const s = Math.sin(angle);
     const c = Math.cos(angle);
 
+    // prettier-ignore
     Matrix.FromValuesToRef(
-      c,
-      s,
-      0.0,
-      0.0,
-      -s,
-      c,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      1.0,
-      0.0,
-      0.0,
-      0.0,
-      0.0,
-      1.0,
+         c,  s, 0.0, 0.0,
+       -s,   c, 0.0, 0.0,
+      0.0, 0.0, 1.0, 0.0,
+      0.0, 0.0, 0.0, 1.0,
       result
     );
 

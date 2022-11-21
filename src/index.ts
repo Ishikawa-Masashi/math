@@ -13,4 +13,3 @@ export * from './Matrix';
 export * from './polar';
 
 export * from './geometry2DFunctions';
-export * from './EulerAngles';

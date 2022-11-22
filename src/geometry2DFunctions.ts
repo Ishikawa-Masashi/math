@@ -2,7 +2,7 @@
 // package sg.games.football.geom;
 
 import { ReadonlyVector2Like } from './like';
-import { Vector2 } from './Vector2';
+import { Vector2 } from './math.vector';
 
 // import static sg.games.football.geom.Vector2D.*;
 // import static sg.games.football.geom.Utils.*;

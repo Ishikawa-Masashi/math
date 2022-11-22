@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
-import { Vector2 } from './Vector2';
-import { Vector3 } from './Vector3';
+import { Vector2, Vector3 } from './math.vector';
 
 /**
  * Class used to store (r, theta) vector representation

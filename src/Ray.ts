@@ -1,9 +1,10 @@
 ﻿// import { MathHelper } from './MathHelper';
-import { Vector3 } from './Vector3';
 // import BoundingSphere from './BoundingSphere.js';
 // import Plane from './Plane';
 // import BoundingFrustum from './BoundingFrustum.js';
 // import BoundingBox from './BoundingBox.js';
+
+import { Vector3 } from './math.vector';
 
 export class Ray {
   /**
@@ -14,8 +15,8 @@ export class Ray {
    * @returns {Ray}
    */
   constructor(
-    public Position = Vector3.Zero,
-    public Direction = Vector3.Zero
+    public Position = Vector3.Zero(),
+    public Direction = Vector3.Zero()
   ) {}
 
   /**
@@ -25,13 +26,13 @@ export class Ray {
    */
   Equals(other: Ray) {
     return (
-      this.Direction.Equals(other.Direction) &&
-      this.Position.Equals(other.Position)
+      this.Direction.equals(other.Direction) &&
+      this.Position.equals(other.Position)
     );
   }
 
   GetHashCode() {
-    return this.Position.GetHashCode() ^ this.Direction.GetHashCode();
+    return this.Position.getHashCode() ^ this.Direction.getHashCode();
   }
 
   // Intersects(...args) {
@@ -182,6 +183,6 @@ export class Ray {
   // }
 
   ToString() {
-    return `{Position:${this.Position.ToString()} Direction:${this.Direction.ToString()}}`;
+    return `{Position:${this.Position.toString()} Direction:${this.Direction.toString()}}`;
   }
 }

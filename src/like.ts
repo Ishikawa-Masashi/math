@@ -105,6 +105,13 @@ export type ReadonlyVector2Like = {
 /**
  * @hidden
  */
+export interface ReadonlyMatrixLike {
+  m: ReadonlyArray<number>;
+}
+
+/**
+ * @hidden
+ */
 export interface IViewportLike {
   x: float;
   y: float;

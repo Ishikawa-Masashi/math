@@ -10,7 +10,7 @@
 // import TypeList from '../Core/TypeList.js';
 
 import { Matrix } from './Matrix';
-import { Plane } from './Plane';
+import { Plane } from './plane';
 
 // function createPlanes() {
 //   const planes = this._getPrivateVar('_planes');

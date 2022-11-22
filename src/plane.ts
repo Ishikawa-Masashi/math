@@ -1,12 +1,9 @@
-﻿import { MathHelper } from './MathHelper';
-import { Vector3 } from './Vector3';
-import { Vector4 } from './Vector4';
-import { Matrix } from './Matrix';
-import { Quaternion } from './Quaternion';
-// import BoundingSphere from './BoundingSphere';
+﻿// import BoundingSphere from './BoundingSphere';
 // import BoundingFrustum from './BoundingFrustum';
 // import BoundingBox from './BoundingBox';
 // import { PlaneIntersectionType } from './PlaneIntersectionType';
+
+import { Vector3, Vector4 } from './math.vector';
 
 export class Plane {
   /**
@@ -16,7 +13,7 @@ export class Plane {
    * @param {Number} d Plane 从原点位置起沿法线方向的距离。
    * @returns {Plane}
    */
-  constructor(public normal = Vector3.Zero, public d = 0) {}
+  constructor(public normal = new Vector3(), public d = 0) {}
 
   /**
    * 计算指定的 Vector4 和此 Plane 的点积。
@@ -66,12 +63,12 @@ export class Plane {
    */
   Equals(other: Plane) {
     return (
-      this.normal.Equals(other.normal) && Math.abs(this.d - other.d) < 1e-6
+      this.normal.equals(other.normal) && Math.abs(this.d - other.d) < 1e-6
     );
   }
 
   GetHashCode() {
-    return this.normal.GetHashCode() ^ this.d;
+    return this.normal.getHashCode() ^ this.d;
   }
 
   // Intersects(...args) {

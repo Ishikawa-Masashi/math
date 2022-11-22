@@ -1,6 +1,6 @@
 ﻿import { Vector3 } from './Vector3';
 import { Quaternion } from './Quaternion';
-import { Plane } from './Plane';
+import { Plane } from './plane';
 import { Viewport } from './viewport';
 import { ArrayTools } from './arrayTools';
 import { ReadonlyMatrixLike, ReadonlyVector3Like } from './like';

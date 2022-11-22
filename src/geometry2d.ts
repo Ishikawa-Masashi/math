@@ -410,22 +410,27 @@ export function getRandomPoint(
   return { x: Math.random() * maxX + minX, y: Math.random() * maxY + minY };
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function isPoint(obj: any): obj is Point {
   return 'x' in obj && 'y' in obj;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function isVector(obj: any): obj is Vector {
   return 'x' in obj && 'y' in obj;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function isAARect(obj: any): obj is AARect {
   return 'x' in obj && 'y' in obj && 'width' in obj && 'height' in obj;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function isAABox(obj: any): obj is AABox {
   return 'x' in obj && 'y' in obj && 'halfDimX' in obj && 'halfDimY' in obj;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function isCircle(obj: any): obj is Circle {
   return 'x' in obj && 'y' in obj && 'radius' in obj;
 }

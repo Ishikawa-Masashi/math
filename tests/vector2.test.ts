@@ -21,6 +21,6 @@ describe('Vector2', () => {
     const b = BABYLON.Vector2.FromArray(array);
     b.normalize();
 
-    expect(a.equals(b)).toBeTruthy();
+    expect(a.equals(Vector2.FromArray(b.asArray()))).toBeTruthy();
   });
 });

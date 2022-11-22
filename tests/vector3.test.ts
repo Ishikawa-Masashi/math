@@ -14,13 +14,13 @@ describe('Vector3', () => {
   it('add', () => {
     const a = getRandomVector3();
     const b = getRandomVector3();
-    const value1 = Vector3.Add(a, b);
+    const value1 = a.add(b);
 
     const c = new BABYLON.Vector3(a.x, a.y, a.z);
     const d = new BABYLON.Vector3(b.x, b.y, b.z);
     const value2 = c.add(d);
 
-    value1.equals(value2);
+    value1.equals(new Vector3().fromArray(value2.asArray()));
   });
 
   it('scale', () => {
@@ -32,7 +32,7 @@ describe('Vector3', () => {
     const vector2 = BABYLON.Vector3.FromArray(a);
     const value2 = vector2.scale(b);
 
-    value1.equals(value2);
+    value1.equals(new Vector3().fromArray(value2.asArray()));
   });
 
   it('Dot', () => {
@@ -56,7 +56,7 @@ describe('Vector3', () => {
     const vector1 = new Vector3(...a);
     const vector2 = new Vector3(...b);
 
-    const value1 = vector1.dot(vector2);
+    const value1 = Vector3.Dot(vector1, vector2);
 
     const vector3 = BABYLON.Vector3.FromArray(a);
     const vector4 = BABYLON.Vector3.FromArray(b);
@@ -74,7 +74,7 @@ describe('Vector3', () => {
     const d = new BABYLON.Vector3(b.x, b.y, b.z);
     const value2 = c.cross(d);
 
-    value1.equals(value2);
+    value1.equals(new Vector3().fromArray(value2.asArray()));
   });
 
   it('TransformNormal', () => {
@@ -82,14 +82,16 @@ describe('Vector3', () => {
     const array2 = getRandomArray(16);
 
     const a = new Vector3(...array1);
-    const b = new Matrix(...array2);
+    const b = Matrix.FromArray(array2);
     const value1 = Vector3.TransformNormal(a, b);
 
     const c = BABYLON.Vector3.FromArray(array1);
     const d = BABYLON.Matrix.FromArray(array2);
     const value2 = BABYLON.Vector3.TransformNormal(c, d);
 
-    expect(value1.equalsWithEpsilon(value2)).toBeTruthy();
+    expect(
+      value1.equals(new Vector3().fromArray(value2.asArray()))
+    ).toBeTruthy();
   });
 
   it('TransformCoordinates', () => {
@@ -97,14 +99,16 @@ describe('Vector3', () => {
     const array2 = getRandomArray(16);
 
     const a = new Vector3(...array1);
-    const b = new Matrix(...array2);
+    const b = Matrix.FromArray(array2);
     const value1 = Vector3.TransformCoordinates(a, b);
 
     const c = BABYLON.Vector3.FromArray(array1);
     const d = BABYLON.Matrix.FromArray(array2);
     const value2 = BABYLON.Vector3.TransformCoordinates(c, d);
 
-    expect(value1.equalsWithEpsilon(value2)).toBeTruthy();
+    expect(
+      value1.equalsWithEpsilon(new Vector3().fromArray(value2.asArray()))
+    ).toBeTruthy();
   });
 
   it('TransformCoordinates', () => {
@@ -134,6 +138,6 @@ describe('Vector3', () => {
     );
 
     expect(value1).toBe(value2);
-    expect(ref.equals(_ref)).toBeTruthy();
+    expect(ref.equals(new Vector3().fromArray(_ref.asArray()))).toBeTruthy();
   });
 });

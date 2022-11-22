@@ -2393,7 +2393,7 @@ export class Vector3 {
    * @param rightHandedSystem is the scene right-handed (negative-z)
    * @returns a new Backward Vector3
    */
-  public static Backward(rightHandedSystem: boolean = false): Vector3 {
+  public static Backward(rightHandedSystem = false): Vector3 {
     return new Vector3(0.0, 0.0, rightHandedSystem ? 1.0 : -1.0);
   }
   /**
@@ -3519,7 +3519,7 @@ export class Vector4 {
    * @param index defines the offset in the destination array
    * @returns the current Vector3
    */
-  public fromArray(array: FloatArray, index: number = 0): this {
+  public fromArray(array: FloatArray, index = 0): this {
     Vector4.FromArrayToRef(array, index, this);
     return this;
   }
@@ -4421,7 +4421,7 @@ export class Vector4 {
    * @param w defines the 4th component (default is 0)
    * @returns a new Vector4
    */
-  public static FromVector3(source: Vector3, w: number = 0) {
+  public static FromVector3(source: Vector3, w = 0) {
     return new Vector4(source._x, source._y, source._z, w);
   }
 }

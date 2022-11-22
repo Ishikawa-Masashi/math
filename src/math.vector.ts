@@ -5843,9 +5843,9 @@ export class Matrix {
 
   private _updateIdentityStatus(
     isIdentity: boolean,
-    isIdentityDirty: boolean = false,
-    isIdentity3x2: boolean = false,
-    isIdentity3x2Dirty: boolean = true
+    isIdentityDirty = false,
+    isIdentity3x2 = false,
+    isIdentity3x2Dirty = true
   ) {
     this._isIdentity = isIdentity;
     this._isIdentity3x2 = isIdentity || isIdentity3x2;
@@ -6335,10 +6335,7 @@ export class Matrix {
    * @param offset defines the offset in the target array where to start storing values
    * @returns the current matrix
    */
-  public copyToArray(
-    array: Float32Array | Array<number>,
-    offset: number = 0
-  ): this {
+  public copyToArray(array: Float32Array | Array<number>, offset = 0): this {
     const source = this._m;
     array[offset] = source[0];
     array[offset + 1] = source[1];
@@ -6870,7 +6867,7 @@ export class Matrix {
    */
   public static FromArray(
     array: DeepImmutable<ArrayLike<number>>,
-    offset: number = 0
+    offset = 0
   ): Matrix {
     const result = new Matrix();
     Matrix.FromArrayToRef(array, offset, result);
@@ -8239,7 +8236,7 @@ export class Matrix {
     znear: number,
     zfar: number,
     halfZRange?: boolean,
-    projectionPlaneTilt: number = 0
+    projectionPlaneTilt = 0
   ): Matrix {
     const matrix = new Matrix();
 
@@ -8336,8 +8333,8 @@ export class Matrix {
     result: T,
     isVerticalFovFixed = true,
     halfZRange?: boolean,
-    projectionPlaneTilt: number = 0,
-    reverseDepthBufferMode: boolean = false
+    projectionPlaneTilt = 0,
+    reverseDepthBufferMode = false
   ): T {
     const n = znear;
     const f = zfar;
@@ -8403,7 +8400,7 @@ export class Matrix {
     result: T,
     isVerticalFovFixed = true,
     halfZRange?: boolean,
-    projectionPlaneTilt: number = 0
+    projectionPlaneTilt = 0
   ): T {
     const t = 1.0 / Math.tan(fov * 0.5);
     const a = isVerticalFovFixed ? t / aspect : t;
@@ -8453,8 +8450,8 @@ export class Matrix {
     znear: number,
     zfar: number,
     halfZRange?: boolean,
-    projectionPlaneTilt: number = 0,
-    reverseDepthBufferMode: boolean = false
+    projectionPlaneTilt = 0,
+    reverseDepthBufferMode = false
   ): Matrix {
     const matrix = new Matrix();
     Matrix.PerspectiveFovRHToRef(

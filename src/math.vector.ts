@@ -4494,12 +4494,7 @@ export class Quaternion {
    * @param z defines the third component (0 by default)
    * @param w defines the fourth component (1.0 by default)
    */
-  constructor(
-    x: number = 0.0,
-    y: number = 0.0,
-    z: number = 0.0,
-    w: number = 1.0
-  ) {
+  constructor(x = 0.0, y = 0.0, z = 0.0, w = 1.0) {
     this._x = x;
     this._y = y;
     this._z = z;
@@ -4555,7 +4550,7 @@ export class Quaternion {
    * @param index defines an optional index in the target array to define where to start storing values
    * @returns the current Quaternion object
    */
-  public toArray(array: FloatArray, index: number = 0): Quaternion {
+  public toArray(array: FloatArray, index = 0): Quaternion {
     array[index] = this.x;
     array[index + 1] = this.y;
     array[index + 2] = this.z;
@@ -5118,7 +5113,7 @@ export class Quaternion {
   public static AreClose(
     quat0: DeepImmutable<Quaternion>,
     quat1: DeepImmutable<Quaternion>,
-    epsilon: number = 0.1
+    epsilon = 0.1
   ): boolean {
     const dot = Quaternion.Dot(quat0, quat1);
 
@@ -5824,7 +5819,7 @@ export class Matrix {
    * It will be incremented every time the matrix data change.
    * You can use it to speed the comparison between two versions of the same matrix.
    */
-  public updateFlag: number = -1;
+  public updateFlag = -1;
 
   private readonly _m: Float32Array | Array<number>;
 
@@ -8302,8 +8297,8 @@ export class Matrix {
     znear: number,
     zfar: number,
     halfZRange?: boolean,
-    projectionPlaneTilt: number = 0,
-    reverseDepthBufferMode: boolean = false
+    projectionPlaneTilt = 0,
+    reverseDepthBufferMode = false
   ): Matrix {
     const matrix = new Matrix();
     Matrix.PerspectiveFovLHToRef(

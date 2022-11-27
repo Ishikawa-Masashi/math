@@ -12,7 +12,7 @@ describe('Matrix', () => {
     expect(a.equals(zero)).toBeTruthy();
   });
 
-  it('Add', () => {
+  it('add', () => {
     const array1 = getRandomArray(16);
     const array2 = getRandomArray(16);
 
@@ -80,7 +80,7 @@ describe('Matrix', () => {
     const matrix1 = Matrix.RotationY(angle);
     const matrix2 = BABYLON.Matrix.RotationY(angle);
 
-    matrix1.equals(Matrix.FromArray(matrix2.m));
+    expect(matrix1.equals(matrix2)).toBeTruthy();
   });
 
   it('RotationZ', () => {
@@ -89,7 +89,7 @@ describe('Matrix', () => {
     const matrix1 = Matrix.RotationZ(angle);
     const matrix2 = BABYLON.Matrix.RotationZ(angle);
 
-    matrix1.equals(Matrix.FromArray(matrix2.m));
+    expect(matrix1.equals(matrix2)).toBeTruthy();
   });
 
   it('multiply', () => {
@@ -101,12 +101,12 @@ describe('Matrix', () => {
     const matrix3 = BABYLON.Matrix.Identity();
     const matrix4 = BABYLON.Matrix.RotationZ(angle);
 
-    expect(matrix1.equals(Matrix.FromArray(matrix3.m))).toBeTruthy();
-    expect(matrix2.equals(Matrix.FromArray(matrix4.m))).toBeTruthy();
+    expect(matrix1.equals(matrix3)).toBeTruthy();
+    expect(matrix2.equals(matrix4)).toBeTruthy();
 
     const matrix5 = matrix1.multiply(matrix2);
     const matrix6 = matrix3.multiply(matrix4);
 
-    expect(matrix5.equals(Matrix.FromArray(matrix6.m))).toBeTruthy();
+    expect(matrix5.equals(matrix6)).toBeTruthy();
   });
 });

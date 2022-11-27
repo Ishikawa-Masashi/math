@@ -52,7 +52,7 @@ describe('Matrix', () => {
     a.invert();
     b.invert();
 
-    a.equals(Matrix.FromArray(b.m));
+    expect(a.equals(b)).toBeTruthy();
   });
 
   it('Determinant', () => {

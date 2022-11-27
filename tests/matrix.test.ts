@@ -25,7 +25,7 @@ describe('Matrix', () => {
     const d = BABYLON.Matrix.FromArray(array2);
     const value2 = c.add(d);
 
-    expect(value1.equals(Matrix.FromArray(value2.m))).toBeTruthy();
+    expect(value1.equals(value2)).toBeTruthy();
   });
 
   it('multiply', () => {

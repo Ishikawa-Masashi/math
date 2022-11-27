@@ -9,7 +9,7 @@
 // import Plane from './Plane.js';
 // import TypeList from '../Core/TypeList.js';
 
-import { Matrix } from './Matrix';
+import { Matrix } from './math.vector';
 import { Plane } from './plane';
 
 // function createPlanes() {

@@ -20,7 +20,7 @@ describe('Vector3', () => {
     const d = new BABYLON.Vector3(b.x, b.y, b.z);
     const value2 = c.add(d);
 
-    value1.equals(new Vector3().fromArray(value2.asArray()));
+    expect(value1.equals(value2)).toBeTruthy();
   });
 
   it('scale', () => {

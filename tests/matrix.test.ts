@@ -71,7 +71,7 @@ describe('Matrix', () => {
     const matrix1 = Matrix.RotationX(angle);
     const matrix2 = BABYLON.Matrix.RotationX(angle);
 
-    matrix1.equals(Matrix.FromArray(matrix2.m));
+    expect(matrix1.equals(matrix2)).toBeTruthy();
   });
 
   it('RotationY', () => {

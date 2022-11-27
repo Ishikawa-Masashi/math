@@ -14,13 +14,6 @@ export function getRandomFloat(min = Number.MIN_VALUE, max = Number.MAX_VALUE) {
   return Math.random() * (max - min) + min;
 }
 
-// export function getRandomArray(
-//   size: number,
-//   min = Number.MIN_VALUE,
-//   max = Number.MAX_VALUE
-// ) {
-//   return ArrayTools.BuildArray(size, () => getRandomFloat(min, max));
-// }
 export function getRandomArray(size: number, min = -1, max = 1) {
   return ArrayTools.BuildArray(size, () => getRandomFloat(min, max));
 }
@@ -57,53 +50,5 @@ export function getRandomVector3(
     Scalar.RandomRange(min, max),
     Scalar.RandomRange(min, max),
     Scalar.RandomRange(min, max)
-  );
-}
-
-export function getArrayFromMatrix(matrix: Matrix) {
-  return [
-    matrix.m11,
-    matrix.m12,
-    matrix.m13,
-    matrix.m14,
-
-    matrix.m21,
-    matrix.m22,
-    matrix.m23,
-    matrix.m24,
-
-    matrix.m31,
-    matrix.m32,
-    matrix.m33,
-    matrix.m34,
-
-    matrix.m41,
-    matrix.m42,
-    matrix.m43,
-    matrix.m44,
-  ];
-}
-
-export function getRandomMatrix() {
-  return new Matrix(
-    getRandomFloat(),
-    getRandomFloat(),
-    getRandomFloat(),
-    getRandomFloat(),
-
-    getRandomFloat(),
-    getRandomFloat(),
-    getRandomFloat(),
-    getRandomFloat(),
-
-    getRandomFloat(),
-    getRandomFloat(),
-    getRandomFloat(),
-    getRandomFloat(),
-
-    getRandomFloat(),
-    getRandomFloat(),
-    getRandomFloat(),
-    getRandomFloat()
   );
 }

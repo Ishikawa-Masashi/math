@@ -32,7 +32,7 @@ describe('Vector3', () => {
     const vector2 = BABYLON.Vector3.FromArray(a);
     const value2 = vector2.scale(b);
 
-    value1.equals(new Vector3().fromArray(value2.asArray()));
+    expect(value1.equals(value2)).toBeTruthy();
   });
 
   it('Dot', () => {
@@ -106,9 +106,7 @@ describe('Vector3', () => {
     const d = BABYLON.Matrix.FromArray(array2);
     const value2 = BABYLON.Vector3.TransformCoordinates(c, d);
 
-    expect(
-      value1.equalsWithEpsilon(new Vector3().fromArray(value2.asArray()))
-    ).toBeTruthy();
+    expect(value1.equalsWithEpsilon(value2)).toBeTruthy();
   });
 
   it('ProjectOnTriangleToRef', () => {

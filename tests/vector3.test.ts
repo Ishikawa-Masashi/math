@@ -111,7 +111,7 @@ describe('Vector3', () => {
     ).toBeTruthy();
   });
 
-  it('TransformCoordinates', () => {
+  it('ProjectOnTriangleToRef', () => {
     const array1 = getRandomArray(3);
     const array2 = getRandomArray(3);
     const array3 = getRandomArray(3);

@@ -8,3 +8,4 @@ export * from './viewport';
 export * from './math.vector';
 
 export * from './geometry2DFunctions';
+export * from './axis';

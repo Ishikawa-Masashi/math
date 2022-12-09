@@ -25,7 +25,7 @@ test('dist3D_Line_to_Line 1', () => {
   expect(Math.abs(result.distance - 13.063945294843615) < 1e-6).toBeTruthy();
 });
 
-test('dist3D_Line_to_Line 2', async (t) => {
+test('dist3D_Line_to_Line 2', () => {
   const lineA: Line = {
     origin: new Vector3(0, 0, 0),
     dir: new Vector3(1, 0, 1),

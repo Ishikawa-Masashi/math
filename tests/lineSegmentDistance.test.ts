@@ -4,9 +4,9 @@ import {
   dist3D_Line_to_Segment,
   dist3D_Segment_to_Segment,
   Line,
-  Segment,
 } from '../src/lineSegmentDistance';
 import { Vector3 } from '../src/math.vector';
+import { Segment } from '../src/segment';
 
 test('dist3D_Line_to_Line 1', () => {
   const lineA: Line = {
@@ -47,10 +47,7 @@ test('dist3D_Line_to_segment 1', () => {
     dir: new Vector3(1, 0, 1),
   };
 
-  const segmentB: Segment = {
-    start: new Vector3(4, 8, 0),
-    end: new Vector3(19, 8, 0),
-  };
+  const segmentB = new Segment(new Vector3(4, 8, 0), new Vector3(19, 8, 0));
 
   const result = dist3D_Line_to_Segment(lineA, segmentB);
   console.log(result);
@@ -59,15 +56,8 @@ test('dist3D_Line_to_segment 1', () => {
 });
 
 test('dist3D_segment_to_segment 1', () => {
-  const segmentA: Segment = {
-    start: new Vector3(0, 0, 5),
-    end: new Vector3(0, 0, 20),
-  };
-
-  const segmentB: Segment = {
-    start: new Vector3(4, 8, 0),
-    end: new Vector3(19, 8, 0),
-  };
+  const segmentA = new Segment(new Vector3(0, 0, 5), new Vector3(0, 0, 20));
+  const segmentB = new Segment(new Vector3(4, 8, 0), new Vector3(19, 8, 0));
 
   const result = dist3D_Segment_to_Segment(segmentA, segmentB);
   console.log(result);

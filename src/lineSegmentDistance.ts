@@ -1,6 +1,7 @@
 // import { vec3, ReadonlyVec3 } from 'gl-matrix';
 
 import { Vector3 } from './math.vector';
+import { Segment } from './segment';
 
 //http://geomalgorithms.com/a07-_distance.html
 
@@ -47,11 +48,6 @@ export function dist3D_Line_to_Line(L1: Line, L2: Line) {
     l2_scale: tc,
   };
 }
-
-export type Segment = {
-  start: Vector3;
-  end: Vector3;
-};
 
 export function dist3D_Segment_to_Segment(S1: Segment, S2: Segment) {
   const u = S1.end.subtract(S1.start);

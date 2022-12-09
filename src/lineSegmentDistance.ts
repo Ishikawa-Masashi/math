@@ -15,23 +15,12 @@ export function dist3D_Line_to_Line(L1: Line, L2: Line) {
   const u = L1.dir;
   const v = L2.dir;
 
-  //   const w = vec3.sub(
-  //     vec3.create(),
-  //     L1.origin as ReadonlyVec3,
-  //     L2.origin as ReadonlyVec3
-  //   );
-
   const w = L1.origin.subtract(L2.origin);
 
-  //   const a = vec3.dot(u, u);
   const a = Vector3.Dot(u, u);
-  //   const b = vec3.dot(u, v);
   const b = Vector3.Dot(u, v);
-  //   const c = vec3.dot(v, v);
   const c = Vector3.Dot(v, v);
-  //   const d = vec3.dot(u, w);
   const d = Vector3.Dot(u, w);
-  //   const e = vec3.dot(v, w);
   const e = Vector3.Dot(v, w);
   const D = a * c - b * b;
 
@@ -46,11 +35,11 @@ export function dist3D_Line_to_Line(L1: Line, L2: Line) {
     sc = (b * e - c * d) / D;
     tc = (a * e - b * d) / D;
   }
-  //   const P1 = vec3.scale(vec3.create(), u, sc); // L1(sc)
+
   const P1 = u.scale(sc); // L1(sc)
   const P2 = v.scale(tc); // L2(tc)
-  //   const dP = vec3.add(vec3.create(), w, vec3.sub(vec3.create(), P1, P2));
   const dP = w.add(P1.subtract(P2));
+
   return {
     // distance: vec3.len(dP),
     distance: dP.length(),
@@ -65,39 +54,15 @@ export type Segment = {
 };
 
 export function dist3D_Segment_to_Segment(S1: Segment, S2: Segment) {
-  //   const u = vec3.sub(
-  //     vec3.create(),
-  //     S1.end as ReadonlyVec3,
-  //     S1.start as ReadonlyVec3
-  //   );
-
   const u = S1.end.subtract(S1.start);
-
-  //   const v = vec3.sub(
-  //     vec3.create(),
-  //     S2.end as ReadonlyVec3,
-  //     S2.start as ReadonlyVec3
-  //   );
-
   const v = S2.end.subtract(S2.start);
-
-  //   const w = vec3.sub(
-  //     vec3.create(),
-  //     S1.start as ReadonlyVec3,
-  //     S2.start as ReadonlyVec3
-  //   );
 
   const w = S1.start.subtract(S2.start);
 
-  //   const a = vec3.dot(u, u);
   const a = Vector3.Dot(u, u);
-  //   const b = vec3.dot(u, v);
   const b = Vector3.Dot(u, v);
-  //   const c = vec3.dot(v, v);
   const c = Vector3.Dot(v, v);
-  //   const d = vec3.dot(u, w);
   const d = Vector3.Dot(u, w);
-  //   const e = vec3.dot(v, w);
   const e = Vector3.Dot(v, w);
   const D = a * c - b * b;
 
@@ -157,9 +122,8 @@ export function dist3D_Segment_to_Segment(S1: Segment, S2: Segment) {
   }
   const sc = Math.abs(sN) < EPSILON ? 0.0 : sN / sD;
   const tc = Math.abs(tN) < EPSILON ? 0.0 : tN / tD;
-  //   const P1 = vec3.scale(vec3.create(), u, sc); // S1(sc)
+
   const P1 = u.scale(sc); // S1(sc)
-  //   const P2 = vec3.scale(vec3.create(), v, tc); // S2(tc)
   const P2 = v.scale(tc); // S2(tc)
   const dP = w.add(P1.subtract(P2));
   return {
@@ -171,31 +135,14 @@ export function dist3D_Segment_to_Segment(S1: Segment, S2: Segment) {
 
 export function dist3D_Line_to_Segment(L: Line, S: Segment) {
   const u = L.dir;
-  //   const v = vec3.sub(
-  //     vec3.create(),
-  //     S.end as ReadonlyVec3,
-  //     S.start as ReadonlyVec3
-  //   );
-
   const v = S.end.subtract(S.start);
-
-  //   const w = vec3.sub(
-  //     vec3.create(),
-  //     L.origin as ReadonlyVec3,
-  //     S.start as ReadonlyVec3
-  //   );
 
   const w = L.origin.subtract(S.start);
 
-  //   const a = vec3.dot(u, u);
   const a = Vector3.Dot(u, u);
-  //   const b = vec3.dot(u, v);
   const b = Vector3.Dot(u, v);
-  //   const c = vec3.dot(v, v);
   const c = Vector3.Dot(v, v);
-  //   const d = vec3.dot(u, w);
   const d = Vector3.Dot(u, w);
-  //   const e = vec3.dot(v, w);
   const e = Vector3.Dot(v, w);
   const D = a * c - b * b;
 
@@ -239,12 +186,11 @@ export function dist3D_Line_to_Segment(L: Line, S: Segment) {
   }
   const sc = Math.abs(sN) < EPSILON ? 0.0 : sN / sD;
   const tc = Math.abs(tN) < EPSILON ? 0.0 : tN / tD;
-  //   const P1 = vec3.scale(vec3.create(), u, sc); // L(sc)
+
   const P1 = u.scale(sc); // L(sc)
-  //   const P2 = vec3.scale(vec3.create(), v, tc); // S(tc)
   const P2 = v.scale(tc); // S(tc)
-  //   const dP = vec3.add(vec3.create(), w, vec3.sub(vec3.create(), P1, P2));
   const dP = w.add(P1.subtract(P2));
+
   return {
     // distance: vec3.len(dP),
     distance: dP.length(),

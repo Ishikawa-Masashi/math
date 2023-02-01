@@ -1,170 +1,117 @@
-﻿// import BoundingSphere from './BoundingSphere';
-// import BoundingFrustum from './BoundingFrustum';
-// import BoundingBox from './BoundingBox';
-// import { PlaneIntersectionType } from './PlaneIntersectionType';
+﻿import type { DeepImmutable } from './types';
+import { Vector3, Matrix } from './math.vector';
 
-import { Vector3, Vector4 } from './math.vector';
-
+/**
+ * Represents a plane by the equation ax + by + cz + d = 0
+ */
 export class Plane {
-  /**
-   * 新建 Plane 实例。
-   * @constructs
-   * @param {Vector3} normal Plane 的法线矢量。
-   * @param {Number} d Plane 从原点位置起沿法线方向的距离。
-   * @returns {Plane}
-   */
-  constructor(public normal = new Vector3(), public d = 0) {}
+  private static _TmpMatrix = Matrix.Identity();
 
   /**
-   * 计算指定的 Vector4 和此 Plane 的点积。
-   * @param {Vector4} value 要乘以此 Plane 的 Vector4。
-   * @return {Number}
+   * Normal of the plane (a,b,c)
    */
-  Dot(value: Vector4) {
-    return (
-      this.normal.x * value.x +
-      this.normal.y * value.y +
-      this.normal.z * value.z +
-      this.d * value.w
-    );
+  public normal: Vector3;
+  /**
+   * d component of the plane
+   */
+  public d: number;
+  /**
+   * Creates a Plane object according to the given floats a, b, c, d and the plane equation : ax + by + cz + d = 0
+   * @param a a component of the plane
+   * @param b b component of the plane
+   * @param c c component of the plane
+   * @param d d component of the plane
+   */
+  constructor(a: number, b: number, c: number, d: number) {
+    this.normal = new Vector3(a, b, c);
+    this.d = d;
   }
 
   /**
-   * 返回指定的 Vector3 和此 Plane 的 Normal 矢量的点积加上 Plane 的距离 (D) 值。
-   * @param {Vector3} value 要乘以的 Vector3。
-   * @return {Number}
+   * @returns the plane coordinates as a new array of 4 elements [a, b, c, d].
    */
-  DotCoordinate(value: Vector3) {
+  public asArray(): number[] {
+    return [this.normal.x, this.normal.y, this.normal.z, this.d];
+  }
+
+  // Methods
+  /**
+   * @returns a new plane copied from the current Plane.
+   */
+  public clone(): Plane {
+    return new Plane(this.normal.x, this.normal.y, this.normal.z, this.d);
+  }
+  /**
+   * @returns the string "Plane".
+   */
+  public getClassName(): string {
+    return 'Plane';
+  }
+  /**
+   * @returns the Plane hash code.
+   */
+  public getHashCode(): number {
+    let hash = this.normal.getHashCode();
+    hash = (hash * 397) ^ (this.d | 0);
+    return hash;
+  }
+  /**
+   * Normalize the current Plane in place.
+   * @returns the updated Plane.
+   */
+  public normalize(): Plane {
+    const norm = Math.sqrt(
+      this.normal.x * this.normal.x +
+        this.normal.y * this.normal.y +
+        this.normal.z * this.normal.z
+    );
+    let magnitude = 0.0;
+
+    if (norm !== 0) {
+      magnitude = 1.0 / norm;
+    }
+    this.normal.x *= magnitude;
+    this.normal.y *= magnitude;
+    this.normal.z *= magnitude;
+    this.d *= magnitude;
+    return this;
+  }
+  /**
+   * Applies a transformation the plane and returns the result
+   * @param transformation the transformation matrix to be applied to the plane
+   * @returns a new Plane as the result of the transformation of the current Plane by the given matrix.
+   */
+  public transform(transformation: DeepImmutable<Matrix>): Plane {
+    const invertedMatrix = Plane._TmpMatrix;
+    transformation.invertToRef(invertedMatrix);
+    const m = invertedMatrix.m;
+    const x = this.normal.x;
+    const y = this.normal.y;
+    const z = this.normal.z;
+    const d = this.d;
+
+    const normalX = x * m[0] + y * m[1] + z * m[2] + d * m[3];
+    const normalY = x * m[4] + y * m[5] + z * m[6] + d * m[7];
+    const normalZ = x * m[8] + y * m[9] + z * m[10] + d * m[11];
+    const finalD = x * m[12] + y * m[13] + z * m[14] + d * m[15];
+
+    return new Plane(normalX, normalY, normalZ, finalD);
+  }
+
+  /**
+   * Compute the dot product between the point and the plane normal
+   * @param point point to calculate the dot product with
+   * @returns the dot product (float) of the point coordinates and the plane normal.
+   */
+  public dotCoordinate(point: DeepImmutable<Vector3>): number {
     return (
-      this.normal.x * value.x +
-      this.normal.y * value.y +
-      this.normal.z * value.z +
+      this.normal.x * point.x +
+      this.normal.y * point.y +
+      this.normal.z * point.z +
       this.d
     );
   }
 
-  /**
-   * 返回指定的 Vector3 和此 Plane 的 Normal 矢量的点积。
-   * @param {Vector3} value 要乘以的 Vector3。
-   * @return {Number}
-   */
-  DotNormal(value: Vector3) {
-    return (
-      this.normal.x * value.x +
-      this.normal.y * value.y +
-      this.normal.z * value.z
-    );
-  }
-
-  /**
-   * 确定指定的 Plane 是否等于 Plane。
-   * @param {Plane} other 用于与当前 Plane 比较的 Plane。
-   * @returns {Boolean}
-   */
-  Equals(other: Plane) {
-    return (
-      this.normal.equals(other.normal) && Math.abs(this.d - other.d) < 1e-6
-    );
-  }
-
-  GetHashCode() {
-    return this.normal.getHashCode() ^ this.d;
-  }
-
-  // Intersects(...args) {
-  //   return (Plane.prototype.Intersects = Overload.Create()
-  //     .Add([BoundingSphere], function (sphere) {
-  //       return sphere.Intersects(this);
-  //     })
-  //     .Add([BoundingFrustum], function (frustum) {
-  //       return frustum.Intersects(this);
-  //     })
-  //     .Add([BoundingBox], function (box) {
-  //       return box.Intersects(this);
-  //     })
-  //     .Add([Vector3], function (point) {
-  //       const distance = this.DotCoordinate(point);
-
-  //       if (distance > 0) {
-  //         return PlaneIntersectionType.Front;
-  //       }
-
-  //       if (distance < 0) {
-  //         return PlaneIntersectionType.Back;
-  //       }
-
-  //       return PlaneIntersectionType.Intersecting;
-  //     })).call(this, ...args);
-  // }
-
-  /**
-   * 更改 Plane 的 Normal 矢量系数以使其成为单位长度。
-   * @static
-   * @param {Plane} value 要法线化的 Plane。
-   * @return {Plane}
-   */
-  static Normalize(value: Plane) {
-    const result = new Plane();
-    result.normal = Vector3.Normalize(value.normal);
-    const factor =
-      Math.sqrt(
-        result.normal.x * result.normal.x +
-          result.normal.y * result.normal.y +
-          result.normal.z * result.normal.z
-      ) /
-      Math.sqrt(
-        value.normal.x * value.normal.x +
-          value.normal.y * value.normal.y +
-          value.normal.z * value.normal.z
-      );
-    result.d = value.d * factor;
-    return result;
-  }
-
-  /**
-   * 更改该 Plane 的 Normal 矢量系数以使其成为单位长度。
-   */
-  Normalize() {
-    const normal = Vector3.Normalize(this.normal);
-    const factor =
-      Math.sqrt(
-        normal.x * normal.x + normal.y * normal.y + normal.z * normal.z
-      ) /
-      Math.sqrt(
-        this.normal.x * this.normal.x +
-          this.normal.y * this.normal.y +
-          this.normal.z * this.normal.z
-      );
-    this.normal = normal;
-    this.d *= factor;
-  }
-
-  ToString() {
-    return `{Normal:${this.normal.toString()} D:${this.d}}`;
-  }
-
-  /**
-   * 通过 Matrix 变换法线化 Plane。
-   * @static
-   * @param {Plane} plane 要变换的法线化 Plane。该 Plane 必须已进行法线化处理，以便在调用此方法前，其 Normal 矢量为单位长度。
-   * @param {Matrix} matrix 要应用到 Plane 的变换 Matrix。
-   * @returns {Plane}
-   */
-  // static Transform(plane: Plane, matrix: Matrix) {
-  //   const transformedMatrix = Matrix.Transpose(Matrix.Invert(matrix));
-
-  //   // const vector = new Vector4(plane.Normal, plane.D);
-  //   const vector = new Vector4(
-  //     plane.Normal.x,
-  //     plane.Normal.y,
-  //     plane.Normal.z,
-  //     plane.D
-  //   );
-
-  //   const transformedVector = Vector4.Transform(vector, transformedMatrix);
-
-  //   return new Plane(transformedVector);
-  // }
   /**
    * Updates the current Plane from the plane defined by the three given points.
    * @param point1 one of the points used to construct the plane
@@ -173,9 +120,9 @@ export class Plane {
    * @returns the updated Plane.
    */
   public copyFromPoints(
-    point1: Vector3,
-    point2: Vector3,
-    point3: Vector3
+    point1: DeepImmutable<Vector3>,
+    point2: DeepImmutable<Vector3>,
+    point3: DeepImmutable<Vector3>
   ): Plane {
     const x1 = point2.x - point1.x;
     const y1 = point2.y - point1.y;
@@ -205,5 +152,98 @@ export class Plane {
     );
 
     return this;
+  }
+
+  /**
+   * Checks if the plane is facing a given direction (meaning if the plane's normal is pointing in the opposite direction of the given vector).
+   * Note that for this function to work as expected you should make sure that:
+   *   - direction and the plane normal are normalized
+   *   - epsilon is a number just bigger than -1, something like -0.99 for eg
+   * @param direction the direction to check if the plane is facing
+   * @param epsilon value the dot product is compared against (returns true if dot <= epsilon)
+   * @returns True if the plane is facing the given direction
+   */
+  public isFrontFacingTo(
+    direction: DeepImmutable<Vector3>,
+    epsilon: number
+  ): boolean {
+    const dot = Vector3.Dot(this.normal, direction);
+    return dot <= epsilon;
+  }
+
+  /**
+   * Calculates the distance to a point
+   * @param point point to calculate distance to
+   * @returns the signed distance (float) from the given point to the Plane.
+   */
+  public signedDistanceTo(point: DeepImmutable<Vector3>): number {
+    return Vector3.Dot(point, this.normal) + this.d;
+  }
+
+  // Statics
+  /**
+   * Creates a plane from an  array
+   * @param array the array to create a plane from
+   * @returns a new Plane from the given array.
+   */
+  static FromArray(array: DeepImmutable<ArrayLike<number>>): Plane {
+    return new Plane(array[0], array[1], array[2], array[3]);
+  }
+  /**
+   * Creates a plane from three points
+   * @param point1 point used to create the plane
+   * @param point2 point used to create the plane
+   * @param point3 point used to create the plane
+   * @returns a new Plane defined by the three given points.
+   */
+  static FromPoints(
+    point1: DeepImmutable<Vector3>,
+    point2: DeepImmutable<Vector3>,
+    point3: DeepImmutable<Vector3>
+  ): Plane {
+    const result = new Plane(0.0, 0.0, 0.0, 0.0);
+    result.copyFromPoints(point1, point2, point3);
+    return result;
+  }
+  /**
+   * Creates a plane from an origin point and a normal
+   * @param origin origin of the plane to be constructed
+   * @param normal normal of the plane to be constructed
+   * @returns a new Plane the normal vector to this plane at the given origin point.
+   * Note : the vector "normal" is updated because normalized.
+   */
+  static FromPositionAndNormal(
+    origin: DeepImmutable<Vector3>,
+    normal: Vector3
+  ): Plane {
+    const result = new Plane(0.0, 0.0, 0.0, 0.0);
+    normal.normalize();
+    result.normal = normal;
+    result.d = -(
+      normal.x * origin.x +
+      normal.y * origin.y +
+      normal.z * origin.z
+    );
+    return result;
+  }
+
+  /**
+   * Calculates the distance from a plane and a point
+   * @param origin origin of the plane to be constructed
+   * @param normal normal of the plane to be constructed
+   * @param point point to calculate distance to
+   * @returns the signed distance between the plane defined by the normal vector at the "origin"" point and the given other point.
+   */
+  static SignedDistanceToPlaneFromPositionAndNormal(
+    origin: DeepImmutable<Vector3>,
+    normal: DeepImmutable<Vector3>,
+    point: DeepImmutable<Vector3>
+  ): number {
+    const d = -(
+      normal.x * origin.x +
+      normal.y * origin.y +
+      normal.z * origin.z
+    );
+    return Vector3.Dot(point, normal) + d;
   }
 }

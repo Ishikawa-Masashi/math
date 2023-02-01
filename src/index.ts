@@ -9,3 +9,4 @@ export * from './math.vector';
 
 export * from './geometry2DFunctions';
 export * from './axis';
+export * from './plane';

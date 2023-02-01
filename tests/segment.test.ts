@@ -10,7 +10,7 @@ import { Segment } from '../src/segment';
 let v1: Vector3;
 let v2: Vector3;
 let l1: Segment;
-let l2: Segment;
+// let l2: Segment;
 let lInvalid: Segment;
 
 beforeEach(() => {
@@ -105,7 +105,7 @@ test('ClosestParameter', () => {
 });
 
 test('ClosestPoint', () => {
-  let p = new Vector3(1000, 1000, 0);
+  const p = new Vector3(1000, 1000, 0);
   l1 = new Segment(new Vector3(0, 2000, 0), new Vector3(2000, 2000, 0));
   expect(l1.ClosestParameter(p)).toBeCloseTo(0.5, 3);
   expect(l1.ClosestPoint(p).equals(new Vector3(1000, 2000, 0))).toBe(true);

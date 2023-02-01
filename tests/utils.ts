@@ -1,4 +1,4 @@
-import { Matrix, Vector2 } from '../src';
+import { Vector2 } from '../src';
 import { Vector3 } from '../src';
 import { Scalar } from '../src';
 import { ArrayTools } from '../src';

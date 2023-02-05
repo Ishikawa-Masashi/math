@@ -36,6 +36,7 @@
     return 3.141592653589793;
     // return 3.14159274;
   }
+  static readonly PI = 3.141592653589793;
 
   static get PiOver2() {
     return 1.57079637;

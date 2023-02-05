@@ -1,21 +1,19 @@
-import { test, expect, it } from 'vitest';
+import { describe, test, expect, it } from 'vitest';
 import { MathHelper } from '../src';
 
 import * as BABYLON from 'babylonjs';
 
-test('MathHelper', () => {
-  it('Pi', () => {
+describe('MathHelper', () => {
+  test('Pi', () => {
     expect(MathHelper.Pi).toBe(Math.PI);
-    const Pi = MathHelper.Pi;
-    console.log(Pi);
-    expect(Pi).toEqual('');
+    // expect(MathHelper.PI).toEqual('');
   });
 
-  it('E', () => {
+  test('E', () => {
     expect(MathHelper.E).toBe(Math.exp(1));
   });
 
-  it('ToDegrees', () => {
+  test('ToDegrees', () => {
     const value1 = MathHelper.ToDegrees(Math.PI / 2);
     expect(value1).toBe(90);
 
@@ -23,7 +21,7 @@ test('MathHelper', () => {
     expect(value2).toBe(180);
   });
 
-  it('ToRadians', () => {
+  test('ToRadians', () => {
     const value1 = MathHelper.ToRadians(90);
     expect(value1).toBe(Math.PI / 2);
 
@@ -31,7 +29,7 @@ test('MathHelper', () => {
     expect(value2).toBe(Math.PI);
   });
 
-  it('Clamp', () => {
+  test('Clamp', () => {
     const value1 = BABYLON.Scalar.RandomRange(
       Number.MIN_VALUE,
       Number.MAX_VALUE

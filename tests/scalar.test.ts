@@ -21,7 +21,7 @@ describe('Scalar', () => {
     expect(value2).toBe(Math.PI);
   });
 
-  it('RandomRange', () => {
+  it('Scalar.RandomRange', () => {
     for (let i = 0; i < 10; ++i) {
       const min = getRandomFloat();
       const max = getRandomFloat(min);
@@ -32,7 +32,7 @@ describe('Scalar', () => {
     }
   });
 
-  it('Clamp', () => {
+  it('Scalar.Clamp', () => {
     for (let i = 0; i < 10; ++i) {
       const value1 = BABYLON.Scalar.RandomRange(
         Number.MIN_VALUE,

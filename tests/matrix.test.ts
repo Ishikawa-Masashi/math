@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, test } from 'vitest';
 
 import * as BABYLON from 'babylonjs';
 
@@ -6,13 +6,13 @@ import { Matrix } from '../src';
 import { getRandomArray, getRandomFloat } from './utils';
 
 describe('Matrix', () => {
-  it('初期化テスト', () => {
-    const a = new Matrix();
+  test('初期化テスト', () => {
+    const matrix = new Matrix();
     const zero = Matrix.Zero();
-    expect(a.equals(zero)).toBeTruthy();
+    expect(matrix.equals(zero)).toBeTruthy();
   });
 
-  it('add', () => {
+  test('add', () => {
     const array1 = getRandomArray(16);
     const array2 = getRandomArray(16);
 

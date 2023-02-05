@@ -5,7 +5,8 @@
    * @returns {Number}
    */
   static get E() {
-    return 2.71828175;
+    return 2.718281828459045;
+    // return 2.71828175;
   }
 
   /**
@@ -32,7 +33,8 @@
    * @returns {Number}
    */
   static get Pi() {
-    return 3.14159274;
+    return 3.141592653589793;
+    // return 3.14159274;
   }
 
   static get PiOver2() {

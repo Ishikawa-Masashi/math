@@ -1,9 +1,20 @@
-import { describe, expect, it } from 'vitest';
+import { test, expect, it } from 'vitest';
 import { MathHelper } from '../src';
 
 import * as BABYLON from 'babylonjs';
 
-describe('MathHelper', () => {
+test('MathHelper', () => {
+  it('Pi', () => {
+    expect(MathHelper.Pi).toBe(Math.PI);
+    const Pi = MathHelper.Pi;
+    console.log(Pi);
+    expect(Pi).toEqual('');
+  });
+
+  it('E', () => {
+    expect(MathHelper.E).toBe(Math.exp(1));
+  });
+
   it('ToDegrees', () => {
     const value1 = MathHelper.ToDegrees(Math.PI / 2);
     expect(value1).toBe(90);

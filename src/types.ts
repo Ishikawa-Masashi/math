@@ -37,6 +37,7 @@ type Primitive =
   | boolean
   | string
   | number
+  // eslint-disable-next-line @typescript-eslint/ban-types
   | Function
   | Element;
 
@@ -68,6 +69,8 @@ export type DeepImmutableObject<T> = {
 };
 
 /** @internal */
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface DeepImmutableArray<T> extends ReadonlyArray<DeepImmutable<T>> {}
+
 /** @internal */
 /* interface DeepImmutableMap<K, V> extends ReadonlyMap<DeepImmutable<K>, DeepImmutable<V>> {} // es2015+ only */

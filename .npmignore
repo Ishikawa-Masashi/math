@@ -15,3 +15,6 @@ README.md
 tsconfig.json
 vite.config.ts
 yarn.lock
+
+# for .npmignore
+.github/workflows/

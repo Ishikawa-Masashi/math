@@ -6,7 +6,8 @@
   "scripts": {
     "clean": "rimraf dist types",
     "watch": "tsc -w | vite build --watch",
-    "build": "yarn clean && tsc && vite build",
+    "build": "tsc && vite build",
+    "build2": "yarn clean && tsc && vite build",
     "build:debug": "node --inspect-brk=5858 ./node_modules/.bin/vite build",
     "release:minor": "npm version minor && npm publish --access public",
     "release:patch": "npm version patch && npm publish --access public",

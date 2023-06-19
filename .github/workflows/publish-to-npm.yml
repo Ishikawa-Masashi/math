@@ -13,11 +13,12 @@ jobs:
       - name: Use Node.js And Setup .npmrc
         uses: actions/setup-node@v1
         with:
-          node-version: '12.x'
+          node-version: '18'
           registry-url: 'https://registry.npmjs.org'
           # ↓ package.json の name に含めたスコープを指定しておく
           scope       : '@neos21'
           always-auth : true
+          cache: yarn
         env :
           NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
       - name: Can Publish

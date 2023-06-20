@@ -1,6 +1,6 @@
 {
   "name": "@ishikawa-masashi/math",
-  "version": "0.4.9",
+  "version": "0.5.0",
   "main": "./dist/index.mjs",
   "types": "./types/index.d.ts",
   "scripts": {

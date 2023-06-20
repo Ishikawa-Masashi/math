@@ -16,7 +16,7 @@ jobs:
           node-version: '18'
           registry-url: 'https://registry.npmjs.org'
           # ↓ package.json の name に含めたスコープを指定しておく
-          scope       : '@neos21'
+          scope       : '@ishikawa-masashi'
           always-auth : true
           cache: yarn
         env :
@@ -29,6 +29,8 @@ jobs:
         run : npm install
         env :
           NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+      - name: Test
+        run : npm run test
       - name: Build
         run : npm run build --if-present
         env :

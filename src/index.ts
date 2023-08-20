@@ -13,3 +13,4 @@ export * from './axis';
 export * from './plane';
 
 export * from './math2D';
+export * from './perspectiveTransform';

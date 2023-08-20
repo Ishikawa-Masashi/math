@@ -2,15 +2,14 @@
 import { Scalar } from './scalar';
 import { Epsilon } from './constants';
 import type { Viewport } from './viewport';
-import type { DeepImmutable, Nullable, FloatArray, float } from './types';
+import type { DeepImmutable, Nullable, FloatArray, float } from '../types';
 import { ArrayTools } from './arrayTools';
 import type { IPlaneLike } from './like';
 // import { RegisterClass } from '../Misc/typeStore';
 import type { Plane } from './plane';
 // import { PerformanceConfigurator } from '../Engines/performanceConfigurator';
 // import { EngineStore } from '../Engines/engineStore';
-
-// type TransformNode = import('../Meshes/transformNode').TransformNode;
+// import type { TransformNode } from '../Meshes/transformNode';
 
 export type Vector2Constructor<T extends Vector2> = new (
   ...args: ConstructorParameters<typeof Vector2>
@@ -87,7 +86,7 @@ export class Vector2 {
    * @param index defines the offset in source array
    * @returns the current Vector2
    */
-  public toArray(array: FloatArray, index = 0): this {
+  public toArray(array: FloatArray, index: number = 0): this {
     array[index] = this.x;
     array[index + 1] = this.y;
     return this;
@@ -100,7 +99,7 @@ export class Vector2 {
    * @param index defines the offset in the destination array
    * @returns the current Vector2
    */
-  public fromArray(array: FloatArray, index = 0): this {
+  public fromArray(array: FloatArray, index: number = 0): this {
     Vector2.FromArrayToRef(array, index, this);
     return this;
   }
@@ -548,6 +547,19 @@ export class Vector2 {
   }
 
   /**
+   * Returns a new Vector2 with random values between min and max
+   * @param min the minimum random value
+   * @param max the maximum random value
+   * @returns a Vector2 with random values between min and max
+   */
+  public static Random(min: number = 0, max: number = 1): Vector2 {
+    return new Vector2(
+      Scalar.RandomRange(min, max),
+      Scalar.RandomRange(min, max)
+    );
+  }
+
+  /**
    * Gets a zero Vector2 that must not be updated
    */
   public static get ZeroReadOnly(): DeepImmutable<Vector2> {
@@ -563,7 +575,7 @@ export class Vector2 {
    */
   public static FromArray(
     array: DeepImmutable<ArrayLike<number>>,
-    offset = 0
+    offset: number = 0
   ): Vector2 {
     return new Vector2(array[offset], array[offset + 1]);
   }
@@ -1027,9 +1039,16 @@ export class Vector3 {
   private static _RightHandedForwardReadOnly = Vector3.Forward(
     true
   ) as DeepImmutable<Vector3>;
+  private static _LeftHandedBackwardReadOnly = Vector3.Backward(
+    false
+  ) as DeepImmutable<Vector3>;
+  private static _RightHandedBackwardReadOnly = Vector3.Backward(
+    true
+  ) as DeepImmutable<Vector3>;
   private static _RightReadOnly = Vector3.Right() as DeepImmutable<Vector3>;
   private static _LeftReadOnly = Vector3.Left() as DeepImmutable<Vector3>;
   private static _ZeroReadOnly = Vector3.Zero() as DeepImmutable<Vector3>;
+  private static _OneReadOnly = Vector3.One() as DeepImmutable<Vector3>;
 
   /** @internal */
   public _x: number;
@@ -1079,7 +1098,7 @@ export class Vector3 {
    * @param y defines the second coordinates (on Y axis)
    * @param z defines the third coordinates (on Z axis)
    */
-  constructor(x = 0, y = 0, z = 0) {
+  constructor(x: number = 0, y: number = 0, z: number = 0) {
     this._x = x;
     this._y = y;
     this._z = z;
@@ -1137,7 +1156,7 @@ export class Vector3 {
    * @param index defines the offset in the destination array
    * @returns the current Vector3
    */
-  public toArray(array: FloatArray, index = 0): this {
+  public toArray(array: FloatArray, index: number = 0): this {
     array[index] = this._x;
     array[index + 1] = this._y;
     array[index + 2] = this._z;
@@ -1151,7 +1170,7 @@ export class Vector3 {
    * @param index defines the offset in the destination array
    * @returns the current Vector3
    */
-  public fromArray(array: FloatArray, index = 0): this {
+  public fromArray(array: FloatArray, index: number = 0): this {
     Vector3.FromArrayToRef(array, index, this);
     return this;
   }
@@ -1188,9 +1207,10 @@ export class Vector3 {
    * @returns the current updated Vector3
    */
   public addInPlaceFromFloats(x: number, y: number, z: number): this {
-    this.x += x;
-    this.y += y;
-    this.z += z;
+    this._x += x;
+    this._y += y;
+    this._z += z;
+    this._isDirty = true;
     return this;
   }
 
@@ -1233,9 +1253,10 @@ export class Vector3 {
    * @returns the current updated Vector3
    */
   public subtractInPlace(otherVector: DeepImmutable<Vector3>): this {
-    this.x -= otherVector._x;
-    this.y -= otherVector._y;
-    this.z -= otherVector._z;
+    this._x -= otherVector._x;
+    this._y -= otherVector._y;
+    this._z -= otherVector._z;
+    this._isDirty = true;
     return this;
   }
 
@@ -1325,9 +1346,10 @@ export class Vector3 {
    * @returns this
    */
   public negateInPlace(): this {
-    this.x *= -1;
-    this.y *= -1;
-    this.z *= -1;
+    this._x *= -1;
+    this._y *= -1;
+    this._z *= -1;
+    this._isDirty = true;
     return this;
   }
 
@@ -1348,9 +1370,10 @@ export class Vector3 {
    * @returns the current updated Vector3
    */
   public scaleInPlace(scale: number): this {
-    this.x *= scale;
-    this.y *= scale;
-    this.z *= scale;
+    this._x *= scale;
+    this._y *= scale;
+    this._z *= scale;
+    this._isDirty = true;
     return this;
   }
 
@@ -1427,15 +1450,27 @@ export class Vector3 {
     q: Quaternion,
     result: T
   ): T {
-    const ix = q.w * this.x + q.y * this.z - q.z * this.y;
-    const iy = q.w * this.y + q.z * this.x - q.x * this.z;
-    const iz = q.w * this.z + q.x * this.y - q.y * this.x;
-    const iw = -q.x * this.x - q.y * this.y - q.z * this.z;
+    // Derived from https://raw.org/proof/vector-rotation-using-quaternions/
 
-    result.x = ix * q.w + iw * -q.x + iy * -q.z - iz * -q.y;
-    result.y = iy * q.w + iw * -q.y + iz * -q.x - ix * -q.z;
-    result.z = iz * q.w + iw * -q.z + ix * -q.y - iy * -q.x;
+    const vx = this._x,
+      vy = this._y,
+      vz = this._z;
+    const qx = q._x,
+      qy = q._y,
+      qz = q._z,
+      qw = q._w;
 
+    // t = 2q x v
+    const tx = 2 * (qy * vz - qz * vy);
+    const ty = 2 * (qz * vx - qx * vz);
+    const tz = 2 * (qx * vy - qy * vx);
+
+    // v + w t + q x t
+    result._x = vx + qw * tx + qy * tz - qz * ty;
+    result._y = vy + qw * ty + qz * tx - qx * tz;
+    result._z = vz + qw * tz + qx * ty - qy * tx;
+
+    result._isDirty = true;
     return result;
   }
 
@@ -1583,9 +1618,10 @@ export class Vector3 {
    * @returns the current updated Vector3
    */
   public multiplyInPlace(otherVector: DeepImmutable<Vector3>): this {
-    this.x *= otherVector._x;
-    this.y *= otherVector._y;
-    this.z *= otherVector._z;
+    this._x *= otherVector._x;
+    this._y *= otherVector._y;
+    this._z *= otherVector._z;
+    this._isDirty = true;
     return this;
   }
 
@@ -1853,17 +1889,17 @@ export class Vector3 {
    * @param order new ordering of the properties (eg. for vector 1,2,3 with "ZYX" will produce 3,2,1)
    * @returns the current updated vector
    */
-  //   public reorderInPlace(order: string) {
-  //     order = order.toLowerCase();
-  //     if (order === 'xyz') {
-  //       return this;
-  //     }
-  //     MathTmp.Vector3[0].copyFrom(this);
-  //     ['x', 'y', 'z'].forEach((val, i) => {
-  //       (<any>this)[val] = (<any>MathTmp.Vector3[0])[order[i]];
-  //     });
-  //     return this;
-  //   }
+  public reorderInPlace(order: string) {
+    order = order.toLowerCase();
+    if (order === 'xyz') {
+      return this;
+    }
+    MathTmp.Vector3[0].copyFrom(this);
+    ['x', 'y', 'z'].forEach((val, i) => {
+      (<any>this)[val] = (<any>MathTmp.Vector3[0])[order[i]];
+    });
+    return this;
+  }
 
   /**
    * Rotates the vector around 0,0,0 by a quaternion
@@ -1989,9 +2025,10 @@ export class Vector3 {
    * @returns the current updated Vector3
    */
   public copyFromFloats(x: number, y: number, z: number): this {
-    this.x = x;
-    this.y = y;
-    this.z = z;
+    this._x = x;
+    this._y = y;
+    this._z = z;
+    this._isDirty = true;
     return this;
   }
 
@@ -2014,7 +2051,8 @@ export class Vector3 {
    * @returns the current updated Vector3
    */
   public setAll(v: number): this {
-    this.x = this.y = this.z = v;
+    this._x = this._y = this._z = v;
+    this._isDirty = true;
     return this;
   }
 
@@ -2121,9 +2159,10 @@ export class Vector3 {
   ): T {
     const diff = TmpVectors.Vector3[0];
     target.subtractToRef(start, diff);
-    ref.y = Math.atan2(diff.x, diff.z) || 0;
-    ref.x = Math.atan2(Math.sqrt(diff.x ** 2 + diff.z ** 2), diff.y) || 0;
-    ref.z = 0;
+    ref._y = Math.atan2(diff.x, diff.z) || 0;
+    ref._x = Math.atan2(Math.sqrt(diff.x ** 2 + diff.z ** 2), diff.y) || 0;
+    ref._z = 0;
+    ref._isDirty = true;
     return ref;
   }
 
@@ -2228,7 +2267,7 @@ export class Vector3 {
    */
   public static FromArray(
     array: DeepImmutable<ArrayLike<number>>,
-    offset = 0
+    offset: number = 0
   ): Vector3 {
     return new Vector3(array[offset], array[offset + 1], array[offset + 2]);
   }
@@ -2260,9 +2299,10 @@ export class Vector3 {
     offset: number,
     result: T
   ): T {
-    result.x = array[offset];
-    result.y = array[offset + 1];
-    result.z = array[offset + 2];
+    result._x = array[offset];
+    result._y = array[offset + 1];
+    result._z = array[offset + 2];
+    result._isDirty = true;
     return result;
   }
 
@@ -2365,10 +2405,31 @@ export class Vector3 {
   }
 
   /**
+   * Gets a backward Vector3 that must not be updated
+   */
+  public static get LeftHandedBackwardReadOnly(): DeepImmutable<Vector3> {
+    return Vector3._LeftHandedBackwardReadOnly;
+  }
+
+  /**
+   * Gets a backward Vector3 that must not be updated
+   */
+  public static get RightHandedBackwardReadOnly(): DeepImmutable<Vector3> {
+    return Vector3._RightHandedBackwardReadOnly;
+  }
+
+  /**
    * Gets a zero Vector3 that must not be updated
    */
   public static get ZeroReadOnly(): DeepImmutable<Vector3> {
     return Vector3._ZeroReadOnly;
+  }
+
+  /**
+   * Gets a one Vector3 that must not be updated
+   */
+  public static get OneReadOnly(): DeepImmutable<Vector3> {
+    return Vector3._OneReadOnly;
   }
 
   /**
@@ -2385,7 +2446,7 @@ export class Vector3 {
    * @param rightHandedSystem is the scene right-handed (negative z)
    * @returns a new forward Vector3
    */
-  public static Forward(rightHandedSystem = false): Vector3 {
+  public static Forward(rightHandedSystem: boolean = false): Vector3 {
     return new Vector3(0.0, 0.0, rightHandedSystem ? -1.0 : 1.0);
   }
   /**
@@ -2394,7 +2455,7 @@ export class Vector3 {
    * @param rightHandedSystem is the scene right-handed (negative-z)
    * @returns a new Backward Vector3
    */
-  public static Backward(rightHandedSystem = false): Vector3 {
+  public static Backward(rightHandedSystem: boolean = false): Vector3 {
     return new Vector3(0.0, 0.0, rightHandedSystem ? 1.0 : -1.0);
   }
   /**
@@ -2412,6 +2473,20 @@ export class Vector3 {
    */
   public static Left(): Vector3 {
     return new Vector3(-1.0, 0.0, 0.0);
+  }
+
+  /**
+   * Returns a new Vector3 with random values between min and max
+   * @param min the minimum random value
+   * @param max the maximum random value
+   * @returns a Vector3 with random values between min and max
+   */
+  public static Random(min: number = 0, max: number = 1): Vector3 {
+    return new Vector3(
+      Scalar.RandomRange(min, max),
+      Scalar.RandomRange(min, max),
+      Scalar.RandomRange(min, max)
+    );
   }
 
   /**
@@ -2479,9 +2554,10 @@ export class Vector3 {
     const rz = x * m[2] + y * m[6] + z * m[10] + m[14];
     const rw = 1 / (x * m[3] + y * m[7] + z * m[11] + m[15]);
 
-    result.x = rx * rw;
-    result.y = ry * rw;
-    result.z = rz * rw;
+    result._x = rx * rw;
+    result._y = ry * rw;
+    result._z = rz * rw;
+    result._isDirty = true;
     return result;
   }
 
@@ -2545,9 +2621,10 @@ export class Vector3 {
     result: T
   ): T {
     const m = transformation.m;
-    result.x = x * m[0] + y * m[4] + z * m[8];
-    result.y = x * m[1] + y * m[5] + z * m[9];
-    result.z = x * m[2] + y * m[6] + z * m[10];
+    result._x = x * m[0] + y * m[4] + z * m[8];
+    result._y = x * m[1] + y * m[5] + z * m[9];
+    result._z = x * m[2] + y * m[6] + z * m[10];
+    result._isDirty = true;
     return result;
   }
 
@@ -2756,21 +2833,22 @@ export class Vector3 {
   ): T {
     const t2 = time * time;
 
-    result.x =
-      (t2 - time) * 6 * value1.x +
-      (3 * t2 - 4 * time + 1) * tangent1.x +
-      (-t2 + time) * 6 * value2.x +
-      (3 * t2 - 2 * time) * tangent2.x;
-    result.y =
-      (t2 - time) * 6 * value1.y +
-      (3 * t2 - 4 * time + 1) * tangent1.y +
-      (-t2 + time) * 6 * value2.y +
-      (3 * t2 - 2 * time) * tangent2.y;
-    result.z =
-      (t2 - time) * 6 * value1.z +
-      (3 * t2 - 4 * time + 1) * tangent1.z +
-      (-t2 + time) * 6 * value2.z +
-      (3 * t2 - 2 * time) * tangent2.z;
+    result._x =
+      (t2 - time) * 6 * value1._x +
+      (3 * t2 - 4 * time + 1) * tangent1._x +
+      (-t2 + time) * 6 * value2._x +
+      (3 * t2 - 2 * time) * tangent2._x;
+    result._y =
+      (t2 - time) * 6 * value1._y +
+      (3 * t2 - 4 * time + 1) * tangent1._y +
+      (-t2 + time) * 6 * value2._y +
+      (3 * t2 - 2 * time) * tangent2._y;
+    result._z =
+      (t2 - time) * 6 * value1._z +
+      (3 * t2 - 4 * time + 1) * tangent1._z +
+      (-t2 + time) * 6 * value2._z +
+      (3 * t2 - 2 * time) * tangent2._z;
+    result._isDirty = true;
     return result;
   }
 
@@ -2807,9 +2885,10 @@ export class Vector3 {
     amount: number,
     result: T
   ): T {
-    result.x = start._x + (end._x - start._x) * amount;
-    result.y = start._y + (end._y - start._y) * amount;
-    result.z = start._z + (end._z - start._z) * amount;
+    result._x = start._x + (end._x - start._x) * amount;
+    result._y = start._y + (end._y - start._y) * amount;
+    result._z = start._z + (end._z - start._z) * amount;
+    result._isDirty = true;
     return result;
   }
 
@@ -2962,6 +3041,37 @@ export class Vector3 {
 
     Vector3.TransformCoordinatesToRef(vector, matrix, result);
     return result;
+  }
+
+  /**
+   * Reflects a vector off the plane defined by a normalized normal
+   * @param inDirection defines the vector direction
+   * @param normal defines the normal - Must be normalized
+   * @returns the resulting vector
+   */
+  public static Reflect<T extends Vector3>(
+    inDirection: DeepImmutable<Vector3>,
+    normal: DeepImmutable<Vector3>
+  ): Vector3 {
+    return this.ReflectToRef(inDirection, normal, new Vector3());
+  }
+
+  /**
+   * Reflects a vector off the plane defined by a normalized normal to reference
+   * @param inDirection defines the vector direction
+   * @param normal defines the normal - Must be normalized
+   * @param result defines the Vector3 where to store the result
+   * @returns the resulting vector
+   */
+  public static ReflectToRef<T extends Vector3>(
+    inDirection: DeepImmutable<Vector3>,
+    normal: DeepImmutable<Vector3>,
+    ref: T
+  ): T {
+    const tmp = TmpVectors.Vector3[0];
+    tmp.copyFrom(normal).scaleInPlace(2 * Vector3.Dot(inDirection, normal));
+
+    return ref.copyFrom(inDirection).subtractInPlace(tmp);
   }
 
   /**
@@ -3520,7 +3630,7 @@ export class Vector4 {
    * @param index defines the offset in the destination array
    * @returns the current Vector3
    */
-  public fromArray(array: FloatArray, index = 0): this {
+  public fromArray(array: FloatArray, index: number = 0): this {
     Vector4.FromArrayToRef(array, index, this);
     return this;
   }
@@ -4002,6 +4112,7 @@ export class Vector4 {
   public toVector3(): Vector3 {
     return new Vector3(this.x, this.y, this.z);
   }
+
   /**
    * Returns a new Vector4 copied from the current one.
    * @returns the new cloned vector
@@ -4153,6 +4264,22 @@ export class Vector4 {
   public static One(): Vector4 {
     return new Vector4(1.0, 1.0, 1.0, 1.0);
   }
+
+  /**
+   * Returns a new Vector4 with random values between min and max
+   * @param min the minimum random value
+   * @param max the maximum random value
+   * @returns a Vector4 with random values between min and max
+   */
+  public static Random(min: number = 0, max: number = 1): Vector4 {
+    return new Vector4(
+      Scalar.RandomRange(min, max),
+      Scalar.RandomRange(min, max),
+      Scalar.RandomRange(min, max),
+      Scalar.RandomRange(min, max)
+    );
+  }
+
   /**
    * Gets a zero Vector4 that must not be updated
    */
@@ -4422,7 +4549,7 @@ export class Vector4 {
    * @param w defines the 4th component (default is 0)
    * @returns a new Vector4
    */
-  public static FromVector3(source: Vector3, w = 0) {
+  public static FromVector3(source: Vector3, w: number = 0) {
     return new Vector4(source._x, source._y, source._z, w);
   }
 }
@@ -4495,7 +4622,12 @@ export class Quaternion {
    * @param z defines the third component (0 by default)
    * @param w defines the fourth component (1.0 by default)
    */
-  constructor(x = 0.0, y = 0.0, z = 0.0, w = 1.0) {
+  constructor(
+    x: number = 0.0,
+    y: number = 0.0,
+    z: number = 0.0,
+    w: number = 1.0
+  ) {
     this._x = x;
     this._y = y;
     this._z = z;
@@ -4551,11 +4683,11 @@ export class Quaternion {
    * @param index defines an optional index in the target array to define where to start storing values
    * @returns the current Quaternion object
    */
-  public toArray(array: FloatArray, index = 0): Quaternion {
-    array[index] = this.x;
-    array[index + 1] = this.y;
-    array[index + 2] = this.z;
-    array[index + 3] = this.w;
+  public toArray(array: FloatArray, index: number = 0): Quaternion {
+    array[index] = this._x;
+    array[index + 1] = this._y;
+    array[index + 2] = this._z;
+    array[index + 3] = this._w;
     return this;
   }
 
@@ -4616,10 +4748,11 @@ export class Quaternion {
    * @returns the updated current quaternion
    */
   public copyFrom(other: DeepImmutable<Quaternion>): this {
-    this.x = other._x;
-    this.y = other._y;
-    this.z = other._z;
-    this.w = other._w;
+    this._x = other._x;
+    this._y = other._y;
+    this._z = other._z;
+    this._w = other._w;
+    this._isDirty = true;
     return this;
   }
 
@@ -4633,10 +4766,11 @@ export class Quaternion {
    * @returns the updated current quaternion
    */
   public copyFromFloats(x: number, y: number, z: number, w: number): this {
-    this.x = x;
-    this.y = y;
-    this.z = z;
-    this.w = w;
+    this._x = x;
+    this._y = y;
+    this._z = z;
+    this._w = w;
+    this._isDirty = true;
     return this;
   }
 
@@ -4679,6 +4813,7 @@ export class Quaternion {
     this._y += other._y;
     this._z += other._z;
     this._w += other._w;
+    this._isDirty = true;
     return this;
   }
 
@@ -4708,6 +4843,7 @@ export class Quaternion {
     this._y -= other._y;
     this._z -= other._z;
     this._w -= other._w;
+    this._isDirty = true;
     return this;
   }
 
@@ -4734,10 +4870,11 @@ export class Quaternion {
    * @returns result input
    */
   public scaleToRef<T extends Quaternion>(scale: number, result: T): T {
-    result.x = this._x * scale;
-    result.y = this._y * scale;
-    result.z = this._z * scale;
-    result.w = this._w * scale;
+    result._x = this._x * scale;
+    result._y = this._y * scale;
+    result._z = this._z * scale;
+    result._w = this._w * scale;
+    result._isDirty = true;
     return result;
   }
 
@@ -4748,10 +4885,11 @@ export class Quaternion {
    * @returns the current modified quaternion
    */
   public scaleInPlace(value: number): this {
-    this.x *= value;
-    this.y *= value;
-    this.z *= value;
-    this.w *= value;
+    this._x *= value;
+    this._y *= value;
+    this._z *= value;
+    this._w *= value;
+    this._isDirty = true;
 
     return this;
   }
@@ -4764,10 +4902,11 @@ export class Quaternion {
    * @returns result input
    */
   public scaleAndAddToRef<T extends Quaternion>(scale: number, result: T): T {
-    result.x += this._x * scale;
-    result.y += this._y * scale;
-    result.z += this._z * scale;
-    result.w += this._w * scale;
+    result._x += this._x * scale;
+    result._y += this._y * scale;
+    result._z += this._z * scale;
+    result._w += this._w * scale;
+    result._isDirty = true;
     return result;
   }
 
@@ -4839,9 +4978,10 @@ export class Quaternion {
    * @returns the current updated quaternion
    */
   public conjugateInPlace(): this {
-    this.x *= -1;
-    this.y *= -1;
-    this.z *= -1;
+    this._x *= -1;
+    this._y *= -1;
+    this._z *= -1;
+    this._isDirty = true;
     return this;
   }
 
@@ -4972,21 +5112,24 @@ export class Quaternion {
     const limit = 0.4999999;
 
     if (zAxisY < -limit) {
-      result.y = 2 * Math.atan2(qy, qw);
-      result.x = Math.PI / 2;
-      result.z = 0;
+      result._y = 2 * Math.atan2(qy, qw);
+      result._x = Math.PI / 2;
+      result._z = 0;
+      result._isDirty = true;
     } else if (zAxisY > limit) {
-      result.y = 2 * Math.atan2(qy, qw);
-      result.x = -Math.PI / 2;
-      result.z = 0;
+      result._y = 2 * Math.atan2(qy, qw);
+      result._x = -Math.PI / 2;
+      result._z = 0;
+      result._isDirty = true;
     } else {
       const sqw = qw * qw;
       const sqz = qz * qz;
       const sqx = qx * qx;
       const sqy = qy * qy;
-      result.z = Math.atan2(2.0 * (qx * qy + qz * qw), -sqz - sqx + sqy + sqw);
-      result.x = Math.asin(-2.0 * zAxisY);
-      result.y = Math.atan2(2.0 * (qz * qx + qy * qw), sqz - sqx - sqy + sqw);
+      result._z = Math.atan2(2.0 * (qx * qy + qz * qw), -sqz - sqx + sqy + sqw);
+      result._x = Math.asin(-2.0 * zAxisY);
+      result._y = Math.atan2(2.0 * (qz * qx + qy * qw), sqz - sqx - sqy + sqw);
+      result._isDirty = true;
     }
 
     return result;
@@ -5055,31 +5198,35 @@ export class Quaternion {
     if (trace > 0) {
       s = 0.5 / Math.sqrt(trace + 1.0);
 
-      result.w = 0.25 / s;
-      result.x = (m32 - m23) * s;
-      result.y = (m13 - m31) * s;
-      result.z = (m21 - m12) * s;
+      result._w = 0.25 / s;
+      result._x = (m32 - m23) * s;
+      result._y = (m13 - m31) * s;
+      result._z = (m21 - m12) * s;
+      result._isDirty = true;
     } else if (m11 > m22 && m11 > m33) {
       s = 2.0 * Math.sqrt(1.0 + m11 - m22 - m33);
 
-      result.w = (m32 - m23) / s;
-      result.x = 0.25 * s;
-      result.y = (m12 + m21) / s;
-      result.z = (m13 + m31) / s;
+      result._w = (m32 - m23) / s;
+      result._x = 0.25 * s;
+      result._y = (m12 + m21) / s;
+      result._z = (m13 + m31) / s;
+      result._isDirty = true;
     } else if (m22 > m33) {
       s = 2.0 * Math.sqrt(1.0 + m22 - m11 - m33);
 
-      result.w = (m13 - m31) / s;
-      result.x = (m12 + m21) / s;
-      result.y = 0.25 * s;
-      result.z = (m23 + m32) / s;
+      result._w = (m13 - m31) / s;
+      result._x = (m12 + m21) / s;
+      result._y = 0.25 * s;
+      result._z = (m23 + m32) / s;
+      result._isDirty = true;
     } else {
       s = 2.0 * Math.sqrt(1.0 + m33 - m11 - m22);
 
-      result.w = (m21 - m12) / s;
-      result.x = (m13 + m31) / s;
-      result.y = (m23 + m32) / s;
-      result.z = 0.25 * s;
+      result._w = (m21 - m12) / s;
+      result._x = (m13 + m31) / s;
+      result._y = (m23 + m32) / s;
+      result._z = 0.25 * s;
+      result._isDirty = true;
     }
     return result;
   }
@@ -5114,7 +5261,7 @@ export class Quaternion {
   public static AreClose(
     quat0: DeepImmutable<Quaternion>,
     quat1: DeepImmutable<Quaternion>,
-    epsilon = 0.1
+    epsilon: number = 0.1
   ): boolean {
     const dot = Quaternion.Dot(quat0, quat1);
 
@@ -5234,10 +5381,11 @@ export class Quaternion {
   ): T {
     const sin = Math.sin(angle / 2);
     axis.normalize();
-    result.w = Math.cos(angle / 2);
-    result.x = axis._x * sin;
-    result.y = axis._y * sin;
-    result.z = axis._z * sin;
+    result._w = Math.cos(angle / 2);
+    result._x = axis._x * sin;
+    result._y = axis._y * sin;
+    result._z = axis._z * sin;
+    result._isDirty = true;
     return result;
   }
 
@@ -5276,10 +5424,11 @@ export class Quaternion {
     offset: number,
     result: T
   ): T {
-    result.x = array[offset];
-    result.y = array[offset + 1];
-    result.z = array[offset + 2];
-    result.w = array[offset + 3];
+    result._x = array[offset];
+    result._y = array[offset + 1];
+    result._z = array[offset + 2];
+    result._w = array[offset + 3];
+    result._isDirty = true;
     return result;
   }
 
@@ -5349,16 +5498,18 @@ export class Quaternion {
    * @param vecFrom defines the direction vector from which to rotate
    * @param vecTo defines the direction vector to which to rotate
    * @param result the quaternion to store the result
+   * @param epsilon defines the minimal dot value to define vecs as opposite. Default: `BABYLON.Epsilon`
    * @returns the updated quaternion
    */
   public static FromUnitVectorsToRef<T extends Quaternion>(
     vecFrom: DeepImmutable<Vector3>,
     vecTo: DeepImmutable<Vector3>,
-    result: T
+    result: T,
+    epsilon = Epsilon
   ): T {
     const r = Vector3.Dot(vecFrom, vecTo) + 1;
 
-    if (r < Epsilon) {
+    if (r < epsilon) {
       if (Math.abs(vecFrom.x) > Math.abs(vecFrom.z)) {
         result.set(-vecFrom.y, vecFrom.x, 0, 0);
       } else {
@@ -5422,10 +5573,11 @@ export class Quaternion {
     const sinYaw = Math.sin(halfYaw);
     const cosYaw = Math.cos(halfYaw);
 
-    result.x = cosYaw * sinPitch * cosRoll + sinYaw * cosPitch * sinRoll;
-    result.y = sinYaw * cosPitch * cosRoll - cosYaw * sinPitch * sinRoll;
-    result.z = cosYaw * cosPitch * sinRoll - sinYaw * sinPitch * cosRoll;
-    result.w = cosYaw * cosPitch * cosRoll + sinYaw * sinPitch * sinRoll;
+    result._x = cosYaw * sinPitch * cosRoll + sinYaw * cosPitch * sinRoll;
+    result._y = sinYaw * cosPitch * cosRoll - cosYaw * sinPitch * sinRoll;
+    result._z = cosYaw * cosPitch * sinRoll - sinYaw * sinPitch * cosRoll;
+    result._w = cosYaw * cosPitch * cosRoll + sinYaw * sinPitch * sinRoll;
+    result._isDirty = true;
     return result;
   }
 
@@ -5467,10 +5619,11 @@ export class Quaternion {
     const halfGammaMinusAlpha = (gamma - alpha) * 0.5;
     const halfBeta = beta * 0.5;
 
-    result.x = Math.cos(halfGammaMinusAlpha) * Math.sin(halfBeta);
-    result.y = Math.sin(halfGammaMinusAlpha) * Math.sin(halfBeta);
-    result.z = Math.sin(halfGammaPlusAlpha) * Math.cos(halfBeta);
-    result.w = Math.cos(halfGammaPlusAlpha) * Math.cos(halfBeta);
+    result._x = Math.cos(halfGammaMinusAlpha) * Math.sin(halfBeta);
+    result._y = Math.sin(halfGammaMinusAlpha) * Math.sin(halfBeta);
+    result._z = Math.sin(halfGammaPlusAlpha) * Math.cos(halfBeta);
+    result._w = Math.cos(halfGammaPlusAlpha) * Math.cos(halfBeta);
+    result._isDirty = true;
     return result;
   }
 
@@ -5652,10 +5805,11 @@ export class Quaternion {
         : Math.sin(amount * num5) * num6;
     }
 
-    result.x = num3 * left._x + num2 * right._x;
-    result.y = num3 * left._y + num2 * right._y;
-    result.z = num3 * left._z + num2 * right._z;
-    result.w = num3 * left._w + num2 * right._w;
+    result._x = num3 * left._x + num2 * right._x;
+    result._y = num3 * left._y + num2 * right._y;
+    result._z = num3 * left._z + num2 * right._z;
+    result._w = num3 * left._w + num2 * right._w;
+    result._isDirty = true;
     return result;
   }
 
@@ -5759,54 +5913,60 @@ export class Quaternion {
   ): T {
     const t2 = time * time;
 
-    result.x =
-      (t2 - time) * 6 * value1.x +
-      (3 * t2 - 4 * time + 1) * tangent1.x +
-      (-t2 + time) * 6 * value2.x +
-      (3 * t2 - 2 * time) * tangent2.x;
-    result.y =
-      (t2 - time) * 6 * value1.y +
-      (3 * t2 - 4 * time + 1) * tangent1.y +
-      (-t2 + time) * 6 * value2.y +
-      (3 * t2 - 2 * time) * tangent2.y;
-    result.z =
-      (t2 - time) * 6 * value1.z +
-      (3 * t2 - 4 * time + 1) * tangent1.z +
-      (-t2 + time) * 6 * value2.z +
-      (3 * t2 - 2 * time) * tangent2.z;
-    result.w =
-      (t2 - time) * 6 * value1.w +
-      (3 * t2 - 4 * time + 1) * tangent1.w +
-      (-t2 + time) * 6 * value2.w +
-      (3 * t2 - 2 * time) * tangent2.w;
+    result._x =
+      (t2 - time) * 6 * value1._x +
+      (3 * t2 - 4 * time + 1) * tangent1._x +
+      (-t2 + time) * 6 * value2._x +
+      (3 * t2 - 2 * time) * tangent2._x;
+    result._y =
+      (t2 - time) * 6 * value1._y +
+      (3 * t2 - 4 * time + 1) * tangent1._y +
+      (-t2 + time) * 6 * value2._y +
+      (3 * t2 - 2 * time) * tangent2._y;
+    result._z =
+      (t2 - time) * 6 * value1._z +
+      (3 * t2 - 4 * time + 1) * tangent1._z +
+      (-t2 + time) * 6 * value2._z +
+      (3 * t2 - 2 * time) * tangent2._z;
+    result._w =
+      (t2 - time) * 6 * value1._w +
+      (3 * t2 - 4 * time + 1) * tangent1._w +
+      (-t2 + time) * 6 * value2._w +
+      (3 * t2 - 2 * time) * tangent2._w;
+    result._isDirty = true;
     return result;
   }
 }
 
 /**
  * Class used to store matrix data (4x4)
- * Note on matrix definitions in Babylon.js for setting values directly rather than using one of the methods available.
+ * Note on matrix definitions in Babylon.js for setting values directly
+ * rather than using one of the methods available.
  * Matrix size is given by rows x columns.
  * A Vector3 is a 1 X 3 matrix [x, y, z].
+ *
  * In Babylon.js multiplying a 1 x 3 matrix by a 4 x 4 matrix
- * is done using BABYLON.Vector4.TransformCoordinates(vector3, matrix)
- * and extending the passed Vector3 to a Vector4 [x, y, z, w] with w = 1.
- * The multiplication has this form
- * [x, y, z, w] |m0,  m1,  m2,  m3 |
- *              |m4,  m5,  m6,  m7 |
- *              |m8,  m9,  m10, m11|
- *              |m12, m13, m14, m15|
+ * is done using BABYLON.Vector4.TransformCoordinates(Vector3, Matrix).
+ * and extending the passed Vector3 to a Vector4, V = [x, y, z, 1].
+ * Let M be a matrix with elements m(row, column), so that
+ * m(2, 3) is the element in row 2 column 3 of M.
  *
- * = [xm0 + ym4 + zm8 + wm12, xm1 + ym5 + zm9 + wm13, xm2 + ym6 + zm10 + wm14, xm3 + ym7 + zm11 + wm15]
+ * Multiplication is of the form VM and has the resulting Vector4
+ * VM = [xm(0, 0) + ym(1, 0) + zm(2, 0) + m(3, 0), xm(0, 1) + ym(1, 1) + zm(2, 1) + m(3, 1), xm(0, 2) + ym(1, 2) + zm(2, 2) + m(3, 2), xm(0, 3) + ym(1, 3) + zm(2, 3) + m(3, 3)].
+ * On the web you will find many examples that use the opposite convention of MV,
+ * in which case to make use of the examples you will need to transpose the matrix.
  *
+ * Example Playground - Overview Linear Algebra - https://playground.babylonjs.com/#AV9X17
+ * Example Playground - Overview Transformation - https://playground.babylonjs.com/#AV9X17#1
+ * Example Playground - Overview Projection - https://playground.babylonjs.com/#AV9X17#2
  */
 export class Matrix {
   /**
    * Gets the precision of matrix computations
    */
-  //   public static get Use64Bits(): boolean {
-  //     return PerformanceConfigurator.MatrixUse64Bits;
-  //   }
+  public static get Use64Bits(): boolean {
+    return PerformanceConfigurator.MatrixUse64Bits;
+  }
 
   private static _UpdateFlagSeed = 0;
   private static _IdentityReadOnly = Matrix.Identity() as DeepImmutable<Matrix>;
@@ -5820,7 +5980,7 @@ export class Matrix {
    * It will be incremented every time the matrix data change.
    * You can use it to speed the comparison between two versions of the same matrix.
    */
-  public updateFlag = -1;
+  public updateFlag: number = -1;
 
   private readonly _m: Float32Array | Array<number>;
 
@@ -5844,9 +6004,9 @@ export class Matrix {
 
   private _updateIdentityStatus(
     isIdentity: boolean,
-    isIdentityDirty = false,
-    isIdentity3x2 = false,
-    isIdentity3x2Dirty = true
+    isIdentityDirty: boolean = false,
+    isIdentity3x2: boolean = false,
+    isIdentity3x2Dirty: boolean = true
   ) {
     this._isIdentity = isIdentity;
     this._isIdentity3x2 = isIdentity || isIdentity3x2;
@@ -5862,8 +6022,7 @@ export class Matrix {
     //   PerformanceConfigurator.MatrixTrackedMatrices!.push(this);
     // }
 
-    // this._m = new PerformanceConfigurator.MatrixCurrentType(16);
-    this._m = new Float32Array(16);
+    this._m = new Float32Array(16); // new PerformanceConfigurator.MatrixCurrentType(16);
 
     this.markAsUpdated();
   }
@@ -5935,6 +6094,7 @@ export class Matrix {
 
   /**
    * Gets the determinant of the matrix
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#34
    * @returns the matrix determinant
    */
   public determinant(): number {
@@ -5988,6 +6148,7 @@ export class Matrix {
 
   /**
    * Returns the matrix as a Float32Array or Array<number>
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#49
    * @returns the matrix underlying array
    */
   public toArray(): DeepImmutable<Float32Array | Array<number>> {
@@ -5995,6 +6156,7 @@ export class Matrix {
   }
   /**
    * Returns the matrix as a Float32Array or Array<number>
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#114
    * @returns the matrix underlying array.
    */
   public asArray(): DeepImmutable<Float32Array | Array<number>> {
@@ -6003,6 +6165,7 @@ export class Matrix {
 
   /**
    * Inverts the current matrix in place
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#118
    * @returns the current inverted matrix
    */
   public invert(): this {
@@ -6039,6 +6202,7 @@ export class Matrix {
 
   /**
    * Adds the current matrix with a second one
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#44
    * @param other defines the matrix to add
    * @returns a new matrix as the addition of the current matrix and the given one
    */
@@ -6050,6 +6214,7 @@ export class Matrix {
 
   /**
    * Sets the given matrix "result" to the addition of the current matrix and the given one
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#45
    * @param other defines the matrix to add
    * @param result defines the target matrix
    * @returns result input
@@ -6070,6 +6235,7 @@ export class Matrix {
 
   /**
    * Adds in place the given matrix to the current matrix
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#46
    * @param other defines the second operand
    * @returns the current updated matrix
    */
@@ -6085,6 +6251,7 @@ export class Matrix {
 
   /**
    * Sets the given matrix to the current inverted Matrix
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#119
    * @param other defines the target matrix
    * @returns result input
    */
@@ -6188,6 +6355,7 @@ export class Matrix {
 
   /**
    * add a value at the specified position in the current Matrix
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#47
    * @param index the index of the value within the matrix. between 0 and 15.
    * @param value the value to be added
    * @returns the current updated matrix
@@ -6212,6 +6380,7 @@ export class Matrix {
 
   /**
    * Inserts the translation vector (using 3 floats) in the current matrix
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#120
    * @param x defines the 1st component of the translation
    * @param y defines the 2nd component of the translation
    * @param z defines the 3rd component of the translation
@@ -6227,6 +6396,8 @@ export class Matrix {
 
   /**
    * Adds the translation vector (using 3 floats) in the current matrix
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#20
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#48
    * @param x defines the 1st component of the translation
    * @param y defines the 2nd component of the translation
    * @param z defines the 3rd component of the translation
@@ -6242,6 +6413,7 @@ export class Matrix {
 
   /**
    * Inserts the translation vector in the current matrix
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#121
    * @param vector3 defines the translation to insert
    * @returns the current updated matrix
    */
@@ -6251,6 +6423,7 @@ export class Matrix {
 
   /**
    * Gets the translation value of the current matrix
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#122
    * @returns a new Vector3 as the extracted translation from the matrix
    */
   public getTranslation(): Vector3 {
@@ -6259,6 +6432,7 @@ export class Matrix {
 
   /**
    * Fill a Vector3 with the extracted translation from the matrix
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#123
    * @param result defines the Vector3 where to store the translation
    * @returns the current matrix
    */
@@ -6302,6 +6476,7 @@ export class Matrix {
 
   /**
    * Multiply two matrices
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#15
    * A.multiply(B) means apply B to A so result is B x A
    * @param other defines the second operand
    * @returns a new matrix set with the multiplication result of the current Matrix and the given one
@@ -6314,6 +6489,7 @@ export class Matrix {
 
   /**
    * Copy the current matrix from the given one
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#21
    * @param other defines the source matrix
    * @returns the current updated matrix
    */
@@ -6336,7 +6512,10 @@ export class Matrix {
    * @param offset defines the offset in the target array where to start storing values
    * @returns the current matrix
    */
-  public copyToArray(array: Float32Array | Array<number>, offset = 0): this {
+  public copyToArray(
+    array: Float32Array | Array<number>,
+    offset: number = 0
+  ): this {
     const source = this._m;
     array[offset] = source[0];
     array[offset + 1] = source[1];
@@ -6361,6 +6540,7 @@ export class Matrix {
   /**
    * Sets the given matrix "result" with the multiplication result of the current Matrix and the given one
    * A.multiplyToRef(B, R) means apply B to A and store in R and R = B x A
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#16
    * @param other defines the second operand
    * @param result defines the matrix where to store the multiplication
    * @returns result input
@@ -6494,6 +6674,7 @@ export class Matrix {
 
   /**
    * Clone the current matrix
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#18
    * @returns a new matrix from the current matrix
    */
   public clone(): this {
@@ -6524,16 +6705,17 @@ export class Matrix {
 
   /**
    * Decomposes the current Matrix into a translation, rotation and scaling components of the provided node
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#13
    * @param node the node to decompose the matrix to
    * @returns true if operation was successful
    */
-  //   public decomposeToTransformNode(node: TransformNode): boolean {
-  //     node.rotationQuaternion = node.rotationQuaternion || new Quaternion();
-  //     return this.decompose(node.scaling, node.rotationQuaternion, node.position);
-  //   }
-
+  public decomposeToTransformNode(node: TransformNode): boolean {
+    node.rotationQuaternion = node.rotationQuaternion || new Quaternion();
+    return this.decompose(node.scaling, node.rotationQuaternion, node.position);
+  }
   /**
    * Decomposes the current Matrix into a translation, rotation and scaling components
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#12
    * @param scale defines the scale vector3 given as a reference to update
    * @param rotation defines the rotation quaternion given as a reference to update
    * @param translation defines the translation vector3 given as a reference to update
@@ -6543,7 +6725,8 @@ export class Matrix {
   public decompose(
     scale?: Vector3,
     rotation?: Quaternion,
-    translation?: Vector3
+    translation?: Vector3,
+    preserveScalingNode?: TransformNode
   ): boolean {
     if (this._isIdentity) {
       if (translation) {
@@ -6569,19 +6752,19 @@ export class Matrix {
     scale.y = Math.sqrt(m[4] * m[4] + m[5] * m[5] + m[6] * m[6]);
     scale.z = Math.sqrt(m[8] * m[8] + m[9] * m[9] + m[10] * m[10]);
 
-    // if (preserveScalingNode) {
-    //   const signX = preserveScalingNode.scaling.x < 0 ? -1 : 1;
-    //   const signY = preserveScalingNode.scaling.y < 0 ? -1 : 1;
-    //   const signZ = preserveScalingNode.scaling.z < 0 ? -1 : 1;
+    if (preserveScalingNode) {
+      const signX = preserveScalingNode.scaling.x < 0 ? -1 : 1;
+      const signY = preserveScalingNode.scaling.y < 0 ? -1 : 1;
+      const signZ = preserveScalingNode.scaling.z < 0 ? -1 : 1;
 
-    //   scale.x *= signX;
-    //   scale.y *= signY;
-    //   scale.z *= signZ;
-    // } else {
-    if (this.determinant() <= 0) {
-      scale.y *= -1;
+      scale.x *= signX;
+      scale.y *= signY;
+      scale.z *= signZ;
+    } else {
+      if (this.determinant() <= 0) {
+        scale.y *= -1;
+      }
     }
-    // }
 
     if (scale._x === 0 || scale._y === 0 || scale._z === 0) {
       if (rotation) {
@@ -6622,6 +6805,7 @@ export class Matrix {
 
   /**
    * Gets specific row of the matrix
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#36
    * @param index defines the number of the row to get
    * @returns the index-th row of the current matrix as a new Vector4
    */
@@ -6640,6 +6824,7 @@ export class Matrix {
 
   /**
    * Gets specific row of the matrix to ref
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#36
    * @param index defines the number of the row to get
    * @param rowVector vector to store the index-th row of the current matrix
    * @returns result input
@@ -6657,6 +6842,7 @@ export class Matrix {
 
   /**
    * Sets the index-th row of the current matrix to the vector4 values
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#36
    * @param index defines the number of the row to set
    * @param row defines the target vector4
    * @returns the updated current matrix
@@ -6667,6 +6853,7 @@ export class Matrix {
 
   /**
    * Compute the transpose of the matrix
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#40
    * @returns the new transposed matrix
    */
   public transpose(): this {
@@ -6677,6 +6864,7 @@ export class Matrix {
 
   /**
    * Compute the transpose of the matrix and store it in a given matrix
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#41
    * @param result defines the target matrix
    * @returns result input
    */
@@ -6687,6 +6875,7 @@ export class Matrix {
 
   /**
    * Sets the index-th row of the current matrix with the given 4 x float values
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#36
    * @param index defines the row index
    * @param x defines the x component to set
    * @param y defines the y component to set
@@ -6755,6 +6944,7 @@ export class Matrix {
 
   /**
    * Writes to the given matrix a normal matrix, computed from this one (using values from identity matrix for fourth row and column).
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#17
    * @param ref matrix to store the result
    */
   public toNormalMatrix<T extends Matrix>(ref: T): T {
@@ -6862,13 +7052,14 @@ export class Matrix {
   // Statics
   /**
    * Creates a matrix from an array
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#42
    * @param array defines the source array
    * @param offset defines an offset in the source array
    * @returns a new Matrix set from the starting index of the given array
    */
   public static FromArray(
     array: DeepImmutable<ArrayLike<number>>,
-    offset = 0
+    offset: number = 0
   ): Matrix {
     const result = new Matrix();
     Matrix.FromArrayToRef(array, offset, result);
@@ -6877,6 +7068,7 @@ export class Matrix {
 
   /**
    * Copy the content of an array into a given matrix
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#43
    * @param array defines the source array
    * @param offset defines an offset in the source array
    * @param result defines the target matrix
@@ -6896,6 +7088,7 @@ export class Matrix {
 
   /**
    * Stores an array into a matrix after having multiplied each component by a given factor
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#50
    * @param array defines the source array
    * @param offset defines the offset in the source array
    * @param scale defines the scaling factor
@@ -7045,6 +7238,7 @@ export class Matrix {
 
   /**
    * Creates a new matrix composed by merging scale (vector3), rotation (quaternion) and translation (vector3)
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#24
    * @param scale defines the scale vector3
    * @param rotation defines the rotation quaternion
    * @param translation defines the translation vector3
@@ -7062,6 +7256,7 @@ export class Matrix {
 
   /**
    * Sets a matrix to a value composed by merging scale (vector3), rotation (quaternion) and translation (vector3)
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#25
    * @param scale defines the scale vector3
    * @param rotation defines the rotation quaternion
    * @param translation defines the translation vector3
@@ -7205,6 +7400,7 @@ export class Matrix {
 
   /**
    * Creates a new rotation matrix for "angle" radians around the X axis
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#97
    * @param angle defines the angle (in radians) to use
    * @returns the new matrix
    */
@@ -7216,6 +7412,7 @@ export class Matrix {
 
   /**
    * Creates a new matrix as the invert of a given matrix
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#124
    * @param source defines the source matrix
    * @returns the new matrix
    */
@@ -7227,6 +7424,7 @@ export class Matrix {
 
   /**
    * Creates a new rotation matrix for "angle" radians around the X axis and stores it in a given matrix
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#98
    * @param angle defines the angle (in radians) to use
    * @param result defines the target matrix
    * @returns result input
@@ -7260,6 +7458,7 @@ export class Matrix {
 
   /**
    * Creates a new rotation matrix for "angle" radians around the Y axis
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#99
    * @param angle defines the angle (in radians) to use
    * @returns the new matrix
    */
@@ -7271,6 +7470,7 @@ export class Matrix {
 
   /**
    * Creates a new rotation matrix for "angle" radians around the Y axis and stores it in a given matrix
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#100
    * @param angle defines the angle (in radians) to use
    * @param result defines the target matrix
    * @returns result input
@@ -7304,6 +7504,7 @@ export class Matrix {
 
   /**
    * Creates a new rotation matrix for "angle" radians around the Z axis
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#101
    * @param angle defines the angle (in radians) to use
    * @returns the new matrix
    */
@@ -7315,6 +7516,7 @@ export class Matrix {
 
   /**
    * Creates a new rotation matrix for "angle" radians around the Z axis and stores it in a given matrix
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#102
    * @param angle defines the angle (in radians) to use
    * @param result defines the target matrix
    * @returns result input
@@ -7348,6 +7550,7 @@ export class Matrix {
 
   /**
    * Creates a new rotation matrix for "angle" radians around the given axis
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#96
    * @param axis defines the axis to use
    * @param angle defines the angle (in radians) to use
    * @returns the new matrix
@@ -7363,6 +7566,7 @@ export class Matrix {
 
   /**
    * Creates a new rotation matrix for "angle" radians around the given axis and stores it in a given matrix
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#94
    * @param axis defines the axis to use
    * @param angle defines the angle (in radians) to use
    * @param result defines the target matrix
@@ -7406,6 +7610,7 @@ export class Matrix {
   /**
    * Takes normalised vectors and returns a rotation matrix to align "from" with "to".
    * Taken from http://www.iquilezles.org/www/articles/noacos/noacos.htm
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#93
    * @param from defines the vector to align
    * @param to defines the vector to align to
    * @param result defines the target matrix
@@ -7460,6 +7665,8 @@ export class Matrix {
 
   /**
    * Creates a rotation matrix
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#103
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#105
    * @param yaw defines the yaw angle in radians (Y axis)
    * @param pitch defines the pitch angle in radians (X axis)
    * @param roll defines the roll angle in radians (Z axis)
@@ -7477,6 +7684,7 @@ export class Matrix {
 
   /**
    * Creates a rotation matrix and stores it in a given matrix
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#104
    * @param yaw defines the yaw angle in radians (Y axis)
    * @param pitch defines the pitch angle in radians (X axis)
    * @param roll defines the roll angle in radians (Z axis)
@@ -7501,6 +7709,7 @@ export class Matrix {
 
   /**
    * Creates a scaling matrix
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#107
    * @param x defines the scale factor on X axis
    * @param y defines the scale factor on Y axis
    * @param z defines the scale factor on Z axis
@@ -7514,6 +7723,7 @@ export class Matrix {
 
   /**
    * Creates a scaling matrix and stores it in a given matrix
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#108
    * @param x defines the scale factor on X axis
    * @param y defines the scale factor on Y axis
    * @param z defines the scale factor on Z axis
@@ -7552,6 +7762,7 @@ export class Matrix {
 
   /**
    * Creates a translation matrix
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#109
    * @param x defines the translation on X axis
    * @param y defines the translation on Y axis
    * @param z defines the translationon Z axis
@@ -7565,6 +7776,7 @@ export class Matrix {
 
   /**
    * Creates a translation matrix and stores it in a given matrix
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#110
    * @param x defines the translation on X axis
    * @param y defines the translation on Y axis
    * @param z defines the translationon Z axis
@@ -7602,6 +7814,7 @@ export class Matrix {
 
   /**
    * Returns a new Matrix whose values are the interpolated values for "gradient" (float) between the ones of the matrices "startValue" and "endValue".
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#55
    * @param startValue defines the start value
    * @param endValue defines the end value
    * @param gradient defines the gradient factor
@@ -7619,6 +7832,7 @@ export class Matrix {
 
   /**
    * Set the given matrix "result" as the interpolated values for "gradient" (float) between the ones of the matrices "startValue" and "endValue".
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#54
    * @param startValue defines the start value
    * @param endValue defines the end value
    * @param gradient defines the gradient factor
@@ -7647,6 +7861,8 @@ export class Matrix {
    * * decomposing the the "startValue" and "endValue" matrices into their respective scale, rotation and translation matrices
    * * interpolating for "gradient" (float) the values between each of these decomposed matrices between the start and the end
    * * recomposing a new matrix from these 3 interpolated scale, rotation and translation matrices
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#22
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#51
    * @param startValue defines the first matrix
    * @param endValue defines the second matrix
    * @param gradient defines the gradient between the two matrices
@@ -7667,6 +7883,8 @@ export class Matrix {
    * * decomposing the the "startValue" and "endValue" matrices into their respective scale, rotation and translation matrices
    * * interpolating for "gradient" (float) the values between each of these decomposed matrices between the start and the end
    * * recomposing a new matrix from these 3 interpolated scale, rotation and translation matrices
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#23
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#53
    * @param startValue defines the first matrix
    * @param endValue defines the second matrix
    * @param gradient defines the gradient between the two matrices
@@ -7709,6 +7927,8 @@ export class Matrix {
   /**
    * Creates a new matrix that transforms vertices from world space to camera space. It takes three vectors as arguments that together describe the position and orientation of the camera.
    * This function generates a matrix suitable for a left handed coordinate system
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#58
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#59
    * @param eye defines the final position of the entity
    * @param target defines where the entity should look at
    * @param up defines the up vector for the entity
@@ -7727,6 +7947,8 @@ export class Matrix {
   /**
    * Sets the given "result" Matrix to a matrix that transforms vertices from world space to camera space. It takes three vectors as arguments that together describe the position and orientation of the camera.
    * This function generates a matrix suitable for a left handed coordinate system
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#60
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#61
    * @param eye defines the final position of the entity
    * @param target defines where the entity should look at
    * @param up defines the up vector for the entity
@@ -7790,6 +8012,8 @@ export class Matrix {
   /**
    * Creates a new matrix that transforms vertices from world space to camera space. It takes three vectors as arguments that together describe the position and orientation of the camera.
    * This function generates a matrix suitable for a right handed coordinate system
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#62
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#63
    * @param eye defines the final position of the entity
    * @param target defines where the entity should look at
    * @param up defines the up vector for the entity
@@ -7808,6 +8032,8 @@ export class Matrix {
   /**
    * Sets the given "result" Matrix to a matrix that transforms vertices from world space to camera space. It takes three vectors as arguments that together describe the position and orientation of the camera.
    * This function generates a matrix suitable for a right handed coordinate system
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#64
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#65
    * @param eye defines the final position of the entity
    * @param target defines where the entity should look at
    * @param up defines the up vector for the entity
@@ -7872,6 +8098,7 @@ export class Matrix {
   /**
    * Creates a new matrix that transforms vertices from world space to camera space. It takes two vectors as arguments that together describe the orientation of the camera. The position is assumed to be at the origin (0,0,0)
    * This function generates a matrix suitable for a left handed coordinate system
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#66
    * @param forward defines the forward direction - Must be normalized and orthogonal to up.
    * @param up defines the up vector for the entity - Must be normalized and orthogonal to forward.
    * @returns the new matrix
@@ -7888,6 +8115,7 @@ export class Matrix {
   /**
    * Sets the given "result" Matrix to a matrix that transforms vertices from world space to camera space. It takes two vectors as arguments that together describe the orientation of the camera. The position is assumed to be at the origin (0,0,0)
    * This function generates a matrix suitable for a left handed coordinate system
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#67
    * @param forward defines the forward direction - Must be normalized and orthogonal to up.
    * @param up defines the up vector for the entity - Must be normalized and orthogonal to forward.
    * @param result defines the target matrix
@@ -7930,6 +8158,7 @@ export class Matrix {
   /**
    * Creates a new matrix that transforms vertices from world space to camera space. It takes two vectors as arguments that together describe the orientation of the camera. The position is assumed to be at the origin (0,0,0)
    * This function generates a matrix suitable for a right handed coordinate system
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#68
    * @param forward defines the forward direction - Must be normalized and orthogonal to up.
    * @param up defines the up vector for the entity - Must be normalized and orthogonal to forward.
    * @returns the new matrix
@@ -7946,6 +8175,7 @@ export class Matrix {
   /**
    * Sets the given "result" Matrix to a matrix that transforms vertices from world space to camera space. It takes two vectors as arguments that together describe the orientation of the camera. The position is assumed to be at the origin (0,0,0)
    * This function generates a matrix suitable for a right handed coordinate system
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#69
    * @param forward defines the forward direction - Must be normalized and orthogonal to up.
    * @param up defines the up vector for the entity - Must be normalized and orthogonal to forward.
    * @param result defines the target matrix
@@ -7984,6 +8214,7 @@ export class Matrix {
 
   /**
    * Create a left-handed orthographic projection matrix
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#70
    * @param width defines the viewport width
    * @param height defines the viewport height
    * @param znear defines the near clip plane
@@ -8005,6 +8236,7 @@ export class Matrix {
 
   /**
    * Store a left-handed orthographic projection to a given matrix
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#71
    * @param width defines the viewport width
    * @param height defines the viewport height
    * @param znear defines the near clip plane
@@ -8059,6 +8291,7 @@ export class Matrix {
 
   /**
    * Create a left-handed orthographic projection matrix
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#72
    * @param left defines the viewport left coordinate
    * @param right defines the viewport right coordinate
    * @param bottom defines the viewport bottom coordinate
@@ -8093,6 +8326,7 @@ export class Matrix {
 
   /**
    * Stores a left-handed orthographic projection into a given matrix
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#73
    * @param left defines the viewport left coordinate
    * @param right defines the viewport right coordinate
    * @param bottom defines the viewport bottom coordinate
@@ -8153,6 +8387,7 @@ export class Matrix {
 
   /**
    * Creates a right-handed orthographic projection matrix
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#76
    * @param left defines the viewport left coordinate
    * @param right defines the viewport right coordinate
    * @param bottom defines the viewport bottom coordinate
@@ -8187,6 +8422,7 @@ export class Matrix {
 
   /**
    * Stores a right-handed orthographic projection into a given matrix
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#77
    * @param left defines the viewport left coordinate
    * @param right defines the viewport right coordinate
    * @param bottom defines the viewport bottom coordinate
@@ -8223,6 +8459,7 @@ export class Matrix {
 
   /**
    * Creates a left-handed perspective projection matrix
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#85
    * @param width defines the viewport width
    * @param height defines the viewport height
    * @param znear defines the near clip plane
@@ -8237,7 +8474,7 @@ export class Matrix {
     znear: number,
     zfar: number,
     halfZRange?: boolean,
-    projectionPlaneTilt = 0
+    projectionPlaneTilt: number = 0
   ): Matrix {
     const matrix = new Matrix();
 
@@ -8280,6 +8517,7 @@ export class Matrix {
 
   /**
    * Creates a left-handed perspective projection matrix
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#78
    * @param fov defines the horizontal field of view
    * @param aspect defines the aspect ratio
    * @param znear defines the near clip plane
@@ -8295,8 +8533,8 @@ export class Matrix {
     znear: number,
     zfar: number,
     halfZRange?: boolean,
-    projectionPlaneTilt = 0,
-    reverseDepthBufferMode = false
+    projectionPlaneTilt: number = 0,
+    reverseDepthBufferMode: boolean = false
   ): Matrix {
     const matrix = new Matrix();
     Matrix.PerspectiveFovLHToRef(
@@ -8315,6 +8553,7 @@ export class Matrix {
 
   /**
    * Stores a left-handed perspective projection into a given matrix
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#81
    * @param fov defines the horizontal field of view
    * @param aspect defines the aspect ratio
    * @param znear defines the near clip plane
@@ -8334,8 +8573,8 @@ export class Matrix {
     result: T,
     isVerticalFovFixed = true,
     halfZRange?: boolean,
-    projectionPlaneTilt = 0,
-    reverseDepthBufferMode = false
+    projectionPlaneTilt: number = 0,
+    reverseDepthBufferMode: boolean = false
   ): T {
     const n = znear;
     const f = zfar;
@@ -8383,6 +8622,7 @@ export class Matrix {
 
   /**
    * Stores a left-handed perspective projection into a given matrix with depth reversed
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#89
    * @param fov defines the horizontal field of view
    * @param aspect defines the aspect ratio
    * @param znear defines the near clip plane
@@ -8401,7 +8641,7 @@ export class Matrix {
     result: T,
     isVerticalFovFixed = true,
     halfZRange?: boolean,
-    projectionPlaneTilt = 0
+    projectionPlaneTilt: number = 0
   ): T {
     const t = 1.0 / Math.tan(fov * 0.5);
     const a = isVerticalFovFixed ? t / aspect : t;
@@ -8436,6 +8676,7 @@ export class Matrix {
 
   /**
    * Creates a right-handed perspective projection matrix
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#83
    * @param fov defines the horizontal field of view
    * @param aspect defines the aspect ratio
    * @param znear defines the near clip plane
@@ -8451,8 +8692,8 @@ export class Matrix {
     znear: number,
     zfar: number,
     halfZRange?: boolean,
-    projectionPlaneTilt = 0,
-    reverseDepthBufferMode = false
+    projectionPlaneTilt: number = 0,
+    reverseDepthBufferMode: boolean = false
   ): Matrix {
     const matrix = new Matrix();
     Matrix.PerspectiveFovRHToRef(
@@ -8471,6 +8712,7 @@ export class Matrix {
 
   /**
    * Stores a right-handed perspective projection into a given matrix
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#84
    * @param fov defines the horizontal field of view
    * @param aspect defines the aspect ratio
    * @param znear defines the near clip plane
@@ -8490,8 +8732,8 @@ export class Matrix {
     result: T,
     isVerticalFovFixed = true,
     halfZRange?: boolean,
-    projectionPlaneTilt = 0,
-    reverseDepthBufferMode = false
+    projectionPlaneTilt: number = 0,
+    reverseDepthBufferMode: boolean = false
   ): T {
     //alternatively this could be expressed as:
     //    m = PerspectiveFovLHToRef
@@ -8544,6 +8786,7 @@ export class Matrix {
 
   /**
    * Stores a right-handed perspective projection into a given matrix
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#90
    * @param fov defines the horizontal field of view
    * @param aspect defines the aspect ratio
    * @param znear defines the near clip plane
@@ -8562,7 +8805,7 @@ export class Matrix {
     result: T,
     isVerticalFovFixed = true,
     halfZRange?: boolean,
-    projectionPlaneTilt = 0
+    projectionPlaneTilt: number = 0
   ): T {
     const t = 1.0 / Math.tan(fov * 0.5);
     const a = isVerticalFovFixed ? t / aspect : t;
@@ -8599,6 +8842,7 @@ export class Matrix {
 
   /**
    * Stores a perspective projection for WebVR info a given matrix
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#92
    * @param fov defines the field of view
    * @param fov.upDegrees
    * @param fov.downDegrees
@@ -8624,7 +8868,7 @@ export class Matrix {
     result: T,
     rightHanded = false,
     halfZRange?: boolean,
-    projectionPlaneTilt = 0
+    projectionPlaneTilt: number = 0
   ): T {
     const rightHandedFactor = rightHanded ? -1 : 1;
 
@@ -8659,6 +8903,7 @@ export class Matrix {
 
   /**
    * Computes a complete transformation matrix
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#113
    * @param viewport defines the viewport to use
    * @param world defines the world matrix
    * @param view defines the view matrix
@@ -8715,12 +8960,9 @@ export class Matrix {
   ): Float32Array | Array<number> {
     const m = matrix.m;
     const arr = [m[0], m[1], m[4], m[5]];
-
-    // return PerformanceConfigurator.MatrixUse64Bits
-    //   ? arr
-    //   : new Float32Array(arr);
-
-    return new Float32Array(arr);
+    return PerformanceConfigurator.MatrixUse64Bits
+      ? arr
+      : new Float32Array(arr);
   }
   /**
    * Extracts a 3x3 matrix from a given matrix and store the result in a Float32Array
@@ -8732,16 +8974,14 @@ export class Matrix {
   ): Float32Array | Array<number> {
     const m = matrix.m;
     const arr = [m[0], m[1], m[2], m[4], m[5], m[6], m[8], m[9], m[10]];
-
-    // return PerformanceConfigurator.MatrixUse64Bits
-    //   ? arr
-    //   : new Float32Array(arr);
-
-    return new Float32Array(arr);
+    return PerformanceConfigurator.MatrixUse64Bits
+      ? arr
+      : new Float32Array(arr);
   }
 
   /**
    * Compute the transpose of a given matrix
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#111
    * @param matrix defines the matrix to transpose
    * @returns the new matrix
    */
@@ -8753,6 +8993,7 @@ export class Matrix {
 
   /**
    * Compute the transpose of a matrix and store it in a target matrix
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#112
    * @param matrix defines the matrix to transpose
    * @param result defines the target matrix
    * @returns result input
@@ -8795,6 +9036,7 @@ export class Matrix {
 
   /**
    * Computes a reflection matrix from a plane
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#87
    * @param plane defines the reflection plane
    * @returns a new matrix
    */
@@ -8806,6 +9048,7 @@ export class Matrix {
 
   /**
    * Computes a reflection matrix from a plane
+   * Example Playground - https://playground.babylonjs.com/#AV9X17#88
    * @param plane defines the reflection plane
    * @param result defines the target matrix
    * @returns result input
